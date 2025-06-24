@@ -9,7 +9,7 @@ import CartSidebar from './components/cart/CartSidebar';
 import ScrollToTop from './components/common/ScrollToTop';
 import { ImagePathContext } from './context/ImagePathContext';
 
-const BASE_PATH = '/favina-cosmetics';
+const BASE_PATH = '/';
 
 const App = () => {
   return (
