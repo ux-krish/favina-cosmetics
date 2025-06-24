@@ -4,7 +4,7 @@ import { addToCart } from '../../redux/slices/cartSlice';
 import Button from '../common/Button';
 import { FaHeart, FaShoppingCart } from 'react-icons/fa';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useImageBasePath } from '../../context/ImagePathContext';
 
 const ProductCard = ({ product }) => {
@@ -13,6 +13,7 @@ const ProductCard = ({ product }) => {
   const isWished = wishlist.includes(product.id);
   const [toast, setToast] = useState(null);
   const imageBasePath = useImageBasePath();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem('wishlist') || '[]');
@@ -72,14 +73,28 @@ const ProductCard = ({ product }) => {
     imageSrc = `/${imageSrc}`;
   }
 
+  // Only navigate to product details if not clicking on add/wishlist
+  const handleCardClick = (e) => {
+    // Prevent navigation if clicking on button or icon inside card
+    if (
+      e.target.closest('button') ||
+      e.target.closest('a') ||
+      e.target.closest('[role="button"]')
+    ) {
+      return;
+    }
+    navigate(`/products/${product.id}`);
+  };
+
   return (
-    <Card>
+    <Card onClick={handleCardClick} style={{ cursor: 'pointer' }}>
       <ImageContainer>
         {/* Wishlist button at top right of image on mobile */}
         <WishlistBtn
           aria-label="Add to wishlist"
           wished={isWished ? 1 : 0}
           onClick={handleAddToWishlist}
+          type="button"
         >
           <FaHeart />
         </WishlistBtn>
@@ -112,17 +127,26 @@ const ProductCard = ({ product }) => {
           aria-label="Add to wishlist"
           wished={isWished ? 1 : 0}
           onClick={handleAddToWishlist}
+          type="button"
           style={{ display: 'none' }}
         >
           <FaHeart />
         </IconButton>
         <IconButton
           aria-label="Add to cart"
-          onClick={handleAddToCart}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleAddToCart();
+          }}
+          type="button"
         >
           <FaShoppingCart />
         </IconButton>
-        <ViewButton as={Link} to={`/products/${product.id}`}>
+        <ViewButton
+          as={Link}
+          to={`/products/${product.id}`}
+          onClick={e => e.stopPropagation()}
+        >
           View Product
         </ViewButton>
       </Actions>

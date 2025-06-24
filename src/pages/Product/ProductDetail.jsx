@@ -15,6 +15,8 @@ import 'swiper/css/navigation';
 import { useForm } from 'react-hook-form';
 import ProductGrid from '../../components/product/ProductGrid';
 import { useImageBasePath } from '../../context/ImagePathContext';
+import PromoBanner, { BannerHighlight } from '../../components/common/PromoBanner';
+import promoImg from '../../assets/images/main-bg1.png';
 
 const SwiperNavStyles = createGlobalStyle`
   .product-detail-swiper .swiper-button-next,
@@ -148,9 +150,6 @@ const ProductDetail = () => {
       <SwiperNavStyles />
       <ProductDetailContainer className="container">
         <ProductImageContainer>
-          <BackButton type="button" onClick={() => navigate(-1)}>
-            ← Back
-          </BackButton>
           {/* --- Product Images Swiper with Thumbs --- */}
           {product.images && product.images.length > 0 ? (
             <>
@@ -251,23 +250,24 @@ const ProductDetail = () => {
           </Button>
         </ProductInfo>
       </ProductDetailContainer>
-      <DiscountBanner className="container">
-        <DiscountImage />
-        <DiscountContent>
-          <DiscountTitle>Discount</DiscountTitle>
-          <DiscountDesc>
-            Nourish your skin with toxin-free cosmetic products. With the offers that you can’t refuse.
-          </DiscountDesc>
-          <DiscountOffer>
-            <span>Get Your</span> <Highlight>50% Off</Highlight>
-          </DiscountOffer>
-          <DiscountSub>
-            on your first purchase<br />
-            for the next <b>24 hours only!</b>
-          </DiscountSub>
-          <Button variant="outline" style={{ marginTop: 24, minWidth: 120 }}>Get Now</Button>
-        </DiscountContent>
-      </DiscountBanner>
+
+      <PromoBanner
+        image={promoImg}
+        titlePink="Special Offer"
+        titlePurple="On This Product"
+        desc="Enjoy an exclusive discount on this product for a limited time only. Hurry up before the offer ends!"
+        offerLabel="Save"
+        offerHighlight="50% OFF"
+        sub={
+          <>
+            Use code <BannerHighlight>GLOW15</BannerHighlight> at checkout.<br />
+            Offer valid for <BannerHighlight>today only!</BannerHighlight>
+          </>
+        }
+        buttonText="Buy Now"
+        buttonTo="/checkout"
+      />
+
       <ReviewsSection className="container">
         <ReviewsTitle>Customer Reviews & Ratings</ReviewsTitle>
         {/* Swiper for all testimonials (user + product) */}
@@ -380,16 +380,24 @@ const ProductDetail = () => {
           />
           <FeatureList>
             <Feature>
-              <FeatureIcon src="https://cdn-icons-png.flaticon.com/512/1828/1828884.png" alt="30H Wear" />
-              <FeatureText>30H WEAR</FeatureText>
-            </Feature>
-            <Feature>
-              <FeatureIcon src="https://cdn-icons-png.flaticon.com/512/1828/1828885.png" alt="Weightless" />
-              <FeatureText>WEIGHTLESS</FeatureText>
-            </Feature>
-            <Feature>
-              <FeatureIcon src="https://cdn-icons-png.flaticon.com/512/1828/1828886.png" alt="Sweatproof" />
-              <FeatureText>SWEATPROOF</FeatureText>
+              <FeatureIcon
+                src={
+                  Array.isArray(product.images) && product.images.length > 0
+                    ? (product.images[0].startsWith('/') || product.images[0].startsWith('http')
+                        ? product.images[0]
+                        : `${imageBasePath}/${product.images[0]}`
+                      )
+                    : (
+                        product.image
+                          ? product.image.startsWith('/')
+                            ? product.image
+                            : `${imageBasePath}/${product.image}`
+                          : ''
+                      )
+                }
+                alt="Product Feature"
+              />
+              <FeatureText>Product Preview</FeatureText>
             </Feature>
           </FeatureList>
         </TestimonialRight>
@@ -827,8 +835,8 @@ const TestimonialRight = styled.div`
 `;
 
 const ProductImg = styled.img`
-  width: 180px;
-  height: 220px;
+  width: 100%;
+  height: 320px;
   object-fit: contain;
   margin-bottom: 28px;
   border-radius: 12px;

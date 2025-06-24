@@ -51,6 +51,19 @@ const CartSidebar = () => {
   const cartIds = items.map(i => i.id);
   const quickBuyProducts = productData.products.filter(p => !cartIds.includes(p.id));
 
+  // Handler for navigating to product details from upsell or quick buy
+  const navigateToProduct = (id, e) => {
+    // Prevent navigation if clicking on add button
+    if (
+      e.target.closest('button') ||
+      e.target.closest('[role="button"]')
+    ) {
+      return;
+    }
+    dispatch(toggleCart());
+    navigate(`/products/${id}`);
+  };
+
   return (
     <AnimatePresence>
       {isCartOpen && (
@@ -89,7 +102,10 @@ const CartSidebar = () => {
                 >
                   {quickBuyProducts.map(product => (
                     <SwiperSlide key={product.id}>
-                      <QuickBuyCard>
+                      <QuickBuyCard
+                        onClick={e => navigateToProduct(product.id, e)}
+                        style={{ cursor: 'pointer' }}
+                      >
                         <QuickBuyImg
                           src={
                             product.image.startsWith('/') || product.image.startsWith('http')
@@ -105,7 +121,10 @@ const CartSidebar = () => {
                             : product.price.toFixed(2)}
                         </QuickBuyPrice>
                         <QuickBuyBtn
-                          onClick={() => dispatch(addToCart({ ...product, quantity: 1 }))}
+                          onClick={e => {
+                            e.stopPropagation();
+                            dispatch(addToCart({ ...product, quantity: 1 }));
+                          }}
                         >
                           Add
                         </QuickBuyBtn>
@@ -126,7 +145,11 @@ const CartSidebar = () => {
                       .sort(() => 0.5 - Math.random())
                       .slice(0, 3)
                       .map(product => (
-                        <UpsellCard key={product.id}>
+                        <UpsellCard
+                          key={product.id}
+                          onClick={e => navigateToProduct(product.id, e)}
+                          style={{ cursor: 'pointer' }}
+                        >
                           <UpsellImage
                             src={
                               product.image.startsWith('/') || product.image.startsWith('http')
@@ -144,7 +167,10 @@ const CartSidebar = () => {
                             </UpsellPrice>
                           </UpsellInfo>
                           <UpsellAddBtn
-                            onClick={() => dispatch(addToCart({ ...product, quantity: 1 }))}
+                            onClick={e => {
+                              e.stopPropagation();
+                              dispatch(addToCart({ ...product, quantity: 1 }));
+                            }}
                           >
                             Add to Cart
                           </UpsellAddBtn>
@@ -336,7 +362,7 @@ const ButtonRow = styled.div`
   gap: 10px;
 `;
 
-const CartActionButton = styled(Button)`
+const CartActionButton = styled.button`
   flex: 1;
   width : 100%;
 `;

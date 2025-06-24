@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import { Pagination } from 'swiper/modules';
+import { Pagination, Autoplay } from 'swiper/modules';
 
 const Testimonials = ({ testimonials = [], title = "What Our Customers Say", loop = true, autoplay = true }) => {
   if (!testimonials.length) return null;
@@ -11,7 +11,7 @@ const Testimonials = ({ testimonials = [], title = "What Our Customers Say", loo
     <TestimonialSection>
       <TestimonialTitle>{title}</TestimonialTitle>
       <Swiper
-        modules={[Pagination]}
+        modules={[Pagination, Autoplay]}
         spaceBetween={24}
         slidesPerView={4}
         pagination={{ clickable: true }}
@@ -26,7 +26,7 @@ const Testimonials = ({ testimonials = [], title = "What Our Customers Say", loo
         autoplay={
           autoplay
             ? {
-                delay: 3500,
+                delay: 10000, // 10 seconds
                 disableOnInteraction: false,
               }
             : false

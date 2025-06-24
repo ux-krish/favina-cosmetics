@@ -4,9 +4,11 @@ import ProductGrid from '../../components/product/ProductGrid';
 import Button from '../../components/common/Button';
 import Testimonials from '../../components/common/Testimonials';
 import productData from '../../data/product.json';
-import promoImg from '../../assets/images/main-bg1.png';
 import bannerImg from '../../assets/images/Banner.jpg';
 import { useImageBasePath } from '../../context/ImagePathContext';
+import TextSliderWrapper from '../../components/common/TextSliderWrapper';
+import PromoBanner, { BannerHighlight } from '../../components/common/PromoBanner';
+import promoImg from '../../assets/images/main-bg1.png';
 
 const sliderMessages = [
   { text: "Limited Time Only", highlight: true },
@@ -68,44 +70,25 @@ const HomePage = () => {
         </Container>
       </HeroSection>
 
-      <TextSliderWrapper>
-        <Container>
-        <TextSlider>
-          <TextSliderTrack>
-            {[...sliderMessages, ...sliderMessages].map((msg, idx) => (
-              <TextSliderItem key={idx} $highlight={msg.highlight}>
-                {msg.text}
-              </TextSliderItem>
-            ))}
-          </TextSliderTrack>
-        </TextSlider>
-        </Container>
-      </TextSliderWrapper>
+      <TextSliderWrapper messages={sliderMessages} />
 
-      <Container>
-        <PromoBanner>
-        <PromoImage src={promoImg} alt="Limited Edition Unlimited Glam" />
-        <PromoContent>
-          <PromoTitle>
-            <PromoTitlePink>Limited Edition</PromoTitlePink>
-            <PromoTitlePurple>Unlimited Glam</PromoTitlePurple>
-          </PromoTitle>
-          <PromoDesc>
-            Unveil your beauty with our exclusive launch offer on premium nail polish shades.
-          </PromoDesc>
-          <PromoOffer>
-            <PromoOfferLabel>Flat</PromoOfferLabel>
-            <PromoOfferHighlight>30% OFF</PromoOfferHighlight>
-          </PromoOffer>
-          <PromoSub>
+      <PromoBanner
+        image={promoImg}
+        titlePink="Limited Edition"
+        titlePurple="Unlimited Glam"
+        desc="Unveil your beauty with our exclusive launch offer on premium nail polish shades."
+        offerLabel="Flat"
+        offerHighlight="30% OFF"
+        sub={
+          <>
             on your first purchase<br />
-            for the next <PromoHighlight>24 hours</PromoHighlight> only!
-          </PromoSub>
-          <PromoButton to="/products">Shop Now</PromoButton>
-        </PromoContent>
-        </PromoBanner>
-      </Container>
-    
+            for the next <BannerHighlight>24 hours</BannerHighlight> only!
+          </>
+        }
+        buttonText="Shop Now"
+        buttonTo="/products"
+      />
+
       <FeaturedSection>
         <Container>
         <h2>Featured Products</h2>
@@ -240,178 +223,6 @@ const FeaturedSection = styled.section`
     margin-bottom: 30px;
     font-size: 32px;
     width: 100%;
-  }
-`;
-
-const TextSliderWrapper = styled.div`
-  width: 100%;
-  margin: 0 0 32px 0;
-  overflow: hidden;
-  background: #fff;
-  display: flex;
-  justify-content: center;
-  padding: 30px 0;
-`;
-
-const TextSlider = styled.div`
-  width: 100vw;
-  max-width: 1320px;
-  overflow: hidden;
-  position: relative;
-  height: 54px;
-  display: flex;
-  align-items: center;
-`;
-
-const TextSliderTrack = styled.div`
-  display: flex;
-  align-items: center;
-  animation: scrollTextSlider 22s linear infinite;
-  @keyframes scrollTextSlider {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-`;
-
-const TextSliderItem = styled.div`
-  font-size: 2rem;
-  font-weight: 700;
-  color: ${({ $highlight }) => ($highlight ? '#f7b7a3' : '#5b4a44')};
-  margin: 0 60px;
-  font-family: 'Montserrat', sans-serif;
-  opacity: ${({ $highlight }) => ($highlight ? 1 : 0.85)};
-  transition: color 0.2s;
-  white-space: nowrap;
-  letter-spacing: -1px;
-  @media (max-width: 700px) {
-    font-size: 1.1rem;
-    margin: 0 24px;
-  }
-`;
-
-const PromoBanner = styled.div`
-  width: 100%;
-  max-width: 1320px;
-  margin: 0 auto 40px auto;
-  display: flex;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 18px rgba(0,0,0,0.06);
-  overflow: hidden;
-  min-height: 380px;
-  @media (max-width: 900px) {
-    flex-direction: column;
-    min-height: 0;
-  }
-`;
-
-const PromoImage = styled.img`
-  flex: 1;
-  min-width: 320px;
-  object-fit: cover;
-  background: #f9f9f9;
-  @media (max-width: 900px) {
-    width: 100%;
-    height: 180px;
-    min-width: 0;
-  }
-`;
-
-const PromoContent = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 48px 48px 48px 48px;
-  background: #fff;
-  @media (max-width: 900px) {
-    padding: 28px 18px;
-  }
-`;
-
-const PromoTitle = styled.div`
-  font-size: 2.3rem;
-  font-weight: 900;
-  margin-bottom: 10px;
-  line-height: 1.1;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  @media (max-width: 600px) {
-    font-size: 1.5rem;
-  }
-`;
-
-const PromoTitlePink = styled.span`
-  color: #e5a6a6;
-  font-weight: 900;
-  font-family: 'Montserrat', sans-serif;
-`;
-
-const PromoTitlePurple = styled.span`
-  color: #b49be0;
-  font-weight: 900;
-  margin-top: -2px;
-`;
-
-const PromoDesc = styled.div`
-  font-size: 18px;
-  color: #444;
-  margin-bottom: 18px;
-  max-width: 480px;
-  font-weight: 400;
-`;
-
-const PromoOffer = styled.div`
-  font-size: 2.2rem;
-  font-weight: 900;
-  color: #222;
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-`;
-
-const PromoOfferLabel = styled.span`
-  font-weight: 900;
-  color: #222;
-`;
-
-const PromoOfferHighlight = styled.span`
-  color: #e5a6a6;
-  font-weight: 900;
-  margin-left: 8px;
-`;
-
-const PromoSub = styled.div`
-  font-size: 18px;
-  color: #444;
-  margin-bottom: 22px;
-  b {
-    color: #222;
-    font-weight: 700;
-  }
-`;
-
-const PromoHighlight = styled.span`
-  color: #b49be0;
-  font-weight: 700;
-`;
-
-const PromoButton = styled(Button)`
-  margin-top: 18px;
-  min-width: 140px;
-  font-size: 18px;
-  font-weight: 700;
-  border-radius: 7px;
-  background: #fff;
-  color: #5b4a44;
-  border: 1.5px solid #e5a6a6;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  &:hover {
-    background: #f7f7f7;
-    color: #e5a6a6;
-    border-color: #e5a6a6;
   }
 `;
 
