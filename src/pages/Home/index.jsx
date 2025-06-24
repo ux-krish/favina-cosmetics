@@ -4,7 +4,8 @@ import ProductGrid from '../../components/product/ProductGrid';
 import Button from '../../components/common/Button';
 import Testimonials from '../../components/common/Testimonials';
 import productData from '../../data/product.json';
-import promoImg from '../../assets/images/main-bg1.png'; // Use your actual promo image
+import promoImg from '../../assets/images/main-bg1.png';
+import bannerImg from '../../assets/images/Banner.jpg';
 import { useImageBasePath } from '../../context/ImagePathContext';
 
 const sliderMessages = [
@@ -49,7 +50,7 @@ const HomePage = () => {
 
   return (
     <>
-      <HeroSection $banner={`${imageBasePath}/banner.jpg`}>
+      <HeroSection $banner={`${bannerImg}`}>
          <Container>
         <HeroInner>
           <HeroHeading>
@@ -81,7 +82,6 @@ const HomePage = () => {
         </Container>
       </TextSliderWrapper>
 
-      
       <Container>
         <PromoBanner>
         <PromoImage src={promoImg} alt="Limited Edition Unlimited Glam" />
@@ -104,18 +104,15 @@ const HomePage = () => {
           <PromoButton to="/products">Shop Now</PromoButton>
         </PromoContent>
         </PromoBanner>
-        </Container>
-      
-
+      </Container>
+    
       <FeaturedSection>
         <Container>
         <h2>Featured Products</h2>
         <ProductGrid products={products.slice(0, 8)} />
         </Container>
       </FeaturedSection>
-
       <Testimonials testimonials={testimonials} />
-    
     </>
   );
 };
