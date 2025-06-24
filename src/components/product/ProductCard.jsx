@@ -5,12 +5,14 @@ import Button from '../common/Button';
 import { FaHeart, FaShoppingCart } from 'react-icons/fa';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useImageBasePath } from '../../context/ImagePathContext';
 
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
   const [wishlist, setWishlist] = useState([]);
   const isWished = wishlist.includes(product.id);
   const [toast, setToast] = useState(null);
+  const imageBasePath = useImageBasePath();
 
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem('wishlist') || '[]');
@@ -67,8 +69,8 @@ const ProductCard = ({ product }) => {
   // Fix: Ensure correct image path for public/images usage (works in browser, not Node)
   let imageSrc = product.image;
   if (imageSrc && !imageSrc.includes('/') && imageSrc) {
-    // If only filename is provided, prepend /images/
-    imageSrc = `/images/${imageSrc}`;
+    // If only filename is provided, prepend imageBasePath
+    imageSrc = `${imageBasePath}/${imageSrc}`;
   }
 
   return (

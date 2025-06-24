@@ -1,6 +1,6 @@
 {
   "homepage": "https://ux-krish.github.io/favina-cosmetics",
-  "name": "ecomm-react",
+  "name": "favina-cosmetics",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.8.2",

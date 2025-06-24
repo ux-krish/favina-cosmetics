@@ -7,6 +7,7 @@ import { logout } from '../../redux/slices/authSlice';
 import { useState, useEffect } from 'react';
 import LogoSvg from '../../assets/images/logo.svg';
 import productData from '../../data/product.json';
+import { useImageBasePath } from '../../context/ImagePathContext';
 
 const offerMessages = [
   "💄 Cosmetics Offer: Up to 40% OFF on Makeup Essentials!",
@@ -29,6 +30,7 @@ const Header = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  const imageBasePath = useImageBasePath();
 
   useEffect(() => {
     const updateWishlistCount = () => {
@@ -241,7 +243,7 @@ const Header = () => {
                     >
                       <ResultImg src={
                         product.image && !product.image.includes('/') && product.image
-                          ? `/images/${product.image}`
+                          ? `${imageBasePath}/${product.image}`
                           : product.image
                       } alt={product.title} />
                       <ResultInfo>

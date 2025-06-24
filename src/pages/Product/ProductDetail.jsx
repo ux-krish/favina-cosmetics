@@ -12,6 +12,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import { useForm } from 'react-hook-form';
 import ProductGrid from '../../components/product/ProductGrid';
+import { useImageBasePath } from '../../context/ImagePathContext';
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -22,6 +23,7 @@ const ProductDetail = () => {
   const [loading, setLoading] = useState(true);
   const [userReviews, setUserReviews] = useState([]);
   const { register: formRegister, handleSubmit, reset, formState: { errors } } = useForm();
+  const imageBasePath = useImageBasePath();
 
   useEffect(() => {
     // Find product by id from productData
@@ -129,10 +131,10 @@ const ProductDetail = () => {
                 ? product.image.startsWith('/')
                   ? product.image
                   : product.image.startsWith('products/')
-                    ? `/images/${product.image.replace(/^products\//, '')}`
+                    ? `${imageBasePath}/${product.image.replace(/^products\//, '')}`
                     : !product.image.includes('/') && product.image
-                      ? `/images/${product.image}`
-                      : `/images/${product.image}`
+                      ? `${imageBasePath}/${product.image}`
+                      : `${imageBasePath}/${product.image}`
                 : ''
             }
             alt={product.title}
@@ -293,9 +295,9 @@ const ProductDetail = () => {
                 ? product.image.startsWith('/')
                   ? product.image
                   : product.image.startsWith('products/')
-                    ? `/images/${product.image.replace(/^products\//, '')}`
+                    ? `${imageBasePath}/${product.image.replace(/^products\//, '')}`
                     : !product.image.includes('/') && product.image
-                      ? `/images/${product.image}`
+                      ? `${imageBasePath}/${product.image}`
                       : product.image
                 : ''
             }

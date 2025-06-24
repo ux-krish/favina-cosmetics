@@ -4,8 +4,8 @@ import ProductGrid from '../../components/product/ProductGrid';
 import Button from '../../components/common/Button';
 import Testimonials from '../../components/common/Testimonials';
 import productData from '../../data/product.json';
-import bannerImg from '../../assets/images/banner.jpg';
 import promoImg from '../../assets/images/main-bg1.png'; // Use your actual promo image
+import { useImageBasePath } from '../../context/ImagePathContext';
 
 const sliderMessages = [
   { text: "Limited Time Only", highlight: true },
@@ -20,6 +20,7 @@ const HomePage = () => {
   const [products, setProducts] = useState([]);
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
+  const imageBasePath = useImageBasePath();
 
   useEffect(() => {
     // Fetch products and testimonials from src/product.json
@@ -48,7 +49,7 @@ const HomePage = () => {
 
   return (
     <>
-      <HeroSection>
+      <HeroSection $banner={`${imageBasePath}/banner.jpg`}>
          <Container>
         <HeroInner>
           <HeroHeading>
@@ -138,7 +139,7 @@ const HeroSection = styled.section`
   width: 100%;
   min-height: 40vh;
   padding: 100px 30px 100px;
-  background: url(${bannerImg}) center center/cover no-repeat;
+  background: url(${props => props.$banner}) center center/cover no-repeat;
   display: flex;
   align-items: center;
   justify-content: flex-start;

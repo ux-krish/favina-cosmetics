@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ProductGrid from '../../components/product/ProductGrid';
+import { useImageBasePath } from '../../context/ImagePathContext';
 
 const WishlistPage = () => {
   const [wishlistProducts, setWishlistProducts] = useState([]);
+  const imageBasePath = useImageBasePath();
 
   useEffect(() => {
     // Simulate fetching all products (replace with real API in production)
@@ -16,9 +18,14 @@ const WishlistPage = () => {
     }));
 
     const wishlistIds = JSON.parse(localStorage.getItem('wishlist') || '[]');
-    const filtered = allProducts.filter(p => wishlistIds.includes(p.id));
+    const filtered = allProducts.filter(p => wishlistIds.includes(p.id)).map(p => ({
+      ...p,
+      image: p.image && !p.image.includes('/') && p.image
+        ? `${imageBasePath}/${p.image}`
+        : p.image
+    }));
     setWishlistProducts(filtered);
-  }, []);
+  }, [imageBasePath]);
 
   return (
     <Container>
