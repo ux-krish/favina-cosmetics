@@ -1,4 +1,4 @@
-import{e as p,a as h,r as n,j as e,B as g,d as r,i as j}from"./index-CHwc8rib.js";import{u as b}from"./index.esm-DayzJvye.js";import{F as o}from"./FormInput-BXyy2NRF.js";const v=()=>{const{user:s}=p(c=>c.auth),{register:a,handleSubmit:d,formState:{errors:t}}=b({defaultValues:s||{}}),i=h(),[l,m]=n.useState(!1),f=c=>{i(j(c)),m(!0),setTimeout(()=>m(!1),2e3)};return e.jsxs(y,{children:[e.jsx("h2",{children:"Profile Information"}),e.jsxs(w,{onSubmit:d(f),children:[e.jsxs(x,{children:[e.jsx(o,{label:"First Name",...a("firstName",{required:"First name is required"}),error:t.firstName}),e.jsx(o,{label:"Last Name",...a("lastName",{required:"Last name is required"}),error:t.lastName})]}),e.jsx(o,{label:"Email",type:"email",...a("email",{required:"Email is required",pattern:{value:/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,message:"Invalid email address"}}),error:t.email,disabled:!0}),e.jsx(o,{label:"Phone",...a("phone"),error:t.phone}),e.jsx(o,{label:"Address",...a("address"),error:t.address}),e.jsxs(x,{children:[e.jsx(o,{label:"City",...a("city"),error:t.city}),e.jsx(o,{label:"State",...a("state"),error:t.state})]}),e.jsxs(x,{children:[e.jsx(o,{label:"Country",...a("country"),error:t.country}),e.jsx(o,{label:"Postal Code",...a("postalCode"),error:t.postalCode})]}),e.jsx(g,{type:"submit",children:"Update Profile"})]}),l&&e.jsx(P,{children:"Profile saved successfully!"})]})},y=r.div`
+import{f as p,a as h,r as n,j as e,B as g,d as r,k as j}from"./index-CPOJE-Ok.js";import{u as b}from"./index.esm-DhVp6ZeS.js";import{F as o}from"./FormInput-lLM5Aj_6.js";const v=()=>{const{user:s}=p(c=>c.auth),{register:a,handleSubmit:d,formState:{errors:t}}=b({defaultValues:s||{}}),i=h(),[l,m]=n.useState(!1),f=c=>{i(j(c)),m(!0),setTimeout(()=>m(!1),2e3)};return e.jsxs(y,{children:[e.jsx("h2",{children:"Profile Information"}),e.jsxs(w,{onSubmit:d(f),children:[e.jsxs(x,{children:[e.jsx(o,{label:"First Name",...a("firstName",{required:"First name is required"}),error:t.firstName}),e.jsx(o,{label:"Last Name",...a("lastName",{required:"Last name is required"}),error:t.lastName})]}),e.jsx(o,{label:"Email",type:"email",...a("email",{required:"Email is required",pattern:{value:/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,message:"Invalid email address"}}),error:t.email,disabled:!0}),e.jsx(o,{label:"Phone",...a("phone"),error:t.phone}),e.jsx(o,{label:"Address",...a("address"),error:t.address}),e.jsxs(x,{children:[e.jsx(o,{label:"City",...a("city"),error:t.city}),e.jsx(o,{label:"State",...a("state"),error:t.state})]}),e.jsxs(x,{children:[e.jsx(o,{label:"Country",...a("country"),error:t.country}),e.jsx(o,{label:"Postal Code",...a("postalCode"),error:t.postalCode})]}),e.jsx(g,{type:"submit",children:"Update Profile"})]}),l&&e.jsx(P,{children:"Profile saved successfully!"})]})},y=r.div`
   h2 {
     margin-bottom: 20px;
   }
@@ -35,7 +35,7 @@ import{e as p,a as h,r as n,j as e,B as g,d as r,i as j}from"./index-CHwc8rib.js
     90% { opacity: 1; transform: translateX(-50%) translateY(0);}
     100% { opacity: 0; transform: translateX(-50%) translateY(20px);}
   }
-`,O=()=>{const[s,a]=n.useState([]),{user:d}=p(t=>t.auth);return n.useEffect(()=>{const i=(JSON.parse(localStorage.getItem("orders"))||[]).filter(l=>l.customer.email===d.email);a(i)},[d.email]),e.jsxs(S,{children:[e.jsx("h2",{children:"Your Orders"}),s.length===0?e.jsx(C,{children:"You haven't placed any orders yet."}):e.jsx(F,{children:s.map(t=>e.jsxs(I,{children:[e.jsxs(k,{children:[e.jsxs("div",{children:[e.jsx("strong",{children:"Order #"})," ",t.date]}),e.jsxs("div",{children:[e.jsx("strong",{children:"Date:"})," ",new Date(t.date).toLocaleDateString()]}),e.jsxs("div",{children:[e.jsx("strong",{children:"Total:"})," $",t.total.toFixed(2)]}),e.jsx("div",{children:e.jsx(N,{status:t.status,children:t.status})})]}),e.jsx(T,{children:t.items.map(i=>e.jsxs(q,{children:[e.jsx($,{src:i.image,alt:i.title}),e.jsxs(A,{children:[e.jsx(D,{children:i.title}),e.jsxs(E,{children:["$",i.price.toFixed(2)]}),e.jsxs(Y,{children:["Qty: ",i.quantity]})]})]},i.id))})]},t.date))})]})},S=r.div`
+`,O=()=>{const[s,a]=n.useState([]),{user:d}=p(t=>t.auth);return n.useEffect(()=>{const i=(JSON.parse(localStorage.getItem("orders"))||[]).filter(l=>l.customer.email===d.email);a(i)},[d.email]),e.jsxs(S,{children:[e.jsx("h2",{children:"Your Orders"}),s.length===0?e.jsx(C,{children:"You haven't placed any orders yet."}):e.jsx(k,{children:s.map(t=>e.jsxs(F,{children:[e.jsxs(I,{children:[e.jsxs("div",{children:[e.jsx("strong",{children:"Order #"})," ",t.date]}),e.jsxs("div",{children:[e.jsx("strong",{children:"Date:"})," ",new Date(t.date).toLocaleDateString()]}),e.jsxs("div",{children:[e.jsx("strong",{children:"Total:"})," $",t.total.toFixed(2)]}),e.jsx("div",{children:e.jsx(N,{status:t.status,children:t.status})})]}),e.jsx(T,{children:t.items.map(i=>e.jsxs(q,{children:[e.jsx($,{src:i.image,alt:i.title}),e.jsxs(A,{children:[e.jsx(D,{children:i.title}),e.jsxs(E,{children:["$",i.price.toFixed(2)]}),e.jsxs(Y,{children:["Qty: ",i.quantity]})]})]},i.id))})]},t.date))})]})},S=r.div`
   h2 {
     margin-bottom: 20px;
   }
@@ -43,15 +43,15 @@ import{e as p,a as h,r as n,j as e,B as g,d as r,i as j}from"./index-CHwc8rib.js
   text-align: center;
   color: #666;
   margin-top: 40px;
-`,F=r.div`
+`,k=r.div`
   display: flex;
   flex-direction: column;
   gap: 30px;
-`,I=r.div`
+`,F=r.div`
   border: 1px solid #eee;
   border-radius: 8px;
   overflow: hidden;
-`,k=r.div`
+`,I=r.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
