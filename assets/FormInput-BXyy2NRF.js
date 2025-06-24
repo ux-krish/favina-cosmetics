@@ -1,4 +1,4 @@
-import{j as o,d as n}from"./index-RwLj0z44.js";const c=({label:s,error:t,...e})=>o.jsxs(r,{children:[s&&o.jsx(i,{children:s}),o.jsx(d,{...e}),t&&o.jsx(p,{children:t.message})]}),r=n.div`
+import{j as o,d as n}from"./index-CHwc8rib.js";const c=({label:s,error:t,...e})=>o.jsxs(r,{children:[s&&o.jsx(i,{children:s}),o.jsx(d,{...e}),t&&o.jsx(p,{children:t.message})]}),r=n.div`
   display: flex;
   flex-direction: column;
   gap: 5px;
