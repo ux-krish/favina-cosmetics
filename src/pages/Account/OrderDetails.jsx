@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAuth } from '../../redux/hooks';
 
 const OrderDetails = () => {
   const [orders, setOrders] = useState([]);
-  const { user } = useSelector((state) => state.auth);
+  const { user } = useAuth();
 
   useEffect(() => {
     // Simulate fetching orders from localStorage

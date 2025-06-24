@@ -16,7 +16,7 @@ const App = () => {
     <Provider store={store}>
       <GlobalStyles />
       <ImagePathContext.Provider value={BASE_PATH}>
-        <Router basename={BASE_PATH}>
+        <Router>
           <ScrollToTop />
           <Header />
           <main>

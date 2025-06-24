@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAuth, useCart } from '../../redux/hooks';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../components/common/Button';
 import FormInput from '../../components/ui/FormInput';
@@ -10,9 +10,9 @@ import { updateProfile } from '../../redux/slices/authSlice';
 import { useEffect, useRef } from 'react';
 
 const CheckoutForm = () => {
-  const { user, isAuthenticated } = useSelector((state) => state.auth);
-  const { items } = useSelector((state) => state.cart);
-  const dispatch = useDispatch();
+  const { user, isAuthenticated } = useAuth();
+  const { items } = useCart();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const orderIdRef = useRef(null);
 

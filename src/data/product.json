@@ -5,7 +5,14 @@
       "title": "Matte Liquid Lipstick",
       "price": 22.99,
       "offerPrice": 18.99,
-      "image": "public/images/kay-nail-polish2.png",
+      "image": "/kay-nail-polish2.png",
+      "images": [
+        "/kay-nail-polish2.png",
+        "/kay-nail-polish2.png",
+        "/kay-nail-polish2.png",
+        "/kay-nail-polish2.png",
+        "/kay-nail-polish2.png"
+      ],
       "category": "Makeup",
       "rating": 4.4,
       "testimonials": [
@@ -21,7 +28,13 @@
       "title": "Hydrating Face Serum",
       "price": 34.99,
       "offerPrice": 29.99,
-      "image": "images/hydrating-face-serum.jpg",
+      "image": "/facecreme1.png",
+      "images": [
+        "/facecreme1.png",
+        "/facecreme1.png",
+        "/facecreme1.png",
+        "/facecreme1.png"
+      ],
       "category": "Skincare",
       "rating": 5.0,
       "testimonials": [
@@ -37,7 +50,13 @@
       "title": "Volumizing Mascara",
       "price": 19.99,
       "offerPrice": 15.99,
-      "image": "/images/volumizing-mascara.jpg",
+      "image": "/matt1.png",
+      "images": [
+        "/matt1.png",
+        "/matt1.png",
+        "/matt1.png",
+        "/matt1.png"
+      ],
       "category": "Makeup",
       "rating": 4.1,
       "testimonials": [
@@ -53,7 +72,13 @@
       "title": "Nourishing Shampoo",
       "price": 16.99,
       "offerPrice": 12.99,
-      "image": "/images/nourishing-shampoo.jpg",
+      "image": "nourishing-shampoo.jpg",
+      "images": [
+        "nourishing-shampoo.jpg",
+        "nourishing-shampoo-1.jpg",
+        "nourishing-shampoo-2.jpg",
+        "nourishing-shampoo-3.jpg"
+      ],
       "category": "Haircare",
       "rating": 3.0,
       "testimonials": [
@@ -69,7 +94,13 @@
       "title": "Rose Eau de Parfum",
       "price": 59.99,
       "offerPrice": 49.99,
-      "image": "/images/rose-eau-de-parfum.jpg",
+      "image": "rose-eau-de-parfum.jpg",
+      "images": [
+        "rose-eau-de-parfum.jpg",
+        "rose-eau-de-parfum-1.jpg",
+        "rose-eau-de-parfum-2.jpg",
+        "rose-eau-de-parfum-3.jpg"
+      ],
       "category": "Fragrance",
       "rating": 4.8,
       "testimonials": [
@@ -85,7 +116,13 @@
       "title": "Moisturizing Day Cream",
       "price": 27.99,
       "offerPrice": 22.99,
-      "image": "/images/moisturizing-day-cream.jpg",
+      "image": "moisturizing-day-cream.jpg",
+      "images": [
+        "moisturizing-day-cream.jpg",
+        "moisturizing-day-cream-1.jpg",
+        "moisturizing-day-cream-2.jpg",
+        "moisturizing-day-cream-3.jpg"
+      ],
       "category": "Skincare",
       "rating": 4.5,
       "testimonials": [
@@ -101,7 +138,13 @@
       "title": "Makeup Brush Set",
       "price": 39.99,
       "offerPrice": 34.99,
-      "image": "/images/makeup-brush-set.jpg",
+      "image": "makeup-brush-set.jpg",
+      "images": [
+        "makeup-brush-set.jpg",
+        "makeup-brush-set-1.jpg",
+        "makeup-brush-set-2.jpg",
+        "makeup-brush-set-3.jpg"
+      ],
       "category": "Tools",
       "rating": 4.0,
       "testimonials": []
@@ -111,7 +154,13 @@
       "title": "Curl Defining Cream",
       "price": 19.99,
       "offerPrice": 16.99,
-      "image": "/images/curl-defining-cream.jpg",
+      "image": "curl-defining-cream.jpg",
+      "images": [
+        "curl-defining-cream.jpg",
+        "curl-defining-cream-1.jpg",
+        "curl-defining-cream-2.jpg",
+        "curl-defining-cream-3.jpg"
+      ],
       "category": "Haircare",
       "rating": 3.8,
       "testimonials": [
@@ -127,7 +176,13 @@
       "title": "Long-lasting Foundation",
       "price": 32.99,
       "offerPrice": 27.99,
-      "image": "/images/long-lasting-foundation.jpg",
+      "image": "long-lasting-foundation.jpg",
+      "images": [
+        "long-lasting-foundation.jpg",
+        "long-lasting-foundation-1.jpg",
+        "long-lasting-foundation-2.jpg",
+        "long-lasting-foundation-3.jpg"
+      ],
       "category": "Makeup",
       "rating": 4.2,
       "testimonials": []
@@ -137,7 +192,13 @@
       "title": "Vitamin C Night Cream",
       "price": 36.99,
       "offerPrice": 31.99,
-      "image": "/images/vitamin-c-night-cream.jpg",
+      "image": "vitamin-c-night-cream.jpg",
+      "images": [
+        "vitamin-c-night-cream.jpg",
+        "vitamin-c-night-cream-1.jpg",
+        "vitamin-c-night-cream-2.jpg",
+        "vitamin-c-night-cream-3.jpg"
+      ],
       "category": "Skincare",
       "rating": 4.7,
       "testimonials": [
@@ -153,7 +214,13 @@
       "title": "Floral Body Mist",
       "price": 24.99,
       "offerPrice": 19.99,
-      "image": "/images/floral-body-mist.jpg",
+      "image": "floral-body-mist.jpg",
+      "images": [
+        "floral-body-mist.jpg",
+        "floral-body-mist-1.jpg",
+        "floral-body-mist-2.jpg",
+        "floral-body-mist-3.jpg"
+      ],
       "category": "Fragrance",
       "rating": 4.0,
       "testimonials": [
@@ -169,7 +236,13 @@
       "title": "Facial Cleansing Brush",
       "price": 29.99,
       "offerPrice": 24.99,
-      "image": "/images/facial-cleansing-brush.jpg",
+      "image": "facial-cleansing-brush.jpg",
+      "images": [
+        "facial-cleansing-brush.jpg",
+        "facial-cleansing-brush-1.jpg",
+        "facial-cleansing-brush-2.jpg",
+        "facial-cleansing-brush-3.jpg"
+      ],
       "category": "Tools",
       "rating": 3.5,
       "testimonials": []

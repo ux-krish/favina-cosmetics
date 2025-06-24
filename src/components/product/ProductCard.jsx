@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../redux/hooks';
 import { addToCart } from '../../redux/slices/cartSlice';
 import Button from '../common/Button';
 import { FaHeart, FaShoppingCart } from 'react-icons/fa';
@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { useImageBasePath } from '../../context/ImagePathContext';
 
 const ProductCard = ({ product }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [wishlist, setWishlist] = useState([]);
   const isWished = wishlist.includes(product.id);
   const [toast, setToast] = useState(null);

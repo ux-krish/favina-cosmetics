@@ -1,6 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 import { FaShoppingCart, FaUser, FaHeart, FaBars, FaTimes, FaPencilAlt, FaSearch } from 'react-icons/fa';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useCart, useAuth } from '../../redux/hooks';
 import { toggleCart } from '../../redux/slices/cartSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '../../redux/slices/authSlice';
@@ -18,10 +18,10 @@ const offerMessages = [
 ];
 
 const Header = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { items } = useSelector((state) => state.cart);
-  const { isAuthenticated, user } = useSelector((state) => state.auth);
+  const { items } = useCart();
+  const { isAuthenticated, user } = useAuth();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [catDropdownOpen, setCatDropdownOpen] = useState(false);
   const [wishlistCount, setWishlistCount] = useState(0);

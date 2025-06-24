@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useCart } from '../../redux/hooks';
 import { toggleCart, removeFromCart, updateQuantity, clearCart } from '../../redux/slices/cartSlice';
 import Button from '../common/Button';
 import CartItem from './CartItem';
@@ -8,8 +8,8 @@ import { useNavigate } from 'react-router-dom';
 import { useRef, useEffect } from 'react';
 
 const CartSidebar = () => {
-  const dispatch = useDispatch();
-  const { items, isCartOpen } = useSelector((state) => state.cart);
+  const dispatch = useAppDispatch();
+  const { items, isCartOpen } = useCart();
   const navigate = useNavigate();
   const sidebarRef = useRef();
 

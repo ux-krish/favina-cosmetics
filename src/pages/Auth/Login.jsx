@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAuth } from '../../redux/hooks';
 import { useNavigate, Link } from 'react-router-dom';
 import { login } from '../../redux/slices/authSlice';
 import FormInput  from '../../components/ui/FormInput';
@@ -8,9 +8,9 @@ import Button from '../../components/common/Button';
 
 const LoginPage = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { error } = useSelector((state) => state.auth);
+  const { error } = useAuth();
 
   const onSubmit = (data) => {
     dispatch(login(data))

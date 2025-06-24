@@ -1,27 +1,30 @@
 import styled from 'styled-components';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect, useState, useRef } from 'react';
+import { useAppDispatch } from '../../redux/hooks';
 import { addToCart } from '../../redux/slices/cartSlice';
 import Button from '../../components/common/Button';
 import productData from '../../data/product.json';
 // Add Swiper imports
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Autoplay } from 'swiper/modules';
+import { Pagination, Autoplay, Thumbs, Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
+import 'swiper/css/thumbs';
+import 'swiper/css/navigation';
 import { useForm } from 'react-hook-form';
 import ProductGrid from '../../components/product/ProductGrid';
 import { useImageBasePath } from '../../context/ImagePathContext';
 
 const ProductDetail = () => {
   const { id } = useParams();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
   const [userReviews, setUserReviews] = useState([]);
+  const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const { register: formRegister, handleSubmit, reset, formState: { errors } } = useForm();
   const imageBasePath = useImageBasePath();
 
@@ -125,20 +128,68 @@ const ProductDetail = () => {
           <BackButton type="button" onClick={() => navigate(-1)}>
             ← Back
           </BackButton>
-          <ProductImage
-            src={
-              product.image
-                ? product.image.startsWith('/')
-                  ? product.image
-                  : product.image.startsWith('products/')
-                    ? `${imageBasePath}/${product.image.replace(/^products\//, '')}`
-                    : !product.image.includes('/') && product.image
-                      ? `${imageBasePath}/${product.image}`
-                      : `${imageBasePath}/${product.image}`
-                : ''
-            }
-            alt={product.title}
-          />
+          {/* --- Product Images Swiper with Thumbs --- */}
+          {product.images && product.images.length > 0 ? (
+            <>
+              <Swiper
+                modules={[Thumbs, Navigation]}
+                navigation
+                thumbs={{ swiper: thumbsSwiper }}
+                spaceBetween={10}
+                slidesPerView={1}
+                style={{ width: '100%', maxWidth: 420, marginBottom: 16 }}
+              >
+                {product.images.map((img, idx) => (
+                  <SwiperSlide key={idx}>
+                    <ProductImage
+                      src={
+                        img.startsWith('/') || img.startsWith('http')
+                          ? img
+                          : `${imageBasePath}/${img}`
+                      }
+                      alt={product.title}
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+              <Swiper
+                modules={[Thumbs]}
+                onSwiper={setThumbsSwiper}
+                spaceBetween={10}
+                slidesPerView={Math.min(product.images.length, 5)}
+                watchSlidesProgress
+                style={{ width: '100%', maxWidth: 420 }}
+              >
+                {product.images.map((img, idx) => (
+                  <SwiperSlide key={idx}>
+                    <ThumbImage
+                      src={
+                        img.startsWith('/') || img.startsWith('http')
+                          ? img
+                          : `${imageBasePath}/${img}`
+                      }
+                      alt={`thumb-${idx}`}
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </>
+          ) : (
+            <ProductImage
+              src={
+                product.image
+                  ? product.image.startsWith('/')
+                    ? product.image
+                    : product.image.startsWith('products/')
+                      ? `${imageBasePath}/${product.image.replace(/^products\//, '')}`
+                      : !product.image.includes('/') && product.image
+                        ? `${imageBasePath}/${product.image}`
+                        : `${imageBasePath}/${product.image}`
+                  : ''
+              }
+              alt={product.title}
+            />
+          )}
         </ProductImageContainer>
         <ProductInfo>
           <ProductTitle>{product.title}</ProductTitle>
@@ -347,6 +398,7 @@ const ProductImageContainer = styled.div`
   border-radius: 8px;
   padding: 20px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
@@ -356,6 +408,22 @@ const ProductImage = styled.img`
   max-width: 100%;
   max-height: 500px;
   object-fit: contain;
+  border-radius: 8px;
+  background: #fff;
+`;
+
+const ThumbImage = styled.img`
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  border-radius: 6px;
+  border: 2px solid #eee;
+  background: #fff;
+  cursor: pointer;
+  transition: border 0.18s;
+  &:hover {
+    border: 2px solid #e74c3c;
+  }
 `;
 
 const ProductInfo = styled.div`

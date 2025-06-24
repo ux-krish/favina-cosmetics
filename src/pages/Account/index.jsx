@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAuth } from '../../redux/hooks';
 import Profile  from './Profile';
 import { OrderDetails } from './OrderDetails';
 
 const AccountPage = () => {
   const [activeTab, setActiveTab] = useState('profile');
-  const { user } = useSelector((state) => state.auth);
+  const { user } = useAuth();
 
   return (
     <Container>

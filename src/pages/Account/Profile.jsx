@@ -1,17 +1,17 @@
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAuth } from '../../redux/hooks';
 import { updateProfile } from '../../redux/slices/authSlice';
 import FormInput from '../../components/ui/FormInput';
 import Button from '../../components/common/Button';
 import { useState } from 'react';
 
 const Profile = () => {
-  const { user } = useSelector((state) => state.auth);
+  const { user } = useAuth();
   const { register, handleSubmit, formState: { errors } } = useForm({
     defaultValues: user || {},
   });
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [showToast, setShowToast] = useState(false);
 
   const onSubmit = (data) => {

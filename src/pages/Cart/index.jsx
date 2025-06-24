@@ -1,13 +1,13 @@
 import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useCart } from '../../redux/hooks';
 import { Link } from 'react-router-dom';
 import { removeFromCart, updateQuantity, clearCart } from '../../redux/slices/cartSlice';
 import CartItem from '../../components/cart/CartItem';
 import Button from '../../components/common/Button';
 
 const CartPage = () => {
-  const dispatch = useDispatch();
-  const { items } = useSelector((state) => state.cart);
+  const dispatch = useAppDispatch();
+  const { items } = useCart();
 
   const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
