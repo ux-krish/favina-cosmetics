@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { createGlobalStyle , styled} from 'styled-components';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { useAppDispatch } from '../../redux/hooks';
@@ -15,6 +15,28 @@ import 'swiper/css/navigation';
 import { useForm } from 'react-hook-form';
 import ProductGrid from '../../components/product/ProductGrid';
 import { useImageBasePath } from '../../context/ImagePathContext';
+
+const SwiperNavStyles = createGlobalStyle`
+  .product-detail-swiper .swiper-button-next,
+  .product-detail-swiper .swiper-button-prev {
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    min-height: 30px !important;
+    max-width: 30px !important;
+    max-height: 30px !important;
+    border-radius: 50%;
+    background: #fff;
+    color: #e74c3c;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    font-size: 16px !important;
+    top: 40%;
+  }
+  .product-detail-swiper .swiper-button-next:after,
+  .product-detail-swiper .swiper-button-prev:after {
+    font-size: 16px !important;
+  }
+`;
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -123,6 +145,7 @@ const ProductDetail = () => {
 
   return (
     <>
+      <SwiperNavStyles />
       <ProductDetailContainer className="container">
         <ProductImageContainer>
           <BackButton type="button" onClick={() => navigate(-1)}>
@@ -138,6 +161,7 @@ const ProductDetail = () => {
                 spaceBetween={10}
                 slidesPerView={1}
                 style={{ width: '100%', maxWidth: 420, marginBottom: 16 }}
+                className="product-detail-swiper"
               >
                 {product.images.map((img, idx) => (
                   <SwiperSlide key={idx}>

@@ -5,7 +5,7 @@ const CartItem = ({ item, onRemove, onQuantityChange }) => {
   const [quantity, setQuantity] = useState(item.quantity);
 
   const handleQuantityChange = (newQuantity) => {
-    const qty = Math.max(1, Math.min(99, newQuantity));
+    const qty = Math.max(0, Math.min(99, newQuantity));
     setQuantity(qty);
     onQuantityChange(qty);
   };
@@ -22,7 +22,7 @@ const CartItem = ({ item, onRemove, onQuantityChange }) => {
             type="number" 
             value={quantity} 
             onChange={(e) => handleQuantityChange(parseInt(e.target.value))}
-            min="1"
+            min="0"
             max="99"
           />
           <Button onClick={() => handleQuantityChange(quantity + 1)}>+</Button>

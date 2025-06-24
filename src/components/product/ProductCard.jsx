@@ -68,9 +68,8 @@ const ProductCard = ({ product }) => {
 
   // Fix: Ensure correct image path for public/images usage (works in browser, not Node)
   let imageSrc = product.image;
-  if (imageSrc && !imageSrc.includes('/') && imageSrc) {
-    // If only filename is provided, prepend imageBasePath
-    imageSrc = `${imageBasePath}/${imageSrc}`;
+  if (imageSrc && !imageSrc.startsWith('/') && !imageSrc.startsWith('http')) {
+    imageSrc = `/${imageSrc}`;
   }
 
   return (
