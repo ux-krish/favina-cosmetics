@@ -2,7 +2,7 @@ import styled, { keyframes } from 'styled-components';
 import { FaShoppingCart, FaUser, FaHeart, FaBars, FaTimes, FaPencilAlt, FaSearch } from 'react-icons/fa';
 import { useAppDispatch, useCart, useAuth } from '../../redux/hooks';
 import { toggleCart } from '../../redux/slices/cartSlice';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { logout } from '../../redux/slices/authSlice';
 import { useState, useEffect } from 'react';
 import LogoSvg from '../../assets/images/logo.svg';
@@ -20,6 +20,7 @@ const offerMessages = [
 const Header = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const location = useLocation(); // <-- add this
   const { items } = useCart();
   const { isAuthenticated, user } = useAuth();
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -32,15 +33,35 @@ const Header = () => {
   const [searchResults, setSearchResults] = useState([]);
   const imageBasePath = useImageBasePath();
 
+  // Helper to get wishlist count for current user
+  const getWishlistCount = () => {
+    if (!user?.id) return 0;
+    const allWishlists = JSON.parse(localStorage.getItem('wishlists') || '{}');
+    const arr = Array.isArray(allWishlists[user.id]) ? allWishlists[user.id] : [];
+    return arr.filter(id => !!id).length;
+  };
+
   useEffect(() => {
     const updateWishlistCount = () => {
-      const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
-      setWishlistCount(wishlist.length);
+      setWishlistCount(getWishlistCount());
     };
     updateWishlistCount();
     window.addEventListener('storage', updateWishlistCount);
-    return () => window.removeEventListener('storage', updateWishlistCount);
-  }, []);
+
+    // Listen for custom wishlist change event for instant update
+    const handleWishlistChanged = () => setWishlistCount(getWishlistCount());
+    window.addEventListener('wishlistChanged', handleWishlistChanged);
+
+    return () => {
+      window.removeEventListener('storage', updateWishlistCount);
+      window.removeEventListener('wishlistChanged', handleWishlistChanged);
+    };
+  }, [user?.id]);
+
+  // Update wishlist count when location changes (e.g., after login or wishlist change)
+  useEffect(() => {
+    setWishlistCount(getWishlistCount());
+  }, [location, user?.id]);
 
   useEffect(() => {
     if (mobileMenuOpen) {

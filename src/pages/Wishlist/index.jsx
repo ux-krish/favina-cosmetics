@@ -3,23 +3,36 @@ import styled from 'styled-components';
 import ProductGrid from '../../components/product/ProductGrid';
 import { useImageBasePath } from '../../context/ImagePathContext';
 import productData from '../../data/product.json';
+import { useAuth } from '../../redux/hooks';
 
 const WishlistPage = () => {
-  const [wishlistProducts, setWishlistProducts] = useState([]);
   const imageBasePath = useImageBasePath();
+  const { user, isAuthenticated } = useAuth();
+
+  // Get wishlist for current user from localStorage (array of product IDs)
+  const getWishlist = () => {
+    if (!user?.id) return [];
+    const allWishlists = JSON.parse(localStorage.getItem('wishlists') || '{}');
+    const arr = Array.isArray(allWishlists[user.id]) ? allWishlists[user.id] : [];
+    return arr.filter(id => !!id);
+  };
+
+  const [wishlistIds, setWishlistIds] = useState(getWishlist());
 
   useEffect(() => {
-    // Use real products from productData
-    const allProducts = productData.products || [];
-    const wishlistIds = JSON.parse(localStorage.getItem('wishlist') || '[]');
-    const filtered = allProducts.filter(p => wishlistIds.includes(p.id)).map(p => ({
-      ...p,
-      image: p.image && !p.image.includes('/') && p.image
-        ? `${imageBasePath}/${p.image}`
-        : p.image
-    }));
-    setWishlistProducts(filtered);
-  }, [imageBasePath]);
+    setWishlistIds(getWishlist());
+    const handleStorage = () => setWishlistIds(getWishlist());
+    window.addEventListener('storage', handleStorage);
+    return () => window.removeEventListener('storage', handleStorage);
+    // eslint-disable-next-line
+  }, [user?.id]);
+
+  // Get all products
+  const allProducts = productData.products || [];
+  // Filter products by wishlist ids (support both string and number id)
+  const wishlistProducts = allProducts.filter(
+    p => wishlistIds.includes(p.id) || wishlistIds.includes(String(p.id))
+  );
 
   return (
     <Container>
@@ -44,6 +57,5 @@ const EmptyMsg = styled.div`
   color: #888;
   margin: 40px 0;
 `;
-
 
 export default WishlistPage;

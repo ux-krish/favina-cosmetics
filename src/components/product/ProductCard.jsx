@@ -6,6 +6,7 @@ import { FaHeart, FaShoppingCart } from 'react-icons/fa';
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useImageBasePath } from '../../context/ImagePathContext';
+import { useAuth } from '../../redux/hooks';
 
 const ProductCard = ({ product }) => {
   const dispatch = useAppDispatch();
@@ -14,25 +15,53 @@ const ProductCard = ({ product }) => {
   const [toast, setToast] = useState(null);
   const imageBasePath = useImageBasePath();
   const navigate = useNavigate();
+  const { isAuthenticated, user } = useAuth();
+
+  // Helper to get/set wishlist as array of product IDs in localStorage per user
+  const getUserWishlist = () => {
+    if (!user?.id) return [];
+    const allWishlists = JSON.parse(localStorage.getItem('wishlists') || '{}');
+    const arr = Array.isArray(allWishlists[user.id]) ? allWishlists[user.id] : [];
+    // Always return array of product IDs (string or number)
+    return arr.filter(id => !!id);
+  };
+  const setUserWishlist = (list) => {
+    if (!user?.id) return;
+    // Ensure unique IDs
+    const uniqueList = Array.from(new Set(list)).filter(id => !!id);
+    const allWishlists = JSON.parse(localStorage.getItem('wishlists') || '{}');
+    allWishlists[user.id] = uniqueList;
+    localStorage.setItem('wishlists', JSON.stringify(allWishlists));
+    // Dispatch a custom event for instant header update
+    window.dispatchEvent(new Event('wishlistChanged'));
+  };
 
   useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem('wishlist') || '[]');
-    setWishlist(stored);
-  }, []);
+    setWishlist(getUserWishlist());
+    const handleStorage = () => setWishlist(getUserWishlist());
+    window.addEventListener('storage', handleStorage);
+    return () => window.removeEventListener('storage', handleStorage);
+    // eslint-disable-next-line
+  }, [user?.id]);
 
   const handleAddToWishlist = (e) => {
     e.stopPropagation();
-    let updated;
+    if (!isAuthenticated) {
+      navigate('/login');
+      return;
+    }
+    let updatedList;
     let message;
+    const currentWishlist = getUserWishlist();
     if (isWished) {
-      updated = wishlist.filter(id => id !== product.id);
+      updatedList = currentWishlist.filter(id => id !== product.id && id !== String(product.id));
       message = 'Removed from wishlist';
     } else {
-      updated = [...wishlist, product.id];
+      updatedList = [...currentWishlist, product.id];
       message = 'Added to wishlist';
     }
-    setWishlist(updated);
-    localStorage.setItem('wishlist', JSON.stringify(updated));
+    setWishlist(updatedList);
+    setUserWishlist(updatedList);
     setToast(message);
     setTimeout(() => setToast(null), 1500);
   };
