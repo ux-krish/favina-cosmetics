@@ -66,7 +66,36 @@ const ProductCard = ({ product }) => {
     setTimeout(() => setToast(null), 1500);
   };
 
+  // Helper to get/set cart for current user in localStorage
+  const getUserCart = () => {
+    if (!user?.id) return [];
+    const allCarts = JSON.parse(localStorage.getItem('carts') || '{}');
+    const arr = Array.isArray(allCarts[user.id]) ? allCarts[user.id] : [];
+    return arr;
+  };
+  const setUserCart = (cartItems) => {
+    if (!user?.id) return;
+    const allCarts = JSON.parse(localStorage.getItem('carts') || '{}');
+    allCarts[user.id] = cartItems;
+    localStorage.setItem('carts', JSON.stringify(allCarts));
+  };
+
   const handleAddToCart = () => {
+    let updatedCart;
+    const userCart = getUserCart();
+    const exists = userCart.find(item => item.id === product.id);
+    if (exists) {
+      updatedCart = userCart.map(item =>
+        item.id === product.id
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      );
+    } else {
+      updatedCart = [...userCart, { ...product, quantity: 1 }];
+    }
+    if (isAuthenticated) {
+      setUserCart(updatedCart);
+    }
     dispatch(addToCart({ ...product, quantity: 1 }));
     setToast('Added to cart');
     setTimeout(() => setToast(null), 1500);

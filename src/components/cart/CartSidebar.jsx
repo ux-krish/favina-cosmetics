@@ -1,11 +1,11 @@
 import { createGlobalStyle, styled } from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useAppDispatch, useCart } from '../../redux/hooks';
+import { useAppDispatch, useCart, useAuth } from '../../redux/hooks';
 import { toggleCart, removeFromCart, updateQuantity, clearCart, addToCart } from '../../redux/slices/cartSlice';
 import Button from '../common/Button';
 import CartItem from './CartItem';
 import { useNavigate } from 'react-router-dom';
-import { useRef, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import productData from '../../data/product.json';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
@@ -16,8 +16,10 @@ import 'swiper/css';
 const CartSidebar = () => {
   const dispatch = useAppDispatch();
   const { items, isCartOpen } = useCart();
+  const { isAuthenticated, user } = useAuth();
   const navigate = useNavigate();
   const sidebarRef = useRef();
+  const [cartCount, setCartCount] = useState(0);
 
   // Close cart when clicking outside the sidebar
   useEffect(() => {
@@ -31,25 +33,103 @@ const CartSidebar = () => {
     return () => document.removeEventListener('mousedown', handleClick);
   }, [isCartOpen, dispatch]);
 
-  const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  // Helper to get/set cart for current user in localStorage
+  const getUserCart = () => {
+    if (!user?.id) return items;
+    const allCarts = JSON.parse(localStorage.getItem('carts') || '{}');
+    const arr = Array.isArray(allCarts[user.id]) ? allCarts[user.id] : [];
+    return arr;
+  };
+  const setUserCart = (cartItems) => {
+    if (!user?.id) return;
+    const allCarts = JSON.parse(localStorage.getItem('carts') || '{}');
+    allCarts[user.id] = cartItems;
+    localStorage.setItem('carts', JSON.stringify(allCarts));
+    // Dispatch a custom event for instant cart count update
+    window.dispatchEvent(new Event('cartChanged'));
+  };
+
+  // Use user cart if logged in, fallback to redux cart for guest
+  const cartItems = isAuthenticated ? getUserCart() : items;
+
+  // Update cart count from localStorage (always accurate)
+  useEffect(() => {
+    const updateCartCount = () => {
+      if (isAuthenticated && user?.id) {
+        const allCarts = JSON.parse(localStorage.getItem('carts') || '{}');
+        const arr = Array.isArray(allCarts[user.id]) ? allCarts[user.id] : [];
+        setCartCount(arr.length);
+      } else {
+        setCartCount(items.length);
+      }
+    };
+    updateCartCount();
+    window.addEventListener('storage', updateCartCount);
+    window.addEventListener('cartChanged', updateCartCount);
+    return () => {
+      window.removeEventListener('storage', updateCartCount);
+      window.removeEventListener('cartChanged', updateCartCount);
+    };
+    // eslint-disable-next-line
+  }, [isAuthenticated, user?.id, items.length]);
+
+  const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   // Pick 3 random upsell products
-  const upsellProducts = productData.products
+  const quickBuyProducts = productData.products
     .sort(() => 0.5 - Math.random())
     .slice(0, 3);
 
+  // Handler for add to cart (quick buy, upsell, or product card)
+  const handleAddToCart = (product) => {
+    let updatedCart;
+    const exists = cartItems.find(item => item.id === product.id);
+    if (exists) {
+      updatedCart = cartItems.map(item =>
+        item.id === product.id
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      );
+    } else {
+      updatedCart = [...cartItems, { ...product, quantity: 1 }];
+    }
+    if (isAuthenticated) {
+      setUserCart(updatedCart);
+    }
+    dispatch(addToCart({ ...product, quantity: 1 }));
+    window.dispatchEvent(new Event('cartChanged'));
+  };
+
   // Handler to update quantity or remove if 0
   const handleQuantityChange = (id, quantity) => {
+    let updatedCart;
+    if (quantity <= 0) {
+      updatedCart = cartItems.filter(item => item.id !== id);
+    } else {
+      updatedCart = cartItems.map(item =>
+        item.id === id ? { ...item, quantity } : item
+      );
+    }
+    if (isAuthenticated) {
+      setUserCart(updatedCart);
+    }
+    // Always update redux for UI sync
     if (quantity <= 0) {
       dispatch(removeFromCart(id));
     } else {
       dispatch(updateQuantity({ id, quantity }));
     }
+    window.dispatchEvent(new Event('cartChanged'));
   };
 
-  // All products for quick buy slider (exclude those already in cart)
-  const cartIds = items.map(i => i.id);
-  const quickBuyProducts = productData.products.filter(p => !cartIds.includes(p.id));
+  // Handler for clearing cart
+  const handleClearCart = () => {
+    if (isAuthenticated) {
+      setUserCart([]);
+    }
+    dispatch(clearCart());
+    window.dispatchEvent(new Event('cartChanged'));
+  };
 
   // Handler for navigating to product details from upsell or quick buy
   const navigateToProduct = (id, e) => {
@@ -80,7 +160,7 @@ const CartSidebar = () => {
             transition={{ type: 'tween' }}
           >
             <CartHeader>
-              <h3>Your Cart ({items.length})</h3>
+              <h3>Your Cart ({cartCount})</h3>
               <CloseButton onClick={() => dispatch(toggleCart())}>×</CloseButton>
             </CartHeader>
             
@@ -123,7 +203,7 @@ const CartSidebar = () => {
                         <QuickBuyBtn
                           onClick={e => {
                             e.stopPropagation();
-                            dispatch(addToCart({ ...product, quantity: 1 }));
+                            handleAddToCart(product);
                           }}
                         >
                           Add
@@ -136,7 +216,7 @@ const CartSidebar = () => {
             )}
 
             <CartItems>
-              {items.length === 0 ? (
+              {cartItems.length === 0 ? (
                 <>
                   <EmptyCart>Your cart is empty</EmptyCart>
                   <UpsellTitle>Recommended for you</UpsellTitle>
@@ -179,11 +259,11 @@ const CartSidebar = () => {
                   </UpsellGrid>
                 </>
               ) : (
-                items.map((item) => (
+                cartItems.map((item) => (
                   <CartItem
                     key={item.id}
                     item={item}
-                    onRemove={() => dispatch(removeFromCart(item.id))}
+                    onRemove={() => handleQuantityChange(item.id, 0)}
                     onQuantityChange={(quantity) => handleQuantityChange(item.id, quantity)}
                   />
                 ))
@@ -196,21 +276,20 @@ const CartSidebar = () => {
                 <span>${total.toFixed(2)}</span>
               </Total>
               <ButtonRow>
-                <CartActionButton 
-                  fullWidth 
+                <CartActionButton
                   onClick={() => {
                     dispatch(toggleCart());
+                    // No need to sync here, already synced on add/remove
                     navigate('/checkout');
                   }}
-                  disabled={items.length === 0}
+                  disabled={cartItems.length === 0}
                 >
                   Checkout
                 </CartActionButton>
                 <CartActionButton
-                  fullWidth
-                  variant="outline"
-                  onClick={() => dispatch(clearCart())}
-                  disabled={items.length === 0}
+                  $outline
+                  onClick={handleClearCart}
+                  disabled={cartItems.length === 0}
                 >
                   Clear Cart
                 </CartActionButton>
@@ -364,7 +443,7 @@ const ButtonRow = styled.div`
 
 const CartActionButton = styled.button`
   flex: 1;
-  width : 100%;
+  width: 100%;
 `;
 
 const QuickBuySection = styled.div`

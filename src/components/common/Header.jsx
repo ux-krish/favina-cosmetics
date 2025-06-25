@@ -4,7 +4,7 @@ import { useAppDispatch, useCart, useAuth } from '../../redux/hooks';
 import { toggleCart } from '../../redux/slices/cartSlice';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { logout } from '../../redux/slices/authSlice';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import LogoSvg from '../../assets/images/logo.svg';
 import productData from '../../data/product.json';
 import { useImageBasePath } from '../../context/ImagePathContext';
@@ -21,8 +21,9 @@ const Header = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation(); // <-- add this
-  const { items } = useCart();
   const { isAuthenticated, user } = useAuth();
+  const { items } = useCart();
+  const [cartCount, setCartCount] = useState(0);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [catDropdownOpen, setCatDropdownOpen] = useState(false);
   const [wishlistCount, setWishlistCount] = useState(0);
@@ -39,6 +40,16 @@ const Header = () => {
     const allWishlists = JSON.parse(localStorage.getItem('wishlists') || '{}');
     const arr = Array.isArray(allWishlists[user.id]) ? allWishlists[user.id] : [];
     return arr.filter(id => !!id).length;
+  };
+
+  // Helper to get cart count for current user
+  const getCartCount = () => {
+    if (isAuthenticated && user?.id) {
+      const allCarts = JSON.parse(localStorage.getItem('carts') || '{}');
+      const arr = Array.isArray(allCarts[user.id]) ? allCarts[user.id] : [];
+      return arr.length;
+    }
+    return items.length;
   };
 
   useEffect(() => {
@@ -62,6 +73,20 @@ const Header = () => {
   useEffect(() => {
     setWishlistCount(getWishlistCount());
   }, [location, user?.id]);
+
+  useEffect(() => {
+    const updateCartCount = () => {
+      setCartCount(getCartCount());
+    };
+    updateCartCount();
+    window.addEventListener('storage', updateCartCount);
+    window.addEventListener('cartChanged', updateCartCount);
+    return () => {
+      window.removeEventListener('storage', updateCartCount);
+      window.removeEventListener('cartChanged', updateCartCount);
+    };
+    // eslint-disable-next-line
+  }, [isAuthenticated, user?.id, items.length]);
 
   useEffect(() => {
     if (mobileMenuOpen) {
@@ -223,7 +248,7 @@ const Header = () => {
           </WishlistButton>
           <CartButton onClick={() => dispatch(toggleCart())} title="View Cart">
             <FaShoppingCart />
-            {items.length > 0 && <CartCount>{items.length}</CartCount>}
+            {cartCount > 0 && <CartCount>{cartCount}</CartCount>}
           </CartButton>
           <MobileMenuIcon
             aria-label="Open menu"
