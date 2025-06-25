@@ -1,50 +1,79 @@
 import styled from 'styled-components';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import 'swiper/css/pagination';
-import { Pagination, Autoplay } from 'swiper/modules';
+import 'swiper/css/navigation';
+import { Navigation, Autoplay } from 'swiper/modules';
+import { useRef } from 'react';
 
 const Testimonials = ({ testimonials = [], title = "What Our Customers Say", loop = true, autoplay = true }) => {
   if (!testimonials.length) return null;
 
+  const prevRef = useRef(null);
+  const nextRef = useRef(null);
+
   return (
     <TestimonialSection>
       <TestimonialTitle>{title}</TestimonialTitle>
-      <Swiper
-        modules={[Pagination, Autoplay]}
-        spaceBetween={24}
-        slidesPerView={4}
-        pagination={{ clickable: true }}
-        breakpoints={{
-          0: { slidesPerView: 1 },
-          480: { slidesPerView: 2 },
-          900: { slidesPerView: 4 },
-        }}
-        style={{ paddingBottom: 40 }}
-        loop={loop}
-        speed={600}
-        autoplay={
-          autoplay
-            ? {
-                delay: 10000, // 10 seconds
-                disableOnInteraction: false,
-              }
-            : false
-        }
-      >
-        {testimonials.map((testimonial, idx) => (
-          <SwiperSlide key={idx}>
-            <TestimonialCard>
-              <TestimonialAvatar src={testimonial.avatar} alt={testimonial.name} />
-              <TestimonialText>"{testimonial.text}"</TestimonialText>
-              <TestimonialName>
-                - {testimonial.name}
-                {testimonial.category && ` (${testimonial.category})`}
-              </TestimonialName>
-            </TestimonialCard>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      <div style={{ position: 'relative' }}>
+        <Swiper
+          modules={[Navigation, Autoplay]}
+          navigation={{
+            prevEl: prevRef.current,
+            nextEl: nextRef.current,
+          }}
+          onInit={swiper => {
+            swiper.params.navigation.prevEl = prevRef.current;
+            swiper.params.navigation.nextEl = nextRef.current;
+            swiper.navigation.init();
+            swiper.navigation.update();
+          }}
+          spaceBetween={24}
+          slidesPerView={4}
+          breakpoints={{
+            0: { slidesPerView: 1 },
+            480: { slidesPerView: 2 },
+            900: { slidesPerView: 4 },
+          }}
+          style={{ paddingBottom: 40 }}
+          loop={loop}
+          speed={600}
+          autoplay={
+            autoplay
+              ? {
+                  delay: 10000, // 10 seconds
+                  disableOnInteraction: false,
+                }
+              : false
+          }
+        >
+          {testimonials.map((testimonial, idx) => (
+            <SwiperSlide key={idx}>
+              <TestimonialCard>
+                <TestimonialAvatar src={testimonial.avatar} alt={testimonial.name} />
+                <TestimonialText>"{testimonial.text}"</TestimonialText>
+                <TestimonialName>
+                  - {testimonial.name}
+                  {testimonial.category && ` (${testimonial.category})`}
+                </TestimonialName>
+              </TestimonialCard>
+            </SwiperSlide>
+          ))}
+          <div
+            ref={prevRef}
+            className="testimonial-swiper-prev swiper-button-prev"
+            tabIndex={0}
+            role="button"
+            aria-label="Previous slide"
+          ></div>
+          <div
+            ref={nextRef}
+            className="testimonial-swiper-next swiper-button-next"
+            tabIndex={0}
+            role="button"
+            aria-label="Next slide"
+          ></div>
+        </Swiper>
+      </div>
     </TestimonialSection>
   );
 };

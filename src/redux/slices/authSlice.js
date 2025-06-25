@@ -44,6 +44,15 @@ const authSlice = createSlice({
     updateProfile: (state, action) => {
       state.user = { ...state.user, ...action.payload };
       localStorage.setItem('user', JSON.stringify(state.user));
+      // Persist user profile by user id in localStorage
+      if (state.user && state.user.id) {
+        const users = JSON.parse(localStorage.getItem('users') || '[]');
+        const idx = users.findIndex(u => u.id === state.user.id);
+        if (idx !== -1) {
+          users[idx] = { ...users[idx], ...action.payload };
+          localStorage.setItem('users', JSON.stringify(users));
+        }
+      }
     },
   },
   extraReducers: (builder) => {

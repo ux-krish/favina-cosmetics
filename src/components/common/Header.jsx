@@ -25,7 +25,6 @@ const Header = () => {
   const { items } = useCart();
   const [cartCount, setCartCount] = useState(0);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [catDropdownOpen, setCatDropdownOpen] = useState(false);
   const [wishlistCount, setWishlistCount] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownMobileOpen, setUserDropdownMobileOpen] = useState(false);
@@ -155,32 +154,7 @@ const Header = () => {
         <Nav>
           <NavLink to="/" title="Home">Home</NavLink>
           <NavLink to="/products" title="Browse all products">Products</NavLink>
-          <CategoryDropdown
-            tabIndex={0}
-            onMouseEnter={() => setCatDropdownOpen(true)}
-            onMouseLeave={() => setCatDropdownOpen(false)}
-            onFocus={() => setCatDropdownOpen(true)}
-            onBlur={e => {
-              if (!e.currentTarget.contains(e.relatedTarget)) setCatDropdownOpen(false);
-            }}
-          >
-            <NavLink
-              as={Link}
-              to="/category"
-              aria-haspopup="true"
-              aria-expanded={catDropdownOpen}
-              title="Browse by category"
-            >
-              Categories
-            </NavLink>
-            <CategoryMenu $open={catDropdownOpen}>
-              <CategoryMenuItem to="/category/makeup" title="Makeup">Makeup</CategoryMenuItem>
-              <CategoryMenuItem to="/category/haircare" title="Haircare">Haircare</CategoryMenuItem>
-              <CategoryMenuItem to="/category/fragrance" title="Fragrance">Fragrance</CategoryMenuItem>
-              <CategoryMenuItem to="/category/skincare" title="Skincare">Skincare</CategoryMenuItem>
-              <CategoryMenuItem to="/category" title="All Categories">All Categories</CategoryMenuItem>
-            </CategoryMenu>
-          </CategoryDropdown>
+          <NavLink to="/category" title="Shop by Category">Category</NavLink>
           <NavLink to="/contact" title="Contact us">Contact</NavLink>
         </Nav>
         <Icons>
@@ -347,18 +321,6 @@ const Header = () => {
               )}
               <MobileNavLink to="/" onClick={() => setMobileMenuOpen(false)}>Home</MobileNavLink>
               <MobileNavLink to="/products" onClick={() => setMobileMenuOpen(false)}>Products</MobileNavLink>
-              <MobileCategory>
-                <MobileCategoryToggle tabIndex={0}>
-                  Categories
-                  <MobileCategoryList>
-                    <MobileCategoryItem to="/category/makeup" onClick={() => setMobileMenuOpen(false)}>Makeup</MobileCategoryItem>
-                    <MobileCategoryItem to="/category/haircare" onClick={() => setMobileMenuOpen(false)}>Haircare</MobileCategoryItem>
-                    <MobileCategoryItem to="/category/fragrance" onClick={() => setMobileMenuOpen(false)}>Fragrance</MobileCategoryItem>
-                    <MobileCategoryItem to="/category/skincare" onClick={() => setMobileMenuOpen(false)}>Skincare</MobileCategoryItem>
-                    <MobileCategoryItem to="/category" onClick={() => setMobileMenuOpen(false)}>All Categories</MobileCategoryItem>
-                  </MobileCategoryList>
-                </MobileCategoryToggle>
-              </MobileCategory>
               <MobileNavLink to="/contact" onClick={() => setMobileMenuOpen(false)}>Contact</MobileNavLink>
               <MobileDivider />
               <MobileNavLink to="/wishlist" onClick={() => setMobileMenuOpen(false)}>
@@ -565,56 +527,6 @@ const DropdownButton = styled.button`
   }
 `;
 
-const CategoryDropdown = styled.div`
-  position: relative;
-  display: flex;
-  align-items: center;
-  outline: none;
-  cursor: pointer;
-`;
-
-const CategoryMenu = styled.div`
-  position: absolute;
-  left: 0;
-  top: 100%;
-  width: 220px;
-  background: white;
-  border: 1px solid #eee;
-  border-radius: 0 0 8px 8px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-  z-index: 120;
-  display: ${({ $open }) => ($open ? 'flex' : 'none')};
-  flex-direction: column;
-  padding: 8px 0;
-  animation: ${({ $open }) => ($open ? 'fadeInMenu 0.18s' : 'none')};
-  margin-top: 0;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-
-  @keyframes fadeInMenu {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-`;
-
-const CategoryMenuItem = styled(Link)`
-  padding: 10px 20px;
-  color: #333;
-  text-decoration: none;
-  font-size: 15px;
-  background: none;
-  border: none;
-  text-align: left;
-  transition: background 0.15s, color 0.15s;
-  cursor: pointer;
-
-  &:hover, &:focus {
-    background: #f5f5f5;
-    color: #e74c3c;
-    outline: none;
-  }
-`;
-
 const WishlistButton = styled(Link)`
   background: none;
   border: none;
@@ -784,41 +696,24 @@ const MobileBadge = styled.span`
   text-align: center;
 `;
 
-const MobileCategory = styled.div`
-  position: relative;
+const MobileAccountSection = styled.div`
+  padding: 18px 28px 0 28px;
+  background: #faf9fa;
+  border-bottom: 1px solid #eee;
 `;
 
-const MobileCategoryToggle = styled.div`
-  padding: 14px 28px 0 28px;
-  color: #222;
+const MobileAccountLabel = styled.div`
   font-size: 17px;
+  font-weight: 700;
+  color: #5b4a44;
+  margin-bottom: 4px;
+`;
+
+const MobileAccountName = styled.span`
+  font-size: 15px;
   font-weight: 500;
-  cursor: pointer;
-  &:hover > div {
-    display: block;
-  }
-`;
-
-const MobileCategoryList = styled.div`
-  display: block;
-  background: #f9f9f9;
-  border-radius: 0 0 8px 8px;
-  margin-top: 2px;
-  margin-left: -8px;
-  margin-right: 0;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-`;
-
-const MobileCategoryItem = styled(Link)`
-  display: block;
-  padding: 12px 36px;
-  color: #333;
-  font-size: 16px;
-  text-decoration: none;
-  &:hover {
-    background: #f5f5f5;
-    color: #e74c3c;
-  }
+  color: #e5a6a6;
+  margin-left: 6px;
 `;
 
 const Banner = styled.div`
@@ -978,26 +873,6 @@ const NoResults = styled.div`
   font-size: 15px;
   padding: 18px 0 0 0;
   text-align: center;
-`;
-
-const MobileAccountSection = styled.div`
-  padding: 18px 28px 0 28px;
-  background: #faf9fa;
-  border-bottom: 1px solid #eee;
-`;
-
-const MobileAccountLabel = styled.div`
-  font-size: 17px;
-  font-weight: 700;
-  color: #5b4a44;
-  margin-bottom: 4px;
-`;
-
-const MobileAccountName = styled.span`
-  font-size: 15px;
-  font-weight: 500;
-  color: #e5a6a6;
-  margin-left: 6px;
 `;
 
 export default Header;

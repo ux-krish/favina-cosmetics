@@ -20,6 +20,8 @@ const CartSidebar = () => {
   const navigate = useNavigate();
   const sidebarRef = useRef();
   const [cartCount, setCartCount] = useState(0);
+  const prevRef = useRef(null);
+  const nextRef = useRef(null);
 
   // Close cart when clicking outside the sidebar
   useEffect(() => {
@@ -168,50 +170,75 @@ const CartSidebar = () => {
             {quickBuyProducts.length > 0 && (
               <QuickBuySection>
                 <QuickBuyTitle>Quick Buy</QuickBuyTitle>
-                <Swiper
-                  modules={[Navigation]}
-                  navigation
-                  spaceBetween={12}
-                  slidesPerView={2}
-                  style={{ width: '100%', marginBottom: 10 }}
-                  breakpoints={{
-                    480: { slidesPerView: 2 },
-                    700: { slidesPerView: 2 },
-                  }}
-                  className="quick-buy-swiper"
-                >
-                  {quickBuyProducts.map(product => (
-                    <SwiperSlide key={product.id}>
-                      <QuickBuyCard
-                        onClick={e => navigateToProduct(product.id, e)}
-                        style={{ cursor: 'pointer' }}
-                      >
-                        <QuickBuyImg
-                          src={
-                            product.image.startsWith('/') || product.image.startsWith('http')
-                              ? product.image
-                              : `/${product.image}`
-                          }
-                          alt={product.title}
-                        />
-                        <QuickBuyName>{product.title}</QuickBuyName>
-                        <QuickBuyPrice>
-                          ${product.offerPrice && product.offerPrice < product.price
-                            ? product.offerPrice.toFixed(2)
-                            : product.price.toFixed(2)}
-                        </QuickBuyPrice>
-                        <QuickBuyBtn
-                          onClick={e => {
-                            e.stopPropagation();
-                            handleAddToCart(product);
-                          }}
+                <div style={{ position: 'relative' }}>
+                  <Swiper
+                    modules={[Navigation]}
+                    navigation={{
+                      prevEl: prevRef.current,
+                      nextEl: nextRef.current,
+                    }}
+                    onInit={swiper => {
+                      swiper.params.navigation.prevEl = prevRef.current;
+                      swiper.params.navigation.nextEl = nextRef.current;
+                      swiper.navigation.init();
+                      swiper.navigation.update();
+                    }}
+                    spaceBetween={12}
+                    slidesPerView={2}
+                    style={{ width: '100%', marginBottom: 10 }}
+                    breakpoints={{
+                      480: { slidesPerView: 2 },
+                      700: { slidesPerView: 2 },
+                    }}
+                    className="quick-buy-swiper"
+                  >
+                    {quickBuyProducts.map(product => (
+                      <SwiperSlide key={product.id}>
+                        <QuickBuyCard
+                          onClick={e => navigateToProduct(product.id, e)}
+                          style={{ cursor: 'pointer' }}
                         >
-                          Add
-                        </QuickBuyBtn>
-                      </QuickBuyCard>
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
+                          <QuickBuyImg
+                            src={
+                              product.image.startsWith('/') || product.image.startsWith('http')
+                                ? product.image
+                                : `/${product.image}`
+                            }
+                            alt={product.title}
+                          />
+                          <QuickBuyName>{product.title}</QuickBuyName>
+                          <QuickBuyPrice>
+                            ${product.offerPrice && product.offerPrice < product.price
+                              ? product.offerPrice.toFixed(2)
+                              : product.price.toFixed(2)}
+                          </QuickBuyPrice>
+                          <QuickBuyBtn
+                            onClick={e => {
+                              e.stopPropagation();
+                              handleAddToCart(product);
+                            }}
+                          >
+                            Add
+                          </QuickBuyBtn>
+                        </QuickBuyCard>
+                      </SwiperSlide>
+                    ))}
+                    <div
+                      ref={prevRef}
+                      className="quick-buy-swiper-prev swiper-button-prev"
+                      tabIndex={0}
+                      role="button"
+                      aria-label="Previous slide"
+                    ></div>
+                    <div
+                      ref={nextRef}
+                      className="quick-buy-swiper-next swiper-button-next"
+                      tabIndex={0}
+                      role="button"
+                      aria-label="Next slide"
+                    ></div>
+                  </Swiper>
+                </div>
               </QuickBuySection>
             )}
 
@@ -444,6 +471,25 @@ const ButtonRow = styled.div`
 const CartActionButton = styled.button`
   flex: 1;
   width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  background: ${({ $outline }) => ($outline ? '#fff' : '#e74c3c')};
+  color: ${({ $outline }) => ($outline ? '#e74c3c' : '#fff')};
+  border: ${({ $outline }) => ($outline ? '2px solid #e74c3c' : 'none')};
+  transition: background 0.18s, color 0.18s, border 0.18s;
+  cursor: pointer;
+  &:hover:enabled {
+    background: ${({ $outline }) => ($outline ? '#fff7f5' : '#c0392b')};
+    color: #e74c3c;
+    border-color: #e74c3c;
+  }
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
 `;
 
 const QuickBuySection = styled.div`
@@ -515,22 +561,22 @@ const QuickBuyBtn = styled.button`
 const SwiperNavStyles = createGlobalStyle`
   .quick-buy-swiper .swiper-button-next,
   .quick-buy-swiper .swiper-button-prev {
-    width: 20px !important;
-    height: 20px !important;
-    min-width: 20px !important;
-    min-height: 20px !important;
-    max-width: 20px !important;
-    max-height: 20px !important;
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    min-height: 30px !important;
+    max-width: 30px !important;
+    max-height: 30px !important;
     border-radius: 50%;
     background: #fff;
     color: #e74c3c;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    font-size: 13px !important;
+    font-size: 16px !important;
     top: 40%;
   }
   .quick-buy-swiper .swiper-button-next:after,
   .quick-buy-swiper .swiper-button-prev:after {
-    font-size: 13px !important;
+    font-size: 16px !important;
   }
 `;
 

@@ -17,6 +17,7 @@ import ProductGrid from '../../components/product/ProductGrid';
 import { useImageBasePath } from '../../context/ImagePathContext';
 import PromoBanner, { BannerHighlight } from '../../components/common/PromoBanner';
 import promoImg from '../../assets/images/main-bg1.png';
+import { useAuth } from '../../redux/hooks';
 
 const SwiperNavStyles = createGlobalStyle`
   .product-detail-swiper .swiper-button-next,
@@ -51,12 +52,14 @@ const ProductDetail = () => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const { register: formRegister, handleSubmit, reset, formState: { errors } } = useForm();
   const imageBasePath = useImageBasePath();
+  const { isAuthenticated, user } = useAuth();
 
   useEffect(() => {
     // Find product by id from productData
-    const found = (productData.products || []).find(
-      p => String(p.id) === String(id)
-    );
+    if (!id) return;
+    const found = Array.isArray(productData.products)
+      ? productData.products.find(p => String(p.id) === String(id))
+      : null;
     setProduct(found || null);
     setLoading(false);
   }, [id]);
@@ -64,25 +67,62 @@ const ProductDetail = () => {
   // Load user reviews from localStorage for this product
   useEffect(() => {
     if (product) {
-      const saved = JSON.parse(localStorage.getItem(`reviews_${product.id}`) || '[]');
+      // Store reviews as an object keyed by userId for this product
+      const saved = JSON.parse(localStorage.getItem(`reviews_${product.id}`) || '{}');
       setUserReviews(saved);
     }
   }, [product]);
 
+  // Helper to get/set cart for current user in localStorage
+  const getUserCart = () => {
+    if (!user?.id) return [];
+    const allCarts = JSON.parse(localStorage.getItem('carts') || '{}');
+    const arr = Array.isArray(allCarts[user.id]) ? allCarts[user.id] : [];
+    return arr;
+  };
+  const setUserCart = (cartItems) => {
+    if (!user?.id) return;
+    const allCarts = JSON.parse(localStorage.getItem('carts') || '{}');
+    allCarts[user.id] = cartItems;
+    localStorage.setItem('carts', JSON.stringify(allCarts));
+    window.dispatchEvent(new Event('cartChanged'));
+  };
+
   const handleAddToCart = () => {
-    if (product) {
-      dispatch(addToCart({ ...product, quantity }));
+    if (!product) return;
+    let updatedCart;
+    const userCart = getUserCart();
+    const exists = userCart.find(item => item.id === product.id);
+    if (exists) {
+      updatedCart = userCart.map(item =>
+        item.id === product.id
+          ? { ...item, quantity: item.quantity + quantity }
+          : item
+      );
+    } else {
+      updatedCart = [...userCart, { ...product, quantity }];
     }
+    if (isAuthenticated) {
+      setUserCart(updatedCart);
+    }
+    dispatch(addToCart({ ...product, quantity }));
+    window.dispatchEvent(new Event('cartChanged'));
   };
 
   // Handle review form submit
   const onSubmitReview = (data) => {
+    if (!user?.id) {
+      navigate('/login', { replace: true });
+      return;
+    }
     const newReview = {
-      name: data.name,
+      name: user.firstName || user.email || "User",
       text: data.text,
-      avatar: `https://randomuser.me/api/portraits/lego/${Math.floor(Math.random() * 10)}.jpg`,
+      avatar: user.avatar || `https://randomuser.me/api/portraits/lego/${Math.floor(Math.random() * 10)}.jpg`,
+      userId: user.id
     };
-    const updated = [newReview, ...userReviews];
+    // Store reviews as an object keyed by userId
+    const updated = { ...userReviews, [user.id]: newReview };
     setUserReviews(updated);
     localStorage.setItem(`reviews_${product.id}`, JSON.stringify(updated));
     reset();
@@ -139,9 +179,9 @@ const ProductDetail = () => {
     },
   ];
 
-  // Combine user reviews and product testimonials for the Swiper
+  // Combine user reviews (object values) and product testimonials for the Swiper
   const allTestimonials = [
-    ...userReviews,
+    ...Object.values(userReviews || {}),
     ...(product.testimonials || []),
   ];
 
@@ -303,20 +343,40 @@ const ProductDetail = () => {
         {/* --- Write a Review Section --- */}
         <WriteReviewBox>
           <WriteReviewTitle>Write a Review</WriteReviewTitle>
-          <ReviewForm onSubmit={handleSubmit(onSubmitReview)}>
-            <ReviewInput
-              type="text"
-              placeholder="Your Name"
-              {...formRegister('name', { required: 'Name is required' })}
-            />
-            {errors.name && <ReviewError>{errors.name.message}</ReviewError>}
+          <ReviewForm
+            onSubmit={handleSubmit(onSubmitReview)}
+            onFocus={() => {
+              if (!isAuthenticated) {
+                navigate('/login', { replace: true });
+              }
+            }}
+          >
+            {/* Show logged in user name instead of input */}
+            {isAuthenticated && user?.firstName ? (
+              <ReviewInput
+                type="text"
+                value={user.firstName}
+                disabled
+                readOnly
+                style={{ background: "#f5f5f5", color: "#888" }}
+              />
+            ) : (
+              <ReviewInput
+                type="text"
+                placeholder="Your Name"
+                {...formRegister('name', { required: 'Name is required' })}
+              />
+            )}
+            {errors.name && !isAuthenticated && <ReviewError>{errors.name.message}</ReviewError>}
             <ReviewTextarea
               placeholder="Your Review"
               {...formRegister('text', { required: 'Review is required', minLength: { value: 5, message: 'Review must be at least 5 characters' } })}
               rows={3}
             />
             {errors.text && <ReviewError>{errors.text.message}</ReviewError>}
-            <ReviewButton type="submit">Submit Review</ReviewButton>
+            <ReviewButton type="submit" disabled={!isAuthenticated}>
+              {isAuthenticated ? "Submit Review" : "Login to Review"}
+            </ReviewButton>
           </ReviewForm>
         </WriteReviewBox>
       </ReviewsSection>

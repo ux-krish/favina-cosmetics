@@ -1,18 +1,13 @@
 {
   "products": [
+  
     {
       "id": 1,
       "title": "Matte Liquid Lipstick",
       "price": 22.99,
       "offerPrice": 18.99,
       "image": "/kay-nail-polish2.png",
-      "images": [
-        "/kay-nail-polish2.png",
-        "/kay-nail-polish2.png",
-        "/kay-nail-polish2.png",
-        "/kay-nail-polish2.png",
-        "/kay-nail-polish2.png"
-      ],
+      "images": ["/kay-nail-polish2.png", "/kay-nail-polish2.png", "/kay-nail-polish2.png", "/kay-nail-polish2.png", "/kay-nail-polish2.png"],
       "category": "Makeup",
       "rating": 4.4,
       "testimonials": [
@@ -24,39 +19,12 @@
       ]
     },
     {
-      "id": 2,
-      "title": "Hydrating Face Serum",
-      "price": 34.99,
-      "offerPrice": 29.99,
-      "image": "/facecreme1.png",
-      "images": [
-        "/facecreme1.png",
-        "/facecreme1.png",
-        "/facecreme1.png",
-        "/facecreme1.png"
-      ],
-      "category": "Skincare",
-      "rating": 5.0,
-      "testimonials": [
-        {
-          "name": "Isha N.",
-          "text": "Hydrating face serum made my skin glow!",
-          "avatar": "https://randomuser.me/api/portraits/women/78.jpg"
-        }
-      ]
-    },
-    {
       "id": 3,
       "title": "Volumizing Mascara",
       "price": 19.99,
       "offerPrice": 15.99,
       "image": "/matt1.png",
-      "images": [
-        "/matt1.png",
-        "/matt1.png",
-        "/matt1.png",
-        "/matt1.png"
-      ],
+      "images": ["/matt1.png", "/matt1.png", "/matt1.png", "/matt1.png"],
       "category": "Makeup",
       "rating": 4.1,
       "testimonials": [
@@ -68,46 +36,48 @@
       ]
     },
     {
-      "id": 4,
-      "title": "Nourishing Shampoo",
-      "price": 16.99,
-      "offerPrice": 12.99,
-      "image": "nourishing-shampoo.jpg",
-      "images": [
-        "nourishing-shampoo.jpg",
-        "nourishing-shampoo-1.jpg",
-        "nourishing-shampoo-2.jpg",
-        "nourishing-shampoo-3.jpg"
-      ],
-      "category": "Haircare",
-      "rating": 3.0,
+      "id": 9,
+      "title": "Long-lasting Foundation",
+      "price": 32.99,
+      "offerPrice": 27.99,
+      "image": "long-lasting-foundation.jpg",
+      "images": ["long-lasting-foundation.jpg", "long-lasting-foundation-1.jpg", "long-lasting-foundation-2.jpg", "long-lasting-foundation-3.jpg"],
+      "category": "Makeup",
+      "rating": 4.2,
+      "testimonials": []
+    },
+    {
+      "id": 13,
+      "title": "Blush Palette",
+      "price": 25.99,
+      "offerPrice": 21.99,
+      "image": "blush-palette.jpg",
+      "images": ["blush-palette.jpg", "blush-palette-1.jpg", "blush-palette-2.jpg", "blush-palette-3.jpg"],
+      "category": "Makeup",
+      "rating": 4.6,
       "testimonials": [
         {
-          "name": "Anjali M.",
-          "text": "Nourishing shampoo made my hair so soft and shiny!",
-          "avatar": "https://randomuser.me/api/portraits/women/70.jpg"
+          "name": "Simran K.",
+          "text": "Beautiful shades and easy to blend!",
+          "avatar": "https://randomuser.me/api/portraits/women/90.jpg"
         }
       ]
     },
+
     {
-      "id": 5,
-      "title": "Rose Eau de Parfum",
-      "price": 59.99,
-      "offerPrice": 49.99,
-      "image": "rose-eau-de-parfum.jpg",
-      "images": [
-        "rose-eau-de-parfum.jpg",
-        "rose-eau-de-parfum-1.jpg",
-        "rose-eau-de-parfum-2.jpg",
-        "rose-eau-de-parfum-3.jpg"
-      ],
-      "category": "Fragrance",
-      "rating": 4.8,
+      "id": 2,
+      "title": "Hydrating Face Serum",
+      "price": 34.99,
+      "offerPrice": 29.99,
+      "image": "/facecreme1.png",
+      "images": ["/facecreme1.png", "/facecreme1.png", "/facecreme1.png", "/facecreme1.png"],
+      "category": "Skincare",
+      "rating": 5.0,
       "testimonials": [
         {
-          "name": "Rashmi V.",
-          "text": "Rose Eau de Parfum smells divine and lasts all day.",
-          "avatar": "https://randomuser.me/api/portraits/women/74.jpg"
+          "name": "Isha N.",
+          "text": "Hydrating face serum made my skin glow!",
+          "avatar": "https://randomuser.me/api/portraits/women/78.jpg"
         }
       ]
     },
@@ -117,12 +87,7 @@
       "price": 27.99,
       "offerPrice": 22.99,
       "image": "moisturizing-day-cream.jpg",
-      "images": [
-        "moisturizing-day-cream.jpg",
-        "moisturizing-day-cream-1.jpg",
-        "moisturizing-day-cream-2.jpg",
-        "moisturizing-day-cream-3.jpg"
-      ],
+      "images": ["moisturizing-day-cream.jpg", "moisturizing-day-cream-1.jpg", "moisturizing-day-cream-2.jpg", "moisturizing-day-cream-3.jpg"],
       "category": "Skincare",
       "rating": 4.5,
       "testimonials": [
@@ -134,71 +99,12 @@
       ]
     },
     {
-      "id": 7,
-      "title": "Makeup Brush Set",
-      "price": 39.99,
-      "offerPrice": 34.99,
-      "image": "makeup-brush-set.jpg",
-      "images": [
-        "makeup-brush-set.jpg",
-        "makeup-brush-set-1.jpg",
-        "makeup-brush-set-2.jpg",
-        "makeup-brush-set-3.jpg"
-      ],
-      "category": "Tools",
-      "rating": 4.0,
-      "testimonials": []
-    },
-    {
-      "id": 8,
-      "title": "Curl Defining Cream",
-      "price": 19.99,
-      "offerPrice": 16.99,
-      "image": "curl-defining-cream.jpg",
-      "images": [
-        "curl-defining-cream.jpg",
-        "curl-defining-cream-1.jpg",
-        "curl-defining-cream-2.jpg",
-        "curl-defining-cream-3.jpg"
-      ],
-      "category": "Haircare",
-      "rating": 3.8,
-      "testimonials": [
-        {
-          "name": "Sneha T.",
-          "text": "Curl defining cream works wonders for my curls.",
-          "avatar": "https://randomuser.me/api/portraits/women/82.jpg"
-        }
-      ]
-    },
-    {
-      "id": 9,
-      "title": "Long-lasting Foundation",
-      "price": 32.99,
-      "offerPrice": 27.99,
-      "image": "long-lasting-foundation.jpg",
-      "images": [
-        "long-lasting-foundation.jpg",
-        "long-lasting-foundation-1.jpg",
-        "long-lasting-foundation-2.jpg",
-        "long-lasting-foundation-3.jpg"
-      ],
-      "category": "Makeup",
-      "rating": 4.2,
-      "testimonials": []
-    },
-    {
       "id": 10,
       "title": "Vitamin C Night Cream",
       "price": 36.99,
       "offerPrice": 31.99,
       "image": "vitamin-c-night-cream.jpg",
-      "images": [
-        "vitamin-c-night-cream.jpg",
-        "vitamin-c-night-cream-1.jpg",
-        "vitamin-c-night-cream-2.jpg",
-        "vitamin-c-night-cream-3.jpg"
-      ],
+      "images": ["vitamin-c-night-cream.jpg", "vitamin-c-night-cream-1.jpg", "vitamin-c-night-cream-2.jpg", "vitamin-c-night-cream-3.jpg"],
       "category": "Skincare",
       "rating": 4.7,
       "testimonials": [
@@ -210,17 +116,118 @@
       ]
     },
     {
+      "id": 14,
+      "title": "Gentle Face Cleanser",
+      "price": 18.99,
+      "offerPrice": 15.99,
+      "image": "gentle-face-cleanser.jpg",
+      "images": ["gentle-face-cleanser.jpg", "gentle-face-cleanser-1.jpg", "gentle-face-cleanser-2.jpg", "gentle-face-cleanser-3.jpg"],
+      "category": "Skincare",
+      "rating": 4.3,
+      "testimonials": [
+        {
+          "name": "Megha D.",
+          "text": "Leaves my skin soft and clean.",
+          "avatar": "https://randomuser.me/api/portraits/women/91.jpg"
+        }
+      ]
+    },
+
+  
+    {
+      "id": 4,
+      "title": "Nourishing Shampoo",
+      "price": 16.99,
+      "offerPrice": 12.99,
+      "image": "nourishing-shampoo.jpg",
+      "images": ["nourishing-shampoo.jpg", "nourishing-shampoo-1.jpg", "nourishing-shampoo-2.jpg", "nourishing-shampoo-3.jpg"],
+      "category": "Haircare",
+      "rating": 3.0,
+      "testimonials": [
+        {
+          "name": "Anjali M.",
+          "text": "Nourishing shampoo made my hair so soft and shiny!",
+          "avatar": "https://randomuser.me/api/portraits/women/70.jpg"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "title": "Curl Defining Cream",
+      "price": 19.99,
+      "offerPrice": 16.99,
+      "image": "curl-defining-cream.jpg",
+      "images": ["curl-defining-cream.jpg", "curl-defining-cream-1.jpg", "curl-defining-cream-2.jpg", "curl-defining-cream-3.jpg"],
+      "category": "Haircare",
+      "rating": 3.8,
+      "testimonials": [
+        {
+          "name": "Sneha T.",
+          "text": "Curl defining cream works wonders for my curls.",
+          "avatar": "https://randomuser.me/api/portraits/women/82.jpg"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "title": "Herbal Hair Oil",
+      "price": 14.99,
+      "offerPrice": 12.49,
+      "image": "herbal-hair-oil.jpg",
+      "images": ["herbal-hair-oil.jpg", "herbal-hair-oil-1.jpg", "herbal-hair-oil-2.jpg", "herbal-hair-oil-3.jpg"],
+      "category": "Haircare",
+      "rating": 4.2,
+      "testimonials": [
+        {
+          "name": "Rina G.",
+          "text": "Reduced my hair fall and improved shine.",
+          "avatar": "https://randomuser.me/api/portraits/women/92.jpg"
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "title": "Repair Conditioner",
+      "price": 17.99,
+      "offerPrice": 14.99,
+      "image": "repair-conditioner.jpg",
+      "images": ["repair-conditioner.jpg", "repair-conditioner-1.jpg", "repair-conditioner-2.jpg", "repair-conditioner-3.jpg"],
+      "category": "Haircare",
+      "rating": 4.0,
+      "testimonials": [
+        {
+          "name": "Shweta P.",
+          "text": "My hair feels so much healthier!",
+          "avatar": "https://randomuser.me/api/portraits/women/93.jpg"
+        }
+      ]
+    },
+
+    
+    {
+      "id": 5,
+      "title": "Rose Eau de Parfum",
+      "price": 59.99,
+      "offerPrice": 49.99,
+      "image": "rose-eau-de-parfum.jpg",
+      "images": ["rose-eau-de-parfum.jpg", "rose-eau-de-parfum-1.jpg", "rose-eau-de-parfum-2.jpg", "rose-eau-de-parfum-3.jpg"],
+      "category": "Fragrance",
+      "rating": 4.8,
+      "testimonials": [
+        {
+          "name": "Rashmi V.",
+          "text": "Rose Eau de Parfum smells divine and lasts all day.",
+          "avatar": "https://randomuser.me/api/portraits/women/74.jpg"
+        }
+      ]
+    },
+    {
       "id": 11,
       "title": "Floral Body Mist",
       "price": 24.99,
       "offerPrice": 19.99,
       "image": "floral-body-mist.jpg",
-      "images": [
-        "floral-body-mist.jpg",
-        "floral-body-mist-1.jpg",
-        "floral-body-mist-2.jpg",
-        "floral-body-mist-3.jpg"
-      ],
+      "images": ["floral-body-mist.jpg", "floral-body-mist-1.jpg", "floral-body-mist-2.jpg", "floral-body-mist-3.jpg"],
       "category": "Fragrance",
       "rating": 4.0,
       "testimonials": [
@@ -232,20 +239,96 @@
       ]
     },
     {
+      "id": 17,
+      "title": "Citrus Splash Perfume",
+      "price": 44.99,
+      "offerPrice": 39.99,
+      "image": "citrus-splash-perfume.jpg",
+      "images": ["citrus-splash-perfume.jpg", "citrus-splash-perfume-1.jpg", "citrus-splash-perfume-2.jpg", "citrus-splash-perfume-3.jpg"],
+      "category": "Fragrance",
+      "rating": 4.5,
+      "testimonials": [
+        {
+          "name": "Ayesha M.",
+          "text": "Fresh and energizing scent, lasts long.",
+          "avatar": "https://randomuser.me/api/portraits/women/94.jpg"
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "title": "Woody Musk Cologne",
+      "price": 54.99,
+      "offerPrice": 47.99,
+      "image": "woody-musk-cologne.jpg",
+      "images": ["woody-musk-cologne.jpg", "woody-musk-cologne-1.jpg", "woody-musk-cologne-2.jpg", "woody-musk-cologne-3.jpg"],
+      "category": "Fragrance",
+      "rating": 4.3,
+      "testimonials": [
+        {
+          "name": "Deepa S.",
+          "text": "Unique woody notes, my new favorite.",
+          "avatar": "https://randomuser.me/api/portraits/women/95.jpg"
+        }
+      ]
+    },
+
+    
+    {
+      "id": 7,
+      "title": "Makeup Brush Set",
+      "price": 39.99,
+      "offerPrice": 34.99,
+      "image": "makeup-brush-set.jpg",
+      "images": ["makeup-brush-set.jpg", "makeup-brush-set-1.jpg", "makeup-brush-set-2.jpg", "makeup-brush-set-3.jpg"],
+      "category": "Tools",
+      "rating": 4.0,
+      "testimonials": []
+    },
+    {
       "id": 12,
       "title": "Facial Cleansing Brush",
       "price": 29.99,
       "offerPrice": 24.99,
       "image": "facial-cleansing-brush.jpg",
-      "images": [
-        "facial-cleansing-brush.jpg",
-        "facial-cleansing-brush-1.jpg",
-        "facial-cleansing-brush-2.jpg",
-        "facial-cleansing-brush-3.jpg"
-      ],
+      "images": ["facial-cleansing-brush.jpg", "facial-cleansing-brush-1.jpg", "facial-cleansing-brush-2.jpg", "facial-cleansing-brush-3.jpg"],
       "category": "Tools",
       "rating": 3.5,
       "testimonials": []
+    },
+    {
+      "id": 19,
+      "title": "Eyelash Curler",
+      "price": 12.99,
+      "offerPrice": 9.99,
+      "image": "eyelash-curler.jpg",
+      "images": ["eyelash-curler.jpg", "eyelash-curler-1.jpg", "eyelash-curler-2.jpg", "eyelash-curler-3.jpg"],
+      "category": "Tools",
+      "rating": 4.1,
+      "testimonials": [
+        {
+          "name": "Kavita R.",
+          "text": "Easy to use and gives a perfect curl.",
+          "avatar": "https://randomuser.me/api/portraits/women/96.jpg"
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "title": "Beauty Blender Sponge",
+      "price": 8.99,
+      "offerPrice": 6.99,
+      "image": "beauty-blender-sponge.jpg",
+      "images": ["beauty-blender-sponge.jpg", "beauty-blender-sponge-1.jpg", "beauty-blender-sponge-2.jpg", "beauty-blender-sponge-3.jpg"],
+      "category": "Tools",
+      "rating": 4.4,
+      "testimonials": [
+        {
+          "name": "Nisha T.",
+          "text": "Blends foundation flawlessly!",
+          "avatar": "https://randomuser.me/api/portraits/women/97.jpg"
+        }
+      ]
     }
   ]
 }
