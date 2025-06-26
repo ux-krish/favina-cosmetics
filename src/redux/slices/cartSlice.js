@@ -1,31 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-
-// Helper to get user key for cart
-function getCartKey(user) {
-  if (user && user.email) {
-    return `cart_${user.email}`;
-  }
-  return 'cart_guest';
-}
-
-// Load cart from localStorage for current user
-function loadCart(user) {
-  try {
-    const key = getCartKey(user);
-    const data = localStorage.getItem(key);
-    return data ? JSON.parse(data) : [];
-  } catch {
-    return [];
-  }
-}
-
-// Save cart to localStorage for current user
-function saveCart(user, items) {
-  try {
-    const key = getCartKey(user);
-    localStorage.setItem(key, JSON.stringify(items));
-  } catch {}
-}
+import { loadCart, saveCart, clearCart as clearCartService } from '../../services/cartService';
 
 const initialState = {
   items: [],
@@ -56,8 +30,9 @@ const cartSlice = createSlice({
       const item = state.items.find((i) => i.id === id);
       if (item) item.quantity = quantity;
     },
-    clearCart: (state) => {
+    clearCart: (state, action) => {
       state.items = [];
+      clearCartService(action?.payload);
     },
     toggleCart: (state) => {
       state.isCartOpen = !state.isCartOpen;
@@ -68,11 +43,9 @@ const cartSlice = createSlice({
 export const { addToCart, removeFromCart, updateQuantity, clearCart, toggleCart, loadCartForUser } =
   cartSlice.actions;
 
-// Middleware to persist cart to localStorage on every cart change
 export const persistCartMiddleware = (store) => (next) => (action) => {
   const result = next(action);
   const state = store.getState();
-  // Only persist on cart actions
   if (
     action.type.startsWith('cart/') &&
     ['addToCart', 'removeFromCart', 'updateQuantity', 'clearCart'].some((type) => action.type.endsWith(type))

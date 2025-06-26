@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../../components/common/Button';
 import FormInput from '../../components/ui/FormInput';
 import { clearCart } from '../../redux/slices/cartSlice';
-import { createOrder } from '../../redux/slices/orderSlice';
 import { updateProfile } from '../../redux/slices/authSlice';
+import { addOrder } from '../../services/orderService';
 import { useEffect, useRef } from 'react';
 
 const CheckoutForm = () => {
@@ -41,13 +41,11 @@ const CheckoutForm = () => {
       status: 'pending',
     };
 
-    dispatch(createOrder(order))
-      .unwrap()
-      .then((createdOrder) => {
-        dispatch(clearCart());
-        orderIdRef.current = createdOrder.id;
-        navigate(`/order-confirmation/${createdOrder.id}`);
-      });
+    // Use orderService to add order
+    const createdOrder = addOrder(order);
+    dispatch(clearCart());
+    orderIdRef.current = createdOrder.id;
+    navigate(`/order-confirmation/${createdOrder.id}`);
   };
 
   return (

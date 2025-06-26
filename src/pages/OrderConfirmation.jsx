@@ -2,16 +2,15 @@ import styled from 'styled-components';
 import { useParams, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Button from '../components/common/Button';
+import { getOrderById } from '../services/orderService';
 
 const OrderConfirmation = () => {
   const { orderId } = useParams();
   const [order, setOrder] = useState(null);
 
   useEffect(() => {
-    // Get order from localStorage by id
-    const orders = JSON.parse(localStorage.getItem('orders') || '[]');
-    const found = orders.find(o => o.id === orderId);
-    setOrder(found || null);
+    // Use orderService to get order by id
+    setOrder(getOrderById(orderId));
   }, [orderId]);
 
   if (!order) {

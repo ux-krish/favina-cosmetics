@@ -164,7 +164,8 @@ const ProductCard = ({ product }) => {
           <StarIcon>★</StarIcon>
           <RatingValue>{product.rating ? product.rating.toFixed(1) : '4.0'}</RatingValue>
         </RatingRow>
-        <MetaRow>
+        <GroupBox>
+          <MetaRow>
           <Weight>80g</Weight>
           {discount && <DiscountBadge>{discount}% Off</DiscountBadge>}
         </MetaRow>
@@ -178,6 +179,7 @@ const ProductCard = ({ product }) => {
             <OfferPrice>${product.price.toFixed(0)}</OfferPrice>
           )}
         </PriceRow>
+        </GroupBox>
       </Details>
       <Actions>
         {/* Hide wishlist button here on mobile */}
@@ -288,7 +290,12 @@ const RatingValue = styled.span`
   font-size: 15px;
   font-weight: 600;
 `;
-
+const GroupBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+`;
 const MetaRow = styled.div`
   display: flex;
   align-items: center;

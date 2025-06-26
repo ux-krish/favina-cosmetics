@@ -1,14 +1,15 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../redux/hooks';
+import { getOrders } from '../../services/orderService';
 
 const OrderDetails = () => {
   const [orders, setOrders] = useState([]);
   const { user } = useAuth();
 
   useEffect(() => {
-    // Simulate fetching orders from localStorage
-    const userOrders = JSON.parse(localStorage.getItem('orders')) || [];
+    // Use orderService to fetch orders
+    const userOrders = getOrders();
     const userSpecificOrders = userOrders.filter(order => 
       order.customer.email === user.email
     );
