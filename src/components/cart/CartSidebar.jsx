@@ -5,7 +5,7 @@ import { toggleCart, removeFromCart, updateQuantity, clearCart, addToCart } from
 import Button from '../common/Button';
 import CartItem from './CartItem';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import productData from '../../data/product.json';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
@@ -54,6 +54,19 @@ const CartSidebar = () => {
   // Use user cart if logged in, fallback to redux cart for guest
   const cartItems = isAuthenticated ? getUserCart() : items;
 
+  // --- Quick Buy: Exclude products already in cart ---
+  // Memoize quickBuyProducts so Swiper doesn't reset on cart quantity update
+  const quickBuyProducts = useMemo(() => {
+    return productData.products
+      .filter(p => !cartItems.some(item => item.id === p.id))
+      .sort(() => 0.5 - Math.random())
+      .slice(0, 3);
+  // Only change when cartItems' ids change (not quantity)
+  }, [JSON.stringify(cartItems.map(i => i.id).sort())]);
+
+  // Keep Swiper instance stable
+  const quickBuySwiperRef = useRef(null);
+
   // Update cart count from localStorage (always accurate)
   useEffect(() => {
     const updateCartCount = () => {
@@ -77,11 +90,6 @@ const CartSidebar = () => {
 
   const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-  // Pick 3 random upsell products
-  const quickBuyProducts = productData.products
-    .sort(() => 0.5 - Math.random())
-    .slice(0, 3);
-
   // Handler for add to cart (quick buy, upsell, or product card)
   const handleAddToCart = (product) => {
     let updatedCart;
@@ -100,6 +108,7 @@ const CartSidebar = () => {
     }
     dispatch(addToCart({ ...product, quantity: 1 }));
     window.dispatchEvent(new Event('cartChanged'));
+    // No need to manually update quickBuyProducts, component will re-render due to cartItems change
   };
 
   // Handler to update quantity or remove if 0
@@ -172,12 +181,14 @@ const CartSidebar = () => {
                 <QuickBuyTitle>Quick Buy</QuickBuyTitle>
                 <div style={{ position: 'relative' }}>
                   <Swiper
+                    key={quickBuyProducts.map(p => p.id).join(',')}
                     modules={[Navigation]}
                     navigation={{
                       prevEl: prevRef.current,
                       nextEl: nextRef.current,
                     }}
                     onInit={swiper => {
+                      quickBuySwiperRef.current = swiper;
                       swiper.params.navigation.prevEl = prevRef.current;
                       swiper.params.navigation.nextEl = nextRef.current;
                       swiper.navigation.init();
