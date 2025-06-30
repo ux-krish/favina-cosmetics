@@ -165,7 +165,9 @@ const ProductsPage = () => {
             </SortDropdownWrapper>
           </HeaderRow>
         </PageHeader>
-        <ProductGrid products={paginatedProducts} />
+        <ProductGridWrapper>
+          <ProductGrid products={paginatedProducts} />
+        </ProductGridWrapper>
         <Pagination>
           <PageButton
             disabled={currentPage === 1}
@@ -196,42 +198,57 @@ const ProductsPage = () => {
 
 const ProductsLayout = styled.div`
   display: flex;
-  max-width: 1200px;
+  max-width: 1320px;
   margin: 0 auto;
-  padding: 20px;
-  gap: 30px;
+  padding: 24px 0 24px 0;
+  gap: 0;
+  background: #f6f3fa;
+  border-radius: 14px;
+  box-shadow: 0 2px 16px rgba(168,132,202,0.06);
 `;
 
 const Sidebar = styled.aside`
-  width: 250px;
-  background: #fafafa;
-  border-radius: 8px;
-  padding: 20px;
-  border: 1px solid #eee;
-  height: fit-content;
-
+  width: 270px;
+  background: #f5f1fa;
+  border-radius: 14px 0 0 14px;
+  padding: 32px 22px 18px 22px;
+  border-right: 1px solid #ede7f6;
+  min-width: 220px;
+  height: 100%;
   @media (max-width: 900px) {
     display: none;
   }
 `;
 
 const FilterSection = styled.div`
-  margin-bottom: 30px;
+  margin-bottom: 32px;
 `;
 
 const FilterTitle = styled.div`
-  font-weight: bold;
-  margin-bottom: 10px;
-  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  font-size: 15px;
+  color: #a084ca;
+  letter-spacing: -0.5px;
 `;
 
 const FilterOption = styled.div`
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   display: flex;
   align-items: center;
 
   input[type="radio"] {
-    margin-right: 8px;
+    margin-right: 10px;
+    accent-color: #a084ca;
+    width: 18px;
+    height: 18px;
+  }
+  label {
+    font-size: 15px;
+    color: #5b4a44;
+    cursor: pointer;
+    font-weight: 500;
+    letter-spacing: 0;
   }
 `;
 
@@ -244,14 +261,14 @@ const CustomRangeSlider = styled.div`
 const SliderTrack = styled.div`
   position: relative;
   height: 6px;
-  background: #eee;
+  background: #ede7f6;
   border-radius: 3px;
 `;
 
 const SliderRange = styled.div`
   position: absolute;
   height: 100%;
-  background: #e74c3c;
+  background: #a084ca;
   border-radius: 3px;
   z-index: 2;
 `;
@@ -265,7 +282,7 @@ const RangeInput = styled.input`
   background: none;
   -webkit-appearance: none;
   z-index: 3;
-  pointer-events: auto; /* <-- fix: always allow pointer events */
+  pointer-events: auto;
 
   &::-webkit-slider-thumb {
     pointer-events: auto;
@@ -274,7 +291,7 @@ const RangeInput = styled.input`
     width: 20px;
     border-radius: 50%;
     background: #fff;
-    border: 3px solid #e74c3c;
+    border: 3px solid #a084ca;
     box-shadow: 0 2px 6px rgba(0,0,0,0.10);
     cursor: pointer;
     margin-top: -7px;
@@ -282,7 +299,7 @@ const RangeInput = styled.input`
     transition: border 0.2s;
   }
   &::-webkit-slider-thumb:hover {
-    border: 3px solid #c0392b;
+    border: 3px solid #e74c3c;
   }
   &::-moz-range-thumb {
     pointer-events: auto;
@@ -290,14 +307,14 @@ const RangeInput = styled.input`
     width: 20px;
     border-radius: 50%;
     background: #fff;
-    border: 3px solid #e74c3c;
+    border: 3px solid #a084ca;
     box-shadow: 0 2px 6px rgba(0,0,0,0.10);
     cursor: pointer;
     position: relative;
     transition: border 0.2s;
   }
   &::-moz-range-thumb:hover {
-    border: 3px solid #c0392b;
+    border: 3px solid #e74c3c;
   }
   &::-ms-thumb {
     pointer-events: auto;
@@ -305,14 +322,14 @@ const RangeInput = styled.input`
     width: 20px;
     border-radius: 50%;
     background: #fff;
-    border: 3px solid #e74c3c;
+    border: 3px solid #a084ca;
     box-shadow: 0 2px 6px rgba(0,0,0,0.10);
     cursor: pointer;
     position: relative;
     transition: border 0.2s;
   }
   &::-ms-thumb:hover {
-    border: 3px solid #c0392b;
+    border: 3px solid #e74c3c;
   }
   &::-webkit-slider-runnable-track {
     height: 6px;
@@ -332,46 +349,36 @@ const SliderLabels = styled.div`
   justify-content: space-between;
   margin-top: 8px;
   font-size: 14px;
-  color: #333;
+  color: #5b4a44;
 `;
 
 const Main = styled.div`
   flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 32px 32px 0 32px;
+  background: #f6f3fa;
+  border-radius: 0 14px 14px 0;
+  @media (max-width: 900px) {
+    padding: 18px 6px 0 6px;
+  }
 `;
 
 const PageHeader = styled.div`
-  margin-bottom: 30px;
-  
+  margin-bottom: 18px;
+  background: none;
   h1 {
     margin-bottom: 10px;
+    font-size: 1.6rem;
+    color: #5b4a44;
+    font-weight: 800;
+    letter-spacing: -1px;
   }
-  
   p {
-    color: #666;
-  }
-`;
-
-const Pagination = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin: 30px 0 0 0;
-`;
-
-const PageButton = styled.button`
-  padding: 6px 14px;
-  border-radius: 4px;
-  border: none;
-  background: ${({ active }) => (active ? '#e74c3c' : '#f0f0f0')};
-  color: ${({ active }) => (active ? '#fff' : '#333')};
-  font-weight: 500;
-  cursor: pointer;
-  font-size: 15px;
-  transition: background 0.2s;
-  &:disabled {
-    background: #eee;
-    color: #aaa;
-    cursor: not-allowed;
+    color: #a084ca;
+    font-size: 1rem;
+    font-weight: 500;
   }
 `;
 
@@ -391,16 +398,51 @@ const SortDropdownWrapper = styled.div`
 
 const SortLabel = styled.label`
   font-size: 15px;
-  color: #333;
+  color: #a084ca;
+  font-weight: 600;
 `;
 
 const SortDropdown = styled.select`
   padding: 7px 14px;
   border-radius: 4px;
-  border: 1px solid #ddd;
+  border: 1px solid #ede7f6;
   font-size: 15px;
   background: #fff;
-  color: #333;
+  color: #5b4a44;
+  font-weight: 500;
+`;
+
+const ProductGridWrapper = styled.div`
+  width: 100%;
+  background: #fff;
+  border-radius: 10px;
+  padding: 30px 30px 18px 30px;
+  min-height: 480px;
+  box-shadow: 0 2px 8px rgba(168,132,202,0.06);
+`;
+
+const Pagination = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 30px 0 0 0;
+`;
+
+const PageButton = styled.button`
+  padding: 6px 14px;
+  border-radius: 4px;
+  border: none;
+  background: ${({ active }) => (active ? '#a084ca' : '#f0f0f0')};
+  color: ${({ active }) => (active ? '#fff' : '#5b4a44')};
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 15px;
+  transition: background 0.2s;
+  &:disabled {
+    background: #eee;
+    color: #aaa;
+    cursor: not-allowed;
+  }
 `;
 
 export default ProductsPage;

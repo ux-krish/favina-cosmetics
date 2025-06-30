@@ -9,7 +9,6 @@ import productData from '../../data/product.json';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay, Thumbs, Navigation } from 'swiper/modules';
 import 'swiper/css';
-import 'swiper/css/pagination';
 import 'swiper/css/thumbs';
 import 'swiper/css/navigation';
 import { useForm } from 'react-hook-form';
@@ -51,6 +50,7 @@ const ProductDetail = () => {
   const [loading, setLoading] = useState(true);
   const [userReviews, setUserReviews] = useState([]);
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
+  const [activeImgIdx, setActiveImgIdx] = useState(0);
   const { register: formRegister, handleSubmit, reset, formState: { errors } } = useForm();
   const imageBasePath = useImageBasePath();
   const { isAuthenticated, user } = useAuth();
@@ -277,114 +277,111 @@ const ProductDetail = () => {
     ...(product.testimonials || []),
   ];
 
+  // Calculate discount percent
+  const discountPercent = product.offerPrice && product.offerPrice < product.price
+    ? Math.round(((product.price - product.offerPrice) / product.price) * 100)
+    : 0;
+
   return (
     <>
       <SwiperNavStyles />
-      <ProductDetailContainer className="container">
-        <ProductImageContainer>
-          {/* --- Product Images Swiper with Thumbs --- */}
-          {product.images && product.images.length > 0 ? (
-            <>
-              <Swiper
-                modules={[Thumbs, Navigation]}
-                navigation
-                thumbs={{ swiper: thumbsSwiper }}
-                spaceBetween={10}
-                slidesPerView={1}
-                style={{ width: '100%', maxWidth: 420, marginBottom: 16 }}
-                className="product-detail-swiper"
-              >
-                {product.images.map((img, idx) => (
-                  <SwiperSlide key={idx}>
-                    <ProductImage
-                      src={
-                        img.startsWith('/') || img.startsWith('http')
-                          ? img
-                          : `${imageBasePath}/${img}`
-                      }
-                      alt={product.title}
-                    />
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-              <Swiper
-                modules={[Thumbs]}
-                onSwiper={setThumbsSwiper}
-                spaceBetween={10}
-                slidesPerView={Math.min(product.images.length, 5)}
-                watchSlidesProgress
-                style={{ width: '100%', maxWidth: 420 }}
-              >
-                {product.images.map((img, idx) => (
-                  <SwiperSlide key={idx}>
-                    <ThumbImage
-                      src={
-                        img.startsWith('/') || img.startsWith('http')
-                          ? img
-                          : `${imageBasePath}/${img}`
-                      }
-                      alt={`thumb-${idx}`}
-                    />
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </>
-          ) : (
-            <ProductImage
-              src={
-                product.image
-                  ? product.image.startsWith('/')
-                    ? product.image
-                    : product.image.startsWith('products/')
-                      ? `${imageBasePath}/${product.image.replace(/^products\//, '')}`
-                      : !product.image.includes('/') && product.image
-                        ? `${imageBasePath}/${product.image}`
-                        : `${imageBasePath}/${product.image}`
-                  : ''
-              }
-              alt={product.title}
-            />
-          )}
-        </ProductImageContainer>
-        <ProductInfo>
+      <ProductDetailContainer>
+        <ProductImageSection>
+          {/* Swiper main image slider */}
+          <Swiper
+            modules={[Thumbs, Navigation]}
+            navigation
+            thumbs={{ swiper: thumbsSwiper }}
+            spaceBetween={10}
+            slidesPerView={1}
+            style={{ width: '100%', maxWidth: 340, marginBottom: 18 }}
+            className="product-detail-swiper"
+            onSlideChange={swiper => setActiveImgIdx(swiper.activeIndex)}
+            initialSlide={activeImgIdx}
+          >
+            {(product.images || [product.image]).map((img, idx) => (
+              <SwiperSlide key={idx}>
+                <ProductImage
+                  src={
+                    img.startsWith('/') || img.startsWith('http')
+                      ? img
+                      : `${imageBasePath}/${img}`
+                  }
+                  alt={product.title}
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          {/* Swiper thumbs */}
+          <Swiper
+            modules={[Thumbs]}
+            onSwiper={setThumbsSwiper}
+            spaceBetween={10}
+            slidesPerView={Math.min((product.images || [product.image]).length, 5)}
+            watchSlidesProgress
+            style={{ width: '100%', maxWidth: 340 }}
+          >
+            {(product.images || [product.image]).map((img, idx) => (
+              <SwiperSlide key={idx}>
+                <ThumbImage
+                  src={
+                    img.startsWith('/') || img.startsWith('http')
+                      ? img
+                      : `${imageBasePath}/${img}`
+                  }
+                  alt={`thumb-${idx}`}
+                  style={{
+                    borderColor: idx === activeImgIdx ? '#a084ca' : '#eee',
+                    boxShadow: idx === activeImgIdx ? '0 2px 8px #a084ca22' : 'none'
+                  }}
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </ProductImageSection>
+        <ProductInfoSection>
+          <ProductRatingRow>
+            <RatingValue>{product.rating ? product.rating.toFixed(1) : '4.0'}</RatingValue>
+            <RatingStar>★</RatingStar>
+            <RatingCount>53 Ratings</RatingCount>
+          </ProductRatingRow>
           <ProductTitle>{product.title}</ProductTitle>
           <ProductCategory>{product.category}</ProductCategory>
-          <ProductRating>
-            <Star>★</Star>
-            <RatingValue>{product.rating ? product.rating.toFixed(1) : '4.0'}</RatingValue>
-          </ProductRating>
-          <ProductPrice>
+          <ProductPriceRow>
             {product.offerPrice && product.offerPrice < product.price ? (
               <>
-                <RegularPrice>${product.price.toFixed(2)}</RegularPrice>
-                <OfferPrice>${product.offerPrice.toFixed(2)}</OfferPrice>
+                <OfferPrice>₹{product.offerPrice}</OfferPrice>
+                <RegularPrice>₹{product.price}</RegularPrice>
+                <DiscountBadge>{discountPercent}% OFF</DiscountBadge>
               </>
             ) : (
-              <>${product.price.toFixed(2)}</>
+              <OfferPrice>₹{product.price}</OfferPrice>
             )}
-          </ProductPrice>
-          <ProductDescription>
-            {/* You can add a description field in product.json if needed */}
-            This is a detailed description of the product.
-          </ProductDescription>
-          <QuantityControl>
-            <QuantityButton onClick={() => setQuantity(Math.max(1, quantity - 1))}>-</QuantityButton>
-            <QuantityInput 
-              type="number" 
-              value={quantity} 
-              onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
-              min="1"
-            />
-            <QuantityButton onClick={() => setQuantity(quantity + 1)}>+</QuantityButton>
-          </QuantityControl>
-          <ButtonRow>
-            <Button onClick={handleAddToCart} fullWidth={false}>
-              Add to Cart
-            </Button>
-            <BuyNowButton onClick={handleBuyNow}>
-              Buy Now
-            </BuyNowButton>
-            <WishlistButton
+          </ProductPriceRow>
+          <ProductDesc>
+            Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing. Sed lectus.
+          </ProductDesc>
+          <QtyRow>
+            <QtyLabel>Qty:</QtyLabel>
+            <QtyControl>
+              <QtyBtn onClick={() => setQuantity(Math.max(1, quantity - 1))}>-</QtyBtn>
+              <QtyInput
+                type="number"
+                value={quantity}
+                onChange={e => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
+                min="1"
+              />
+              <QtyBtn onClick={() => setQuantity(quantity + 1)}>+</QtyBtn>
+            </QtyControl>
+          </QtyRow>
+          <ActionRow>
+            <AddToCartBtn onClick={handleAddToCart} fullWidth={false}>
+              <span style={{ marginRight: 8, fontSize: 18 }}>🛒</span>Add to cart
+            </AddToCartBtn>
+            <BuyNowBtn onClick={handleBuyNow}>
+              <span style={{ marginRight: 8, fontSize: 18 }}>🛒</span>Buy Now
+            </BuyNowBtn>
+            <WishlistBtn
               type="button"
               aria-label={isWished ? "Remove from wishlist" : "Add to wishlist"}
               wished={isWished ? 1 : 0}
@@ -392,9 +389,9 @@ const ProductDetail = () => {
               title={isWished ? "Remove from wishlist" : "Add to wishlist"}
             >
               <FaHeart />
-            </WishlistButton>
-          </ButtonRow>
-        </ProductInfo>
+            </WishlistBtn>
+          </ActionRow>
+        </ProductInfoSection>
       </ProductDetailContainer>
 
       <PromoBanner
@@ -507,149 +504,255 @@ const ProductDetail = () => {
 };
 
 const ProductDetailContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-  padding: 40px 0;
+  display: flex;
+  gap: 48px;
+  padding: 40px 20px;
   max-width: 1320px;
   margin: 0 auto;
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-    padding: 20px;
+  align-items: flex-start;
+  @media (max-width: 900px) {
+    flex-direction: column;
+    gap: 32px;
+    padding: 20px 20px;
   }
 `;
 
-const ProductImageContainer = styled.div`
-  background: #f9f9f9;
-  border-radius: 8px;
-  padding: 20px;
+const ProductImageSection = styled.div`
+  width: 50%;
+  background: #fff;
+  border-radius: 16px;
+  padding: 32px 24px 18px 24px;
+  box-shadow: 0 2px 16px rgba(168,132,202,0.06);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  position: relative;
+  min-width: 0;
+  max-width: 100%;
+  @media (max-width: 900px) {
+    width: 100%;
+    max-width: 100%;
+    padding: 18px 8px 8px 8px;
+  }
 `;
 
 const ProductImage = styled.img`
-  max-width: 100%;
-  max-height: 500px;
+  width: 100%;
+  max-height: 380px;
   object-fit: contain;
-  border-radius: 8px;
-  background: #fff;
+  border-radius: 12px;
+  background: #f9f9f9;
+  margin-bottom: 18px;
+  border: 1.5px solid #ede7f6;
+`;
+
+const ThumbsRow = styled.div`
+  display: flex;
+  gap: 12px;
+  margin-top: 18px;
+  justify-content: center;
 `;
 
 const ThumbImage = styled.img`
-  width: 70px;
-  height: 70px;
+  width: 64px;
+  height: 64px;
   object-fit: contain;
-  border-radius: 6px;
+  border-radius: 8px;
   border: 2px solid #eee;
   background: #fff;
   cursor: pointer;
   transition: border 0.18s;
   &:hover {
-    border: 2px solid #e74c3c;
+    border: 2px solid #a084ca;
   }
 `;
 
-const ProductInfo = styled.div`
+const ProductInfoSection = styled.div`
+  width: 50%;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 18px;
+  min-width: 0;
+  max-width: 100%;
+  @media (max-width: 900px) {
+    width: 100%;
+    max-width: 100%;
+  }
 `;
 
 const ProductTitle = styled.h1`
-  font-size: 28px;
-  margin: 0;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #5b4a44;
+  margin: 0 0 8px 0;
+  letter-spacing: -1px;
 `;
 
-const ProductCategory = styled.span`
-  color: #666;
+const ProductCategory = styled.div`
+  color: #a084ca;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
   text-transform: capitalize;
 `;
 
-const ProductRating = styled.div`
+const ProductRatingRow = styled.div`
   display: flex;
   align-items: center;
-  gap: 5px;
-`;
-
-const Star = styled.span`
-  color: #ffc107;
-  font-size: 18px;
+  gap: 10px;
+  margin-bottom: 8px;
 `;
 
 const RatingValue = styled.span`
-  color: #333;
-  font-size: 16px;
-  font-weight: 500;
+  color: #222;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-right: 4px;
 `;
 
-const ProductPrice = styled.div`
-  font-size: 24px;
-  font-weight: bold;
+const RatingStar = styled.span`
+  color: #ffc107;
+  font-size: 1.1rem;
+`;
+
+const RatingCount = styled.span`
+  color: #888;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-left: 8px;
+`;
+
+const ProductPriceRow = styled.div`
   display: flex;
   align-items: center;
-  gap: 10px;
-`;
-
-const RegularPrice = styled.span`
-  color: #888;
-  text-decoration: line-through;
-  font-size: 18px;
+  gap: 14px;
+  margin-bottom: 8px;
 `;
 
 const OfferPrice = styled.span`
+  color: #222;
+  font-size: 2rem;
+  font-weight: 900;
+`;
+
+const RegularPrice = styled.span`
+  color: #bdbdbd;
+  text-decoration: line-through;
+  font-size: 1.2rem;
+  font-weight: 500;
+`;
+
+const DiscountBadge = styled.span`
+  background: #f7d7d7;
   color: #e74c3c;
-  font-size: 24px;
-  font-weight: bold;
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: 6px;
+  padding: 4px 12px;
+  margin-left: 4px;
 `;
 
-const ProductDescription = styled.p`
-  line-height: 1.6;
-  color: #333;
+const ProductDesc = styled.p`
+  color: #444;
+  font-size: 1.1rem;
+  margin-bottom: 10px;
 `;
 
-const QuantityControl = styled.div`
+const QtyRow = styled.div`
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin: 10px 0;
+  gap: 16px;
+  margin: 18px 0 18px 0;
 `;
 
-const QuantityButton = styled.button`
-  width: 30px;
-  height: 30px;
-  background: #f0f0f0;
+const QtyLabel = styled.span`
+  font-size: 1.1rem;
+  color: #5b4a44;
+  font-weight: 600;
+`;
+
+const QtyControl = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: #f6f3fa;
+  border-radius: 30px;
+  border: 1.5px solid #ede7f6;
+  overflow: hidden;
+`;
+
+const QtyBtn = styled.button`
+  width: 38px;
+  height: 38px;
+  background: none;
   border: none;
-  border-radius: 4px;
-  font-size: 16px;
+  color: #a084ca;
+  font-size: 1.5rem;
+  font-weight: 700;
   cursor: pointer;
+  transition: background 0.15s;
+  &:hover {
+    background: #ede7f6;
+  }
 `;
 
-const QuantityInput = styled.input`
-  width: 50px;
-  height: 30px;
+const QtyInput = styled.input`
+  width: 44px;
+  height: 38px;
   text-align: center;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  border: none;
+  background: none;
+  font-size: 1.1rem;
+  color: #5b4a44;
+  font-weight: 600;
+  outline: none;
 `;
 
-const BackButton = styled.button`
-  position: absolute;
- 
-  left: 10px;
+const ActionRow = styled.div`
+  display: flex;
+  gap: 14px;
+  margin: 18px 0 0 0;
+`;
+
+const AddToCartBtn = styled(Button)`
+  flex: 1.2;
+  background: #ede7f6;
+  color: #a084ca;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border-radius: 7px;
+  border: none;
+  &:hover {
+    background: #a084ca;
+    color: #fff;
+  }
+`;
+
+const BuyNowBtn = styled(Button)`
+  flex: 1.2;
+  background: #5b4a44;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border-radius: 7px;
+  border: none;
+  &:hover {
+    background: #a084ca;
+    color: #fff;
+  }
+`;
+
+const WishlistBtn = styled.button`
   background: #fff;
-  border: 1px solid #eee;
-  color: #333;
-  font-size: 16px;
-  cursor: pointer;
-  padding: 7px 18px 7px 10px;
-  border-radius: 22px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  z-index: 10;
+  border: 1.5px solid #e5a6a6;
+  border-radius: 8px;
+  color: ${({ wished }) => (wished ? '#e74c3c' : '#a084ca')};
+  font-size: 22px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
+  justify-content: center;
+  cursor: pointer;
   transition: color 0.18s, border 0.18s, background 0.18s;
   &:hover {
     color: #e74c3c;
@@ -658,162 +761,15 @@ const BackButton = styled.button`
   }
 `;
 
-/* --- Reviews & Ratings Section Styles --- */
-const ReviewsSection = styled.div`
-  margin-top: 32px;
-  padding: 24px 0 0 0;
-  border-top: 1px solid #eee;
-  max-width: 1320px;
-  margin-left: auto;
-  margin-right: auto;
-`;
-
-const ReviewsTitle = styled.h3`
-  font-size: 20px;
-  color: #e74c3c;
-  margin:0 a 18px;
-  text-align: center;
-`;
-
-const ReviewsList = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-`;
-
-const ReviewItem = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
-  text-align: center;
-  background: #fafafa;
-  border-radius: 8px;
-  padding: 14px 16px;
-`;
-
-const ReviewAvatar = styled.img`
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #e74c3c;
-`;
-
-const ReviewContent = styled.div`
-  flex: 1;
-`;
-
-const ReviewName = styled.div`
-  font-weight: 500;
-  color: #222;
-  margin-bottom: 3px;
-  font-size: 15px;
-`;
-
-const ReviewText = styled.div`
-  color: #444;
-  font-size: 15px;
-  font-style: italic;
-`;
-
-const NoReviews = styled.div`
-  color: #888;
-  font-size: 15px;
-  padding: 10px 0;
-`;
-
-/* --- Discount Banner Section Styles --- */
-const DiscountBanner = styled.div`
-  display: flex;
-  align-items: stretch;
-  background: #fdf3f1;
-  border-radius: 14px;
-  margin: 40px auto 0 auto;
-  overflow: hidden;
-  min-height: 320px;
-  box-shadow: 0 2px 12px rgba(231,76,60,0.06);
-  max-width: 1320px;
-  @media (max-width: 900px) {
-    flex-direction: column;
-    min-height: 0;
-  }
-`;
-
-const DiscountImage = styled.div`
-  flex: 1.2;
-  min-width: 260px;
-  background: url('https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80') center/cover no-repeat;
-  @media (max-width: 900px) {
-    min-height: 180px;
-    min-width: 0;
-    height: 180px;
-  }
-`;
-
-const DiscountContent = styled.div`
-  flex: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 38px 38px 38px 38px;
-  background: #fdf3f1;
-  @media (max-width: 900px) {
-    padding: 24px 18px;
-  }
-`;
-
-const DiscountTitle = styled.div`
-  font-size: 2rem;
-  font-weight: 700;
-  color: #b49be0;
-  margin-bottom: 10px;
-  font-style: italic;
-`;
-
-const DiscountDesc = styled.div`
-  font-size: 20px;
-  color: #444;
-  margin-bottom: 18px;
-  max-width: 480px;
-`;
-
-const DiscountOffer = styled.div`
-  font-size: 2.2rem;
-  font-weight: 700;
-  color: #222;
-  margin-bottom: 10px;
-  span {
-    font-weight: 700;
-  }
-`;
-
-const Highlight = styled.span`
-  color: #f08a6b;
-  font-weight: 900;
-`;
-
-const DiscountSub = styled.div`
-  font-size: 18px;
-  color: #444;
-  margin-bottom: 18px;
-  b {
-    color: #222;
-    font-weight: 700;
-  }
-`;
-
-/* --- Custom Testimonial Section Styles --- */
 const CustomTestimonialSection = styled.section`
   display: flex;
-  background: linear-gradient(120deg, #fbeaec 0%, #f8f3fa 100%);
-  border-radius: 16px;
+  overflow: hidden;
+  border-radius: 10px;
   margin: 40px auto 0 auto;
   overflow: hidden;
   min-height: 340px;
-  box-shadow: 0 2px 12px rgba(231,76,60,0.06);
   max-width: 1320px;
+  width: 100%;
   @media (max-width: 900px) {
     flex-direction: column;
     min-height: 0;
@@ -821,7 +777,8 @@ const CustomTestimonialSection = styled.section`
 `;
 
 const TestimonialLeft = styled.div`
-  flex: 1.2;
+  flex: 1;
+  background: linear-gradient(120deg, #fbeaec 0%, #f8f3fa 100%);
   padding: 48px 38px 38px 48px;
   display: flex;
   flex-direction: column;
@@ -893,27 +850,7 @@ const VerifiedIcon = styled.span`
   background: url('https://cdn-icons-png.flaticon.com/512/190/190411.png') center/cover no-repeat;
 `;
 
-const TestimonialNav = styled.div`
-  display: flex;
-  gap: 10px;
-  margin-top: 18px;
-`;
 
-const NavBtn = styled.button`
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  background: #fff;
-  border: none;
-  font-size: 20px;
-  color: #e74c3c;
-  box-shadow: 0 2px 8px rgba(231,76,60,0.08);
-  cursor: pointer;
-  transition: background 0.15s;
-  &:hover {
-    background: #ffecec;
-  }
-`;
 
 const TestimonialRight = styled.div`
   flex: 1.2;
