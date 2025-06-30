@@ -76,8 +76,14 @@ const BannerContent = styled.div`
   justify-content: center;
   padding: 48px 48px 48px 48px;
   background: #fff;
+  /* Add a soft, decorative background image (adjust the URL as needed) */
+  background-image: url('/assets/images/txt-bg1.png');
+  background-repeat: no-repeat;
+  background-position: right bottom;
+  background-size: 320px auto;
   @media (max-width: 900px) {
     padding: 28px 18px;
+    background-size: 180px auto;
   }
 `;
 

@@ -240,7 +240,7 @@ const ImageContainer = styled.div`
   align-items: flex-end;
   justify-content: center;
   position: relative;
-  border-radius: 14px 14px 0 0;
+  border-radius: 10px 10px 0 0;
   overflow: hidden;
   padding-top: 18px;
 `;
@@ -353,7 +353,7 @@ const Actions = styled.div`
   padding: 10px 14px 14px 14px;
   border-top: 1px solid #f0f0f0;
   background: #fff;
-  border-radius: 0 0 14px 14px;
+  border-radius: 0 0 10px 10px;
   margin-top: 10px;
 `;
 

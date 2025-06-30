@@ -16,8 +16,9 @@ import { useForm } from 'react-hook-form';
 import ProductGrid from '../../components/product/ProductGrid';
 import { useImageBasePath } from '../../context/ImagePathContext';
 import PromoBanner, { BannerHighlight } from '../../components/common/PromoBanner';
-import promoImg from '../../assets/images/main-bg1.png';
+import promoImg from '../../assets/images/main-bg2.png';
 import { useAuth } from '../../redux/hooks';
+import { FaHeart } from 'react-icons/fa';
 
 const SwiperNavStyles = createGlobalStyle`
   .product-detail-swiper .swiper-button-next,
@@ -53,6 +54,9 @@ const ProductDetail = () => {
   const { register: formRegister, handleSubmit, reset, formState: { errors } } = useForm();
   const imageBasePath = useImageBasePath();
   const { isAuthenticated, user } = useAuth();
+  // Wishlist state and toast
+  const [wishlist, setWishlist] = useState([]);
+  const [toast, setToast] = useState(null);
 
   useEffect(() => {
     // Find product by id from productData
@@ -85,7 +89,7 @@ const ProductDetail = () => {
     const allCarts = JSON.parse(localStorage.getItem('carts') || '{}');
     allCarts[user.id] = cartItems;
     localStorage.setItem('carts', JSON.stringify(allCarts));
-    window.dispatchEvent(new Event('cartChanged'));
+    
   };
 
   const handleAddToCart = () => {
@@ -106,7 +110,30 @@ const ProductDetail = () => {
       setUserCart(updatedCart);
     }
     dispatch(addToCart({ ...product, quantity }));
-    window.dispatchEvent(new Event('cartChanged'));
+    
+  };
+
+  // --- Buy Now handler ---
+  const handleBuyNow = () => {
+    if (!product) return;
+    let updatedCart;
+    const userCart = getUserCart();
+    const exists = userCart.find(item => item.id === product.id);
+    if (exists) {
+      updatedCart = userCart.map(item =>
+        item.id === product.id
+          ? { ...item, quantity: item.quantity + quantity }
+          : item
+      );
+    } else {
+      updatedCart = [...userCart, { ...product, quantity }];
+    }
+    if (isAuthenticated) {
+      setUserCart(updatedCart);
+    }
+    dispatch(addToCart({ ...product, quantity }));
+    
+    navigate('/checkout');
   };
 
   // Handle review form submit
@@ -127,6 +154,71 @@ const ProductDetail = () => {
     localStorage.setItem(`reviews_${product.id}`, JSON.stringify(updated));
     reset();
   };
+
+  // Helper to get/set wishlist as array of product IDs in localStorage per user
+  const getUserWishlist = () => {
+    if (!user?.id) return [];
+    const allWishlists = JSON.parse(localStorage.getItem('wishlists') || '{}');
+    const arr = Array.isArray(allWishlists[user.id]) ? allWishlists[user.id] : [];
+    return arr.filter(id => !!id);
+  };
+  const setUserWishlist = (list) => {
+    if (!user?.id) return;
+    const uniqueList = Array.from(new Set(list)).filter(id => !!id);
+    const allWishlists = JSON.parse(localStorage.getItem('wishlists') || '{}');
+    allWishlists[user.id] = uniqueList;
+    localStorage.setItem('wishlists', JSON.stringify(allWishlists));
+    window.dispatchEvent(new Event('wishlistChanged'));
+  };
+
+  useEffect(() => {
+    setWishlist(getUserWishlist());
+    const handleStorage = () => setWishlist(getUserWishlist());
+    window.addEventListener('storage', handleStorage);
+    return () => window.removeEventListener('storage', handleStorage);
+    // eslint-disable-next-line
+  }, [user?.id]);
+
+  const isWished = product ? wishlist.includes(product.id) || wishlist.includes(String(product.id)) : false;
+
+  const handleWishlist = () => {
+    if (!isAuthenticated) {
+      navigate('/login');
+      return;
+    }
+    let updatedList;
+    let message;
+    const currentWishlist = getUserWishlist();
+    if (isWished) {
+      updatedList = currentWishlist.filter(id => id !== product.id && id !== String(product.id));
+      message = 'Removed from wishlist';
+    } else {
+      updatedList = [...currentWishlist, product.id];
+      message = 'Added to wishlist';
+    }
+    setWishlist(updatedList);
+    setUserWishlist(updatedList);
+    setToast(message);
+    setTimeout(() => setToast(null), 1500);
+  };
+
+  // Toast in document body, not inside card
+  useEffect(() => {
+    if (!toast) return;
+    const toastDiv = document.createElement('div');
+    toastDiv.className = 'global-toast-message';
+    toastDiv.textContent = toast;
+    document.body.appendChild(toastDiv);
+    setTimeout(() => {
+      toastDiv.classList.add('hide');
+    }, 1200);
+    setTimeout(() => {
+      if (toastDiv.parentNode) document.body.removeChild(toastDiv);
+    }, 1500);
+    return () => {
+      if (toastDiv.parentNode) document.body.removeChild(toastDiv);
+    };
+  }, [toast]);
 
   if (loading) return <div>Loading...</div>;
   if (!product) return <div>Product not found</div>;
@@ -285,9 +377,23 @@ const ProductDetail = () => {
             />
             <QuantityButton onClick={() => setQuantity(quantity + 1)}>+</QuantityButton>
           </QuantityControl>
-          <Button onClick={handleAddToCart} fullWidth>
-            Add to Cart
-          </Button>
+          <ButtonRow>
+            <Button onClick={handleAddToCart} fullWidth={false}>
+              Add to Cart
+            </Button>
+            <BuyNowButton onClick={handleBuyNow}>
+              Buy Now
+            </BuyNowButton>
+            <WishlistButton
+              type="button"
+              aria-label={isWished ? "Remove from wishlist" : "Add to wishlist"}
+              wished={isWished ? 1 : 0}
+              onClick={handleWishlist}
+              title={isWished ? "Remove from wishlist" : "Add to wishlist"}
+            >
+              <FaHeart />
+            </WishlistButton>
+          </ButtonRow>
         </ProductInfo>
       </ProductDetailContainer>
 
@@ -305,81 +411,9 @@ const ProductDetail = () => {
           </>
         }
         buttonText="Buy Now"
-        buttonTo="/checkout"
+        buttonTo="/products"
       />
 
-      <ReviewsSection className="container">
-        <ReviewsTitle>Customer Reviews & Ratings</ReviewsTitle>
-        {/* Swiper for all testimonials (user + product) */}
-        {allTestimonials.length > 0 ? (
-          <Swiper
-            modules={[Pagination, Autoplay]}
-            spaceBetween={24}
-            slidesPerView={1}
-            pagination={{ clickable: true }}
-            loop={true}
-            speed={600}
-            autoplay={{
-              delay: 3500,
-              disableOnInteraction: false,
-            }}
-            style={{ paddingBottom: 40, maxWidth: 600 }}
-          >
-            {allTestimonials.map((review, idx) => (
-              <SwiperSlide key={idx}>
-                <ReviewItem>
-                  <ReviewAvatar src={review.avatar} alt={review.name} />
-                  <ReviewContent>
-                    <ReviewName>{review.name}</ReviewName>
-                    <ReviewText>"{review.text}"</ReviewText>
-                  </ReviewContent>
-                </ReviewItem>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        ) : (
-          <NoReviews>No reviews yet for this product.</NoReviews>
-        )}
-        {/* --- Write a Review Section --- */}
-        <WriteReviewBox>
-          <WriteReviewTitle>Write a Review</WriteReviewTitle>
-          <ReviewForm
-            onSubmit={handleSubmit(onSubmitReview)}
-            onFocus={() => {
-              if (!isAuthenticated) {
-                navigate('/login', { replace: true });
-              }
-            }}
-          >
-            {/* Show logged in user name instead of input */}
-            {isAuthenticated && user?.firstName ? (
-              <ReviewInput
-                type="text"
-                value={user.firstName}
-                disabled
-                readOnly
-                style={{ background: "#f5f5f5", color: "#888" }}
-              />
-            ) : (
-              <ReviewInput
-                type="text"
-                placeholder="Your Name"
-                {...formRegister('name', { required: 'Name is required' })}
-              />
-            )}
-            {errors.name && !isAuthenticated && <ReviewError>{errors.name.message}</ReviewError>}
-            <ReviewTextarea
-              placeholder="Your Review"
-              {...formRegister('text', { required: 'Review is required', minLength: { value: 5, message: 'Review must be at least 5 characters' } })}
-              rows={3}
-            />
-            {errors.text && <ReviewError>{errors.text.message}</ReviewError>}
-            <ReviewButton type="submit" disabled={!isAuthenticated}>
-              {isAuthenticated ? "Submit Review" : "Login to Review"}
-            </ReviewButton>
-          </ReviewForm>
-        </WriteReviewBox>
-      </ReviewsSection>
       <CustomTestimonialSection className="container">
         <TestimonialLeft>
           <Swiper
@@ -1010,5 +1044,95 @@ const RelatedTitle = styled.h3`
   margin-bottom: 24px;
   text-align: center;
 `;
+
+const ButtonRow = styled.div`
+  display: flex;
+  gap: 14px;
+  margin-top: 10px;
+`;
+
+const BuyNowButton = styled(Button)`
+  background: #27ae60;
+  color: #fff;
+  &:hover {
+    background: #219150;
+    color: #fff;
+  }
+`;
+
+const WishlistButton = styled.button`
+  background: #fff;
+  border: 1.5px solid #eee;
+  border-radius: 8px;
+  color: ${({ wished }) => (wished ? '#e74c3c' : '#888')};
+  font-size: 22px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: color 0.18s, border 0.18s, background 0.18s;
+  &:hover {
+    color: #e74c3c;
+    border-color: #e74c3c;
+    background: #fff7f5;
+  }
+`;
+
+// Add global styles for the toast if not already present
+if (typeof document !== 'undefined' && !document.getElementById('global-toast-style')) {
+  const style = document.createElement('style');
+  style.id = 'global-toast-style';
+  style.innerHTML = `
+    .global-toast-message {
+      position: fixed;
+      top: 300px;
+      right: 0;
+      transform: translateX(110%);
+      background: #222;
+      color: #fff;
+      padding: 10px 22px;
+      border-radius: 6px 0 0 6px;
+      font-size: 14px;
+      z-index: 2000;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+      animation: slideInRight 1.5s forwards;
+      pointer-events: none;
+    }
+    .global-toast-message.hide {
+      animation: slideOutRight 0.3s forwards;
+    }
+    @keyframes slideInRight {
+      0% {
+        opacity: 0;
+        transform: translateX(110%);
+      }
+      10% {
+        opacity: 1;
+        transform: translateX(0%);
+      }
+      90% {
+        opacity: 1;
+        transform: translateX(0%);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0%);
+      }
+    }
+    @keyframes slideOutRight {
+      0% {
+        opacity: 1;
+        transform: translateX(0%);
+      }
+      100% {
+        opacity: 0;
+        transform: translateX(110%);
+      }
+    }
+  `;
+  document.head.appendChild(style);
+}
 
 export default ProductDetail;
