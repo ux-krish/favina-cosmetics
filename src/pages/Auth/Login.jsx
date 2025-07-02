@@ -2,22 +2,27 @@ import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch, useAuth } from '../../redux/hooks';
 import { useNavigate, Link } from 'react-router-dom';
-import { login } from '../../redux/slices/authSlice';
-import FormInput  from '../../components/ui/FormInput';
+import { loginThunk } from '../../redux/slices/authSlice';
+import FormInput from '../../components/ui/FormInput';
 import Button from '../../components/common/Button';
 
 const LoginPage = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { error } = useAuth();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm();
 
-  const onSubmit = (data) => {
-    dispatch(login(data))
-      .unwrap()
-      .then(() => {
+  // Handle form submission
+  const handleLogin = (formData) => {
+    dispatch(loginThunk(formData)).then((result) => {
+      if (!result?.error) {
         navigate('/account');
-      });
+      }
+    });
   };
 
   return (
@@ -25,11 +30,11 @@ const LoginPage = () => {
       <FormContainer>
         <h2>Login</h2>
         {error && <ErrorMessage>{error}</ErrorMessage>}
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form onSubmit={handleSubmit(handleLogin)}>
           <FormInput
             label="Email"
             type="email"
-            {...register('email', { 
+            {...register('email', {
               required: 'Email is required',
               pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -38,11 +43,10 @@ const LoginPage = () => {
             })}
             error={errors.email}
           />
-          
           <FormInput
             label="Password"
             type="password"
-            {...register('password', { 
+            {...register('password', {
               required: 'Password is required',
               minLength: {
                 value: 6,
@@ -51,7 +55,6 @@ const LoginPage = () => {
             })}
             error={errors.password}
           />
-          
           <Button type="submit" fullWidth>
             Login
           </Button>

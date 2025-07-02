@@ -1,29 +1,26 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { loginUser, registerUser } from '../../services/authService';
 
-export const login = createAsyncThunk(
-  'auth/login',
-  async (credentials, { rejectWithValue }) => {
-    try {
-      const user = await loginUser(credentials);
-      return user;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
+// Async thunks (not using createAsyncThunk)
+export const loginThunk = (credentials) => async (dispatch) => {
+  dispatch(authSlice.actions.loginPending());
+  try {
+    const user = await loginUser(credentials);
+    dispatch(authSlice.actions.loginFulfilled(user));
+  } catch (error) {
+    dispatch(authSlice.actions.loginRejected(error.message));
   }
-);
+};
 
-export const register = createAsyncThunk(
-  'auth/register',
-  async (userData, { rejectWithValue }) => {
-    try {
-      const user = await registerUser(userData);
-      return user;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
+export const registerThunk = (userData) => async (dispatch) => {
+  dispatch(authSlice.actions.registerPending());
+  try {
+    const user = await registerUser(userData);
+    dispatch(authSlice.actions.registerFulfilled(user));
+  } catch (error) {
+    dispatch(authSlice.actions.registerRejected(error.message));
   }
-);
+};
 
 const initialState = {
   user: JSON.parse(localStorage.getItem('user')) || null,
@@ -53,37 +50,36 @@ const authSlice = createSlice({
         }
       }
     },
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(login.pending, (state) => {
-        state.status = 'loading';
-        state.error = null;
-      })
-      .addCase(login.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.user = action.payload;
-        state.isAuthenticated = true;
-        localStorage.setItem('user', JSON.stringify(action.payload));
-      })
-      .addCase(login.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.payload || 'Login failed';
-      })
-      .addCase(register.pending, (state) => {
-        state.status = 'loading';
-        state.error = null;
-      })
-      .addCase(register.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.user = action.payload;
-        state.isAuthenticated = true;
-        localStorage.setItem('user', JSON.stringify(action.payload));
-      })
-      .addCase(register.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.payload || 'Registration failed';
-      });
+    // Async login
+    loginPending: (state) => {
+      state.status = 'loading';
+      state.error = null;
+    },
+    loginFulfilled: (state, action) => {
+      state.status = 'succeeded';
+      state.user = action.payload;
+      state.isAuthenticated = true;
+      localStorage.setItem('user', JSON.stringify(action.payload));
+    },
+    loginRejected: (state, action) => {
+      state.status = 'failed';
+      state.error = action.payload || 'Login failed';
+    },
+    // Async register
+    registerPending: (state) => {
+      state.status = 'loading';
+      state.error = null;
+    },
+    registerFulfilled: (state, action) => {
+      state.status = 'succeeded';
+      state.user = action.payload;
+      state.isAuthenticated = true;
+      localStorage.setItem('user', JSON.stringify(action.payload));
+    },
+    registerRejected: (state, action) => {
+      state.status = 'failed';
+      state.error = action.payload || 'Registration failed';
+    },
   },
 });
 

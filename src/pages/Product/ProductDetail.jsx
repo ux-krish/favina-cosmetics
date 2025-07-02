@@ -545,12 +545,6 @@ const ProductImage = styled.img`
   border: 1.5px solid #ede7f6;
 `;
 
-const ThumbsRow = styled.div`
-  display: flex;
-  gap: 12px;
-  margin-top: 18px;
-  justify-content: center;
-`;
 
 const ThumbImage = styled.img`
   width: 64px;

@@ -2,22 +2,28 @@ import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch, useAuth } from '../../redux/hooks';
 import { useNavigate, Link } from 'react-router-dom';
-import { register } from '../../redux/slices/authSlice';
-import  FormInput  from '../../components/ui/FormInput';
+import { registerThunk } from '../../redux/slices/authSlice';
+import FormInput from '../../components/ui/FormInput';
 import Button from '../../components/common/Button';
 
 const RegisterPage = () => {
-  const { register: formRegister, handleSubmit, formState: { errors }, watch } = useForm();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { error } = useAuth();
+  const {
+    register: formRegister,
+    handleSubmit,
+    formState: { errors },
+    watch
+  } = useForm();
 
-  const onSubmit = (data) => {
-    dispatch(register(data))
-      .unwrap()
-      .then(() => {
+  // Handle registration form submission
+  const handleRegister = (formData) => {
+    dispatch(registerThunk(formData)).then((result) => {
+      if (!result?.error) {
         navigate('/account');
-      });
+      }
+    });
   };
 
   return (
@@ -25,7 +31,7 @@ const RegisterPage = () => {
       <FormContainer>
         <h2>Create Account</h2>
         {error && <ErrorMessage>{error}</ErrorMessage>}
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form onSubmit={handleSubmit(handleRegister)}>
           <FormGroup>
             <FormInput
               label="First Name"
@@ -38,11 +44,10 @@ const RegisterPage = () => {
               error={errors.lastName}
             />
           </FormGroup>
-          
           <FormInput
             label="Email"
             type="email"
-            {...formRegister('email', { 
+            {...formRegister('email', {
               required: 'Email is required',
               pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -51,11 +56,10 @@ const RegisterPage = () => {
             })}
             error={errors.email}
           />
-          
           <FormInput
             label="Password"
             type="password"
-            {...formRegister('password', { 
+            {...formRegister('password', {
               required: 'Password is required',
               minLength: {
                 value: 6,
@@ -64,18 +68,16 @@ const RegisterPage = () => {
             })}
             error={errors.password}
           />
-          
           <FormInput
             label="Confirm Password"
             type="password"
-            {...formRegister('confirmPassword', { 
+            {...formRegister('confirmPassword', {
               required: 'Please confirm your password',
-              validate: (value) => 
+              validate: (value) =>
                 value === watch('password') || 'Passwords do not match'
             })}
             error={errors.confirmPassword}
           />
-          
           <Button type="submit" fullWidth>
             Register
           </Button>

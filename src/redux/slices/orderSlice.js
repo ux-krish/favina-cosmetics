@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 // Helper function to get orders from localStorage
 const getOrdersFromStorage = () => {
@@ -9,24 +9,23 @@ const getOrdersFromStorage = () => {
   return [];
 };
 
-export const createOrder = createAsyncThunk(
-  'order/createOrder',
-  async (orderData, { getState }) => {
-    // In a real app, you would send this to your API
+// Async thunk (not using createAsyncThunk)
+export const createOrderThunk = (orderData) => async (dispatch) => {
+  dispatch(orderSlice.actions.createOrderPending());
+  try {
     const newOrder = {
       ...orderData,
       id: Date.now().toString(),
       status: 'processing',
     };
-    
-    // Save to localStorage
     const currentOrders = getOrdersFromStorage();
     const updatedOrders = [...currentOrders, newOrder];
     localStorage.setItem('orders', JSON.stringify(updatedOrders));
-    
-    return newOrder;
+    dispatch(orderSlice.actions.createOrderFulfilled(newOrder));
+  } catch (error) {
+    dispatch(orderSlice.actions.createOrderRejected(error.message));
   }
-);
+};
 
 const orderSlice = createSlice({
   name: 'order',
@@ -35,20 +34,18 @@ const orderSlice = createSlice({
     status: 'idle',
     error: null,
   },
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(createOrder.pending, (state) => {
-        state.status = 'loading';
-      })
-      .addCase(createOrder.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.orders.push(action.payload);
-      })
-      .addCase(createOrder.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message;
-      });
+  reducers: {
+    createOrderPending: (state) => {
+      state.status = 'loading';
+    },
+    createOrderFulfilled: (state, action) => {
+      state.status = 'succeeded';
+      state.orders.push(action.payload);
+    },
+    createOrderRejected: (state, action) => {
+      state.status = 'failed';
+      state.error = action.payload;
+    },
   },
 });
 
