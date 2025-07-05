@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useImageBasePath } from '../../context/ImagePathContext';
 import { useAuth } from '../../redux/hooks';
+import { colors, fontSizes } from '../../assets/styles/theme';
 
 const ProductCard = ({ product }) => {
   const dispatch = useAppDispatch();
@@ -215,8 +216,8 @@ const ProductCard = ({ product }) => {
 };
 
 const Card = styled.div`
-  background: #fff;
-  border-radius: 14px;
+  background: ${colors.card};
+  border-radius: 8px;
   box-shadow: 0 4px 18px rgba(0,0,0,0.10);
   overflow: visible;
   display: flex;
@@ -242,7 +243,7 @@ const ImageContainer = styled.div`
   position: relative;
   border-radius: 10px 10px 0 0;
   overflow: hidden;
-  padding-top: 18px;
+  padding-top: 0;
 `;
 
 const Image = styled.img`
@@ -255,7 +256,7 @@ const Image = styled.img`
 `;
 
 const Details = styled.div`
-  padding: 12px 18px 0 18px;
+  padding: 12px 10px 0 10px;
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -263,10 +264,10 @@ const Details = styled.div`
 `;
 
 const Title = styled.h3`
-  font-size: 15px;
+  font-size: ${fontSizes.sm};
   margin: 0 0 2px 0;
   font-weight: 500;
-  color: #222;
+  color: ${colors.text};
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -282,12 +283,12 @@ const RatingRow = styled.div`
 
 const StarIcon = styled.span`
   color: #ffc107;
-  font-size: 15px;
+  font-size: ${fontSizes.sm};
 `;
 
 const RatingValue = styled.span`
-  color: #e74c3c;
-  font-size: 15px;
+  color: ${colors.primary};
+  font-size: ${fontSizes.sm};
   font-weight: 600;
 `;
 const GroupBox = styled.div`
@@ -304,8 +305,8 @@ const MetaRow = styled.div`
 `;
 
 const Weight = styled.span`
-  font-size: 13px;
-  color: #888;
+  font-size: ${fontSizes.xs};
+  color: ${colors.muted};
   background: #f5f5f5;
   border-radius: 4px;
   padding: 2px 8px;
@@ -313,9 +314,9 @@ const Weight = styled.span`
 `;
 
 const DiscountBadge = styled.span`
-  font-size: 13px;
-  color: #fff;
-  background: #e74c3c;
+  font-size: ${fontSizes.xs};
+  color: ${colors.textLight};
+  background: ${colors.primary};
   border-radius: 4px;
   padding: 2px 8px;
   font-weight: 500;
@@ -341,8 +342,8 @@ const Strike = styled.span`
 `;
 
 const OfferPrice = styled.span`
-  color: #222;
-  font-size: 18px;
+  color: ${colors.text};
+  font-size: ${fontSizes.md};
   font-weight: 700;
 `;
 
@@ -350,17 +351,17 @@ const Actions = styled.div`
   display: flex;
   align-items: center;
   gap: 7px;
-  padding: 10px 14px 14px 14px;
+  padding: 10px;
   border-top: 1px solid #f0f0f0;
   background: #fff;
   border-radius: 0 0 10px 10px;
-  margin-top: 10px;
+  margin-top: 5px;
 `;
 
 const IconButton = styled.button`
   background: #f7f7f7;
   border: 1.5px solid #eee;
-  border-radius: 8px;
+  border-radius: 4px;
   color: ${({ wished }) => (wished ? '#e74c3c' : '#888')};
   font-size: 18px;
   width: 38px;
@@ -382,7 +383,7 @@ const ViewButton = styled(Link)`
   background: #fff;
   color: #222;
   border: 1.5px solid #ddd;
-  border-radius: 8px;
+  border-radius: 4px;
   font-size: 15px;
   font-weight: 500;
   padding: 0 0;

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import ProductGrid from '../../components/product/ProductGrid';
 import productData from '../../data/product.json';
+import { FaFilter } from 'react-icons/fa';
 
 const categories = ['All', 'Makeup', 'Skincare', 'Haircare', 'Fragrance', 'Tools'];
 
@@ -18,6 +19,7 @@ const ProductsPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortOrder, setSortOrder] = useState('none');
   const [testimonials, setTestimonials] = useState([]);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     // Fetch products and testimonials from src/product.json
@@ -89,7 +91,14 @@ const ProductsPage = () => {
 
   return (
     <ProductsLayout>
-      <Sidebar>
+      <Sidebar $open={sidebarOpen}>
+        <SidebarCloseBtn
+          type="button"
+          aria-label="Close filters"
+          onClick={() => setSidebarOpen(false)}
+        >
+          ×
+        </SidebarCloseBtn>
         <FilterSection>
           <FilterTitle>Category</FilterTitle>
           {categories.map(cat => (
@@ -144,11 +153,23 @@ const ProductsPage = () => {
       </Sidebar>
       <Main>
         <PageHeader>
+          <h1>All Cosmetics Products</h1>
           <HeaderRow>
-            <div>
-              <h1>All Cosmetics Products</h1>
-              <p>{filteredProducts.length} products available</p>
-            </div>
+            
+            <FilterBox>
+              <FilterIconBtn
+                type="button"
+                aria-label="Show filters"
+                onClick={() => setSidebarOpen(true)}
+              >
+                <FaFilter />
+              </FilterIconBtn>
+              <p style={{ margin: 0 }}>
+                {filteredProducts.length} products available
+              </p>
+              {/* Filter icon for mobile */}
+              
+            </FilterBox>
             <SortDropdownWrapper>
               <SortLabel htmlFor="sortOrder">Sort by:</SortLabel>
               <SortDropdown
@@ -215,8 +236,67 @@ const Sidebar = styled.aside`
   border-right: 1px solid #ede7f6;
   min-width: 220px;
   height: 100%;
+  z-index: 1001;
+  transition: transform 0.28s cubic-bezier(.4,0,.2,1);
   @media (max-width: 900px) {
-    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    max-width: 270px;
+    width: 82vw;
+    min-width: 0;
+    background: #f5f1fa;
+    box-shadow: 2px 0 16px rgba(0,0,0,0.13);
+    border-radius: 0 14px 14px 0;
+    transform: ${({ $open }) => ($open ? 'translateX(0)' : 'translateX(-270px)')};
+    pointer-events: ${({ $open }) => ($open ? 'auto' : 'none')};
+    visibility: ${({ $open }) => ($open ? 'visible' : 'hidden')};
+    transition: transform 0.28s cubic-bezier(.4,0,.2,1), visibility 0.18s;
+    z-index: 2001;
+    display: block;
+  }
+`;
+
+const SidebarCloseBtn = styled.button`
+  display: none;
+  @media (max-width: 900px) {
+    display: block;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: #888;
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    z-index: 10;
+    cursor: pointer;
+    &:hover {
+      color: #e74c3c;
+    }
+  }
+`;
+
+const FilterIconBtn = styled.button`
+  display: none;
+  @media (max-width: 900px) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 6px;
+    background: #f5f1fa;
+    border: 1.5px solid #ede7f6;
+    border-radius: 7px;
+    color: #a084ca;
+    font-size: 1.3rem;
+    padding: 7px 12px;
+    cursor: pointer;
+    transition: color 0.18s, border 0.18s, background 0.18s;
+    &:hover {
+      color: #e74c3c;
+      border-color: #e74c3c;
+      background: #fff7f5;
+    }
   }
 `;
 
@@ -231,7 +311,12 @@ const FilterTitle = styled.div`
   color: #a084ca;
   letter-spacing: -0.5px;
 `;
-
+const FilterBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex:auto;
+  `
 const FilterOption = styled.div`
   margin-bottom: 12px;
   display: flex;
@@ -357,17 +442,20 @@ const Main = styled.div`
   min-width: 0;
   display: flex;
   flex-direction: column;
-  padding: 32px 32px 0 32px;
+  padding: 30px 30px 0 30px;
   background: #f6f3fa;
   border-radius: 0 14px 14px 0;
   @media (max-width: 900px) {
-    padding: 18px 6px 0 6px;
+    padding: 18px 20px 0 20px;
   }
 `;
 
 const PageHeader = styled.div`
-  margin-bottom: 18px;
+  margin-bottom: 20px;
   background: none;
+  @media (max-width: 900px) {
+    margin-bottom: 0;
+  }
   h1 {
     margin-bottom: 10px;
     font-size: 1.6rem;
@@ -379,6 +467,9 @@ const PageHeader = styled.div`
     color: #a084ca;
     font-size: 1rem;
     font-weight: 500;
+    @media (max-width: 600px) {
+      display: none;
+    }
   }
 `;
 
@@ -386,20 +477,25 @@ const HeaderRow = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: end;
-  flex-wrap: wrap;
   gap: 20px;
+  width: 100%;
 `;
 
 const SortDropdownWrapper = styled.div`
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 8px;
+  flex: 1;
 `;
 
 const SortLabel = styled.label`
   font-size: 15px;
   color: #a084ca;
   font-weight: 600;
+  flex: auto;
+  justify-content: flex-end;
+  width: 60px;
 `;
 
 const SortDropdown = styled.select`
@@ -415,10 +511,15 @@ const SortDropdown = styled.select`
 const ProductGridWrapper = styled.div`
   width: 100%;
   background: #fff;
-  border-radius: 10px;
+  border-radius: 8px;
   padding: 30px 30px 18px 30px;
   min-height: 480px;
   box-shadow: 0 2px 8px rgba(168,132,202,0.06);
+  @media (max-width: 900px) {
+    padding: 18px 0;
+    background: transparent;
+    box-shadow: none;
+  }
 `;
 
 const Pagination = styled.div`

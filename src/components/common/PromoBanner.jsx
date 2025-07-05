@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import Button from './Button';
+import { colors, fontSizes } from '../../assets/styles/theme';
+import txtBg1 from '../../assets/images/txt-bg1.png';
 
 const PromoBanner = ({
   image,
@@ -41,16 +43,17 @@ const BannerWrapper = styled.div`
   width: 100%;
   max-width: 1320px;
   margin: 0 auto 40px auto;
+  padding: 0 20px;
 `;
 
 const Banner = styled.div`
   width: 100%;
   display: flex;
-  background: #fff;
-  border-radius: 12px;
+  background: ${colors.card};
+  border-radius: 10px;
   box-shadow: 0 2px 18px rgba(0,0,0,0.06);
   overflow: hidden;
-  min-height: 380px;
+  min-height: 400px;
   @media (max-width: 900px) {
     flex-direction: column;
     min-height: 0;
@@ -58,10 +61,10 @@ const Banner = styled.div`
 `;
 
 const BannerImage = styled.img`
-  flex: 1;
+  width: 50%;
   min-width: 320px;
   object-fit: cover;
-  background: #f9f9f9;
+  background: ${colors.background};
   @media (max-width: 900px) {
     width: 100%;
     height: 180px;
@@ -75,12 +78,10 @@ const BannerContent = styled.div`
   flex-direction: column;
   justify-content: center;
   padding: 48px 48px 48px 48px;
-  background: #fff;
-  /* Add a soft, decorative background image (adjust the URL as needed) */
-  background-image: url('/assets/images/txt-bg1.png');
+  background: ${colors.card};
+  background-image: url(${txtBg1});
   background-repeat: no-repeat;
-  background-position: right bottom;
-  background-size: 320px auto;
+  background-size:cover;
   @media (max-width: 900px) {
     padding: 28px 18px;
     background-size: 180px auto;
@@ -101,19 +102,19 @@ const BannerTitle = styled.div`
 `;
 
 const BannerTitlePink = styled.span`
-  color: #e5a6a6;
+  color: ${colors.accent};
   font-weight: 900;
   font-family: 'Montserrat', sans-serif;
 `;
 
 const BannerTitlePurple = styled.span`
-  color: #b49be0;
+  color: ${colors.highlight};
   font-weight: 900;
   margin-top: -2px;
 `;
 
 const BannerDesc = styled.div`
-  font-size: 18px;
+  font-size: ${fontSizes.md};
   color: #444;
   margin-bottom: 18px;
   max-width: 480px;
@@ -123,7 +124,7 @@ const BannerDesc = styled.div`
 const BannerOffer = styled.div`
   font-size: 2.2rem;
   font-weight: 900;
-  color: #222;
+  color: ${colors.text};
   margin-bottom: 10px;
   display: flex;
   align-items: center;
@@ -132,44 +133,44 @@ const BannerOffer = styled.div`
 
 const BannerOfferLabel = styled.span`
   font-weight: 900;
-  color: #222;
+  color: ${colors.text};
 `;
 
 const BannerOfferHighlight = styled.span`
-  color: #e5a6a6;
+  color: ${colors.accent};
   font-weight: 900;
   margin-left: 8px;
 `;
 
 const BannerSub = styled.div`
-  font-size: 18px;
+  font-size: ${fontSizes.md};
   color: #444;
   margin-bottom: 22px;
   b {
-    color: #222;
+    color: ${colors.text};
     font-weight: 700;
   }
 `;
 
 const BannerHighlight = styled.span`
-  color: #b49be0;
+  color: ${colors.highlight};
   font-weight: 700;
 `;
 
 const BannerButton = styled(Button)`
   margin-top: 18px;
   min-width: 140px;
-  font-size: 18px;
+  font-size: ${fontSizes.md};
   font-weight: 700;
   border-radius: 7px;
-  background: #fff;
-  color: #5b4a44;
-  border: 1.5px solid #e5a6a6;
+  background: ${colors.card};
+  color: ${colors.text};
+  border: 1.5px solid ${colors.accent};
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   &:hover {
     background: #f7f7f7;
-    color: #e5a6a6;
-    border-color: #e5a6a6;
+    color: ${colors.accent};
+    border-color: ${colors.accent};
   }
 `;
 

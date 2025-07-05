@@ -1,5 +1,6 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
+import { colors, fontSizes } from '../../assets/styles/theme';
 
 const Button = ({ children, to, variant, fullWidth, small, tooltip, ...props }) => {
   if (to) {
@@ -40,25 +41,25 @@ const Tooltip = styled.span`
   left: 50%;
   bottom: 110%;
   transform: translateX(-50%) scale(0.98);
-  background: #222;
-  color: #fff;
+  background: ${colors.dark};
+  color: ${colors.textLight};
   padding: 7px 14px;
   border-radius: 5px;
-  font-size: 13px;
+  font-size: ${fontSizes.sm};
   white-space: nowrap;
   z-index: 100;
   transition: opacity 0.18s, transform 0.18s;
   box-shadow: 0 2px 8px rgba(0,0,0,0.13);
 `;
 
-const baseStyles = `
+const baseStyles = css`
   display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: 12px 20px;
   border-radius: 4px;
   font-weight: 500;
-  font-size: ${(props) => (props.$small ? '14px' : '16px')};
+  font-size: ${(props) => (props.$small ? fontSizes.sm : fontSizes.base)};
   cursor: pointer;
   transition: all 0.3s ease;
   border: none;
@@ -79,23 +80,23 @@ const baseStyles = `
 
 const StyledButton = styled.button`
   ${baseStyles}
-  background-color: ${(props) => (props.$variant === 'outline' ? 'transparent' : '#333')};
-  color: ${(props) => (props.$variant === 'outline' ? '#333' : 'white')};
-  border: ${(props) => (props.$variant === 'outline' ? '1px solid #333' : 'none')};
+  background-color: ${(props) => (props.$variant === 'outline' ? 'transparent' : colors.dark)};
+  color: ${(props) => (props.$variant === 'outline' ? colors.dark : colors.textLight)};
+  border: ${(props) => (props.$variant === 'outline' ? `1px solid ${colors.dark}` : 'none')};
 
   &:hover:not(:disabled) {
-    background-color: ${(props) => (props.$variant === 'outline' ? '#f5f5f5' : '#555')};
+    background-color: ${(props) => (props.$variant === 'outline' ? colors.background : '#555')};
   }
 `;
 
 const StyledLink = styled(Link)`
   ${baseStyles}
-  background-color: ${(props) => (props.$variant === 'outline' ? 'transparent' : '#333')};
-  color: ${(props) => (props.$variant === 'outline' ? '#333' : 'white')};
-  border: ${(props) => (props.$variant === 'outline' ? '1px solid #333' : 'none')};
+  background-color: ${(props) => (props.$variant === 'outline' ? 'transparent' : colors.dark)};
+  color: ${(props) => (props.$variant === 'outline' ? colors.dark : colors.textLight)};
+  border: ${(props) => (props.$variant === 'outline' ? `1px solid ${colors.dark}` : 'none')};
 
   &:hover:not(:disabled) {
-    background-color: ${(props) => (props.$variant === 'outline' ? '#f5f5f5' : '#555')};
+    background-color: ${(props) => (props.$variant === 'outline' ? colors.background : '#555')};
   }
 `;
 

@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import LogoSvg from '../../assets/images/logo.svg';
 import productData from '../../data/product.json';
 import { useImageBasePath } from '../../context/ImagePathContext';
+import { colors, fontSizes } from '../../assets/styles/theme';
 
 const offerMessages = [
   "💄 Cosmetics Offer: Up to 40% OFF on Makeup Essentials!",
@@ -339,11 +340,11 @@ const Header = () => {
 const HeaderContainer = styled.header`
   display: flex;
   flex-direction: column;
-  background: white;
+  background: ${colors.card};
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 9999;
 `;
 
 const Container = styled.div`
@@ -357,9 +358,9 @@ const Container = styled.div`
 `;
 
 const Logo = styled(Link)`
-  font-size: 24px;
+  font-size: ${fontSizes.lg};
   font-weight: bold;
-  color: #333;
+  color: ${colors.text};
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -383,15 +384,16 @@ const Nav = styled.nav`
 
 const NavLink = styled(Link)`
   text-decoration: none;
-  color: #333;
+  color: ${colors.text};
   font-weight: 500;
   display: flex;
   align-items: center;
   gap: 5px;
   padding: 23px 0; 
+  font-size: ${fontSizes.base};
 
   &:hover {
-    color: #666;
+    color: ${colors.muted};
   }
 `;
 
@@ -400,7 +402,7 @@ const MobileMenuIcon = styled.button`
   background: none;
   border: none;
   font-size: 24px;
-  color: #333;
+  color: ${colors.text};
   cursor: pointer;
   margin-left: 10px;
   svg{
@@ -426,7 +428,7 @@ const Icons = styled.div`
 const SearchIconBtn = styled.button`
   background: none;
   border: none;
-  color: #333;
+  color: ${colors.text};
   font-size: 18px;
   display: flex;
   align-items: center;
@@ -434,7 +436,7 @@ const SearchIconBtn = styled.button`
   padding: 0 2px;
   margin-right: 2px;
   &:hover {
-    color: #e5a6a6;
+    color: ${colors.accent};
   }
 `;
 
@@ -448,7 +450,7 @@ const UserDropdown = styled.div`
 const UserIconBtn = styled.button`
   background: none;
   border: none;
-  color: #333;
+  color: ${colors.text};
   font-size: 18px;
   display: flex;
   align-items: center;
@@ -456,14 +458,14 @@ const UserIconBtn = styled.button`
   padding: 25px 0; 
 
   &:hover {
-    color: #666;
+    color: ${colors.muted};
   }
 `;
 
 const UserName = styled.span`
   margin-left: 8px;
   font-weight: 500;
-  color: #333;
+  color: ${colors.text};
   font-size: 15px;
 `;
 
@@ -498,7 +500,7 @@ const DropdownMenu = styled.div`
 
 const DropdownItem = styled(Link)`
   padding: 10px 20px;
-  color: #333;
+  color: ${colors.text};
   text-decoration: none;
   font-size: 15px;
   background: none;
@@ -513,7 +515,7 @@ const DropdownItem = styled(Link)`
 
 const DropdownButton = styled.button`
   padding: 10px 20px;
-  color: #333;
+  color: ${colors.text};
   background: none;
   border: none;
   font-size: 15px;
@@ -530,7 +532,7 @@ const WishlistButton = styled(Link)`
   background: none;
   border: none;
   font-size: 18px;
-  color: #e74c3c;
+  color: ${colors.primary};
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -538,7 +540,7 @@ const WishlistButton = styled(Link)`
   position: relative;
   
   &:hover {
-    color: #c0392b;
+    color: ${colors.accent};
   }
 `;
 
@@ -546,16 +548,15 @@ const WishlistCount = styled.span`
   position: absolute;
   top: -8px;
   right: -8px;
-  background: #ff6b6b;
-  color: white;
+  background: ${colors.warning};
+  color: ${colors.textLight};
   width: 20px;
   height: 20px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
-  
+  font-size: ${fontSizes.xs};
 `;
 
 const CartButton = styled.button`
@@ -564,12 +565,12 @@ const CartButton = styled.button`
   font-size: 18px;
   position: relative;
   cursor: pointer;
-  color: #333;
+  color: ${colors.text};
   padding: 0 0;
   position:relative;
   top:2px;
   &:hover {
-    color: #666;
+    color: ${colors.muted};
   }
 `;
 
@@ -577,15 +578,15 @@ const CartCount = styled.span`
   position: absolute;
   top: -8px;
   right: -8px;
-  background: #ff6b6b;
-  color: white;
+  background: ${colors.warning};
+  color: ${colors.textLight};
   width: 20px;
   height: 20px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: ${fontSizes.xs};
 `;
 
 // --- Mobile Menu Styles ---
@@ -635,7 +636,7 @@ const MobileMenuClose = styled.button`
   background: none;
   border: none;
   font-size: 26px;
-  color: #333;
+  color: ${colors.text};
   cursor: pointer;
 `;
 
@@ -658,7 +659,7 @@ const MobileNavLink = styled(Link)`
   cursor: pointer;
   &:hover {
     background: #f5f5f5;
-    color: #e74c3c;
+    color: ${colors.primary};
   }
 `;
 
@@ -673,7 +674,7 @@ const MobileNavButton = styled.button`
   cursor: pointer;
   &:hover {
     background: #f5f5f5;
-    color: #e74c3c;
+    color: ${colors.primary};
   }
 `;
 
@@ -686,7 +687,7 @@ const MobileDivider = styled.div`
 const MobileBadge = styled.span`
   display: inline-block;
   margin-left: 8px;
-  background: #e74c3c;
+  background: ${colors.primary};
   color: #fff;
   border-radius: 10px;
   font-size: 13px;
@@ -717,12 +718,12 @@ const MobileAccountName = styled.span`
 
 const Banner = styled.div`
   width: 100%;
-  background: #C8BFE7;
-  color: #fff;
+  background: ${colors.info};
+  color: ${colors.textLight};
   display: flex;
   align-items: center;
   min-height: 38px;
-  font-size: 15px;
+  font-size: ${fontSizes.sm};
   font-weight: 500;
   position: relative;
   overflow: hidden;
@@ -814,7 +815,7 @@ const CloseSearchBtn = styled.button`
   font-size: 16px;
   cursor: pointer;
   &:hover {
-    color: #e5a6a6;
+    color: ${colors.accent};
   }
 `;
 

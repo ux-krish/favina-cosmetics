@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import LogoSvg from '../../assets/images/logo.svg';
 import { Link } from 'react-router-dom';
+import { colors, fontSizes } from '../../assets/styles/theme';
 
 const Footer = () => {
   return (
@@ -29,8 +30,8 @@ const Footer = () => {
 };
 
 const FooterContainer = styled.footer`
-  background: #333;
-  color: white;
+  background: ${colors.text};
+  color: ${colors.textLight};
   padding: 40px 20px 20px;
 `;
 
@@ -51,22 +52,22 @@ const Section = styled.div`
 
 const Title = styled.h3`
   margin: 0;
-  font-size: 18px;
+  font-size: ${fontSizes.md};
 `;
 
 const Text = styled.p`
   margin: 0;
-  color: #ccc;
-  font-size: 14px;
+  color: ${colors.gray};
+  font-size: ${fontSizes.sm};
 `;
 
 const FooterLink = styled(Link)`
-  color: #ccc;
+  color: ${colors.gray};
   text-decoration: none;
-  font-size: 14px;
+  font-size: ${fontSizes.sm};
 
   &:hover {
-    color: white;
+    color: ${colors.textLight};
   }
 `;
 
@@ -76,7 +77,7 @@ const Copyright = styled.p`
   padding-top: 20px;
   border-top: 1px solid #444;
   color: #aaa;
-  font-size: 14px;
+  font-size: ${fontSizes.sm};
 `;
 
 const LogoImg = styled.img`
@@ -84,7 +85,6 @@ const LogoImg = styled.img`
   width: 106px;
   display: block;
   margin-bottom: 10px;
-  
 `;
 
 export default Footer;

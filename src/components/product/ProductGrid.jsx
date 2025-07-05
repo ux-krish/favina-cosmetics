@@ -18,7 +18,7 @@ const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
-  padding: 20px 0;
+  padding: 10px 0;
 
   @media (max-width: 700px) {
     grid-template-columns: repeat(2, 1fr);

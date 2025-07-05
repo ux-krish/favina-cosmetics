@@ -23,7 +23,7 @@ const Wrapper = styled.div`
   background: #fff;
   display: flex;
   justify-content: center;
-  padding: 30px 0;
+  padding: 30px 20px;
 `;
 
 const Container = styled.div`

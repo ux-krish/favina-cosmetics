@@ -22,7 +22,8 @@ const OrderConfirmation = () => {
   }
 
   return (
-    <Container>
+    <OrderConfirmationWrapper>
+      <Container>
       <h1>Order Confirmed!</h1>
       <OrderId>Order #{order.id}</OrderId>
       <Status>
@@ -51,12 +52,18 @@ const OrderConfirmation = () => {
         View My Orders
       </Button>
     </Container>
+    </OrderConfirmationWrapper>
   );
 };
-
+const OrderConfirmationWrapper = styled.div`
+  width: 100%;  
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 20px;
+`;
 const Container = styled.div`
-  max-width: 600px;
-  margin: 40px auto;
+  width: 100%;
+  margin: 40px 0 0;
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.07);

@@ -10,6 +10,7 @@ import TextSliderWrapper from '../../components/common/TextSliderWrapper';
 import PromoBanner, { BannerHighlight } from '../../components/common/PromoBanner';
 import promoImg from '../../assets/images/main-bg1.png';
 import { Link } from 'react-router-dom';
+import { colors, fontSizes } from '../../assets/styles/theme';
 
 const sliderMessages = [
   { text: "Limited Time Only", highlight: true },
@@ -125,36 +126,7 @@ const HomePage = () => {
         buttonTo="/products"
       />
 
-       <BeautyPicksSection>
-        <BeautyPicksTitle>
-          <span style={{ color: '#e5a6a6', fontWeight: 700 }}>Beauty Picks</span>
-          <span style={{ color: '#5b4a44', fontWeight: 900 }}> for Every Mood</span>
-        </BeautyPicksTitle>
-        <BeautyPicksGrid>
-          {beautyPicks.map((pick, idx) => (
-            <BeautyPickCard as={Link} to={pick.to} key={idx}>
-              <BeautyPickImg src={pick.image} alt={pick.label} />
-              <BeautyPickOverlay>
-                <BeautyPickLabel>
-                  {pick.label}
-                  <BeautyPickShopBtn
-              BeautyPickCarde="beauty-pick-shop-btn"
-                    tabIndex={-1}
-                    type="button"
-                    onClick={e => {
-                      e.preventDefault();
-                      window.location.href = pick.to;
-                    }}
-                  >
-                    Shop Now
-                  </BeautyPickShopBtn>
-                </BeautyPickLabel>
-                <BeautyPickOffer>{pick.offer}</BeautyPickOffer>
-              </BeautyPickOverlay>
-            </BeautyPickCard>
-          ))}
-        </BeautyPicksGrid>
-      </BeautyPicksSection>
+      {/* Beauty Picks for Every Mood section removed as requested */}
 
       <FeaturedSection>
         <Container>
@@ -171,7 +143,7 @@ const Container = styled.div`
   max-width: 1320px;
   width: 100%;
   margin: 0 auto;
-  padding: 0 0;
+  padding: 0 20px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -192,8 +164,8 @@ const HeroSection = styled.section`
   justify-content: flex-start;
   @media (max-width: 900px) {
     padding-top:50px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 0;
+    padding-right: 0;
     padding-bottom: 200px;
     min-height: 420px;
     justify-content: center;
@@ -215,28 +187,28 @@ const HeroInner = styled.div`
 `;
 
 const HeroHeading = styled.h1`
-  font-size: 48px;
+  font-size: ${fontSizes.xxl};
   font-weight: 700;
-  color: #5b4a44;
+  color: ${colors.text};
   margin: 0 0 12px 0;
   line-height: 1.1;
   letter-spacing: -1px;
   @media (max-width: 600px) {
-    font-size: 32px;
+    font-size: ${fontSizes.xl};
   }
 `;
 
 const Highlight = styled.span`
-  color: #e5a6a6;
+  color: ${colors.accent};
 `;
 
 const HeroSubtitle = styled.p`
-  font-size: 22px;
-  color: #5b4a44;
+  font-size: ${fontSizes.md};
+  color: ${colors.text};
   margin: 0 0 18px 0;
   font-weight: 400;
   @media (max-width: 600px) {
-    font-size: 16px;
+    font-size: ${fontSizes.base};
   }
 `;
 
@@ -248,10 +220,10 @@ const HeroOfferRow = styled.div`
 `;
 
 const DiscountBadge = styled.span`
-  background: #c8bfe7;
-  color: #fff;
+  background: ${colors.info};
+  color: ${colors.textLight};
   font-weight: 700;
-  font-size: 18px;
+  font-size: ${fontSizes.md};
   border-radius: 7px;
   padding: 7px 22px;
   display: inline-block;
@@ -259,8 +231,8 @@ const DiscountBadge = styled.span`
 `;
 
 const OfferText = styled.span`
-  color: #5b4a44;
-  font-size: 18px;
+  color: ${colors.text};
+  font-size: ${fontSizes.md};
   font-weight: 400;
 `;
 
@@ -281,9 +253,9 @@ const ShopNowBtn = styled(Button)`
 `;
 
 const FeaturedSection = styled.section`
-  max-width: 1320px;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 0;
   width: 100%;
   h2 {
     text-align: center;

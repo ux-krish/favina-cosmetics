@@ -12,9 +12,9 @@
       "rating": 4.4,
       "testimonials": [
         {
-          "name": "Priya S.",
+          "name": "Emily R.",
           "text": "The matte lipstick is my new favorite! Stays all day and feels light.",
-          "avatar": "https://randomuser.me/api/portraits/women/65.jpg"
+          "avatar": "/avatar-default.jpg"
         }
       ]
     },
@@ -29,9 +29,9 @@
       "rating": 4.1,
       "testimonials": [
         {
-          "name": "Aarti P.",
+          "name": "Jessica P.",
           "text": "Love the volumizing mascara, my lashes look amazing!",
-          "avatar": "https://randomuser.me/api/portraits/women/81.jpg"
+          "avatar": "/avatar-default.jpg"
         }
       ]
     },
@@ -47,9 +47,9 @@
       "rating": 5.0,
       "testimonials": [
         {
-          "name": "Isha N.",
+          "name": "Ashley N.",
           "text": "Hydrating face serum made my skin glow!",
-          "avatar": "https://randomuser.me/api/portraits/women/78.jpg"
+          "avatar": "/avatar-default.jpg"
         }
       ]
     },
@@ -64,9 +64,9 @@
       "rating": 4.5,
       "testimonials": [
         {
-          "name": "Tanvi P.",
+          "name": "Lauren P.",
           "text": "Moisturizing day cream is light and non-greasy.",
-          "avatar": "https://randomuser.me/api/portraits/women/84.jpg"
+          "avatar": "/avatar-default.jpg"
         }
       ]
     },
@@ -82,9 +82,9 @@
       "rating": 3.0,
       "testimonials": [
         {
-          "name": "Anjali M.",
+          "name": "Megan M.",
           "text": "Nourishing shampoo made my hair so soft and shiny!",
-          "avatar": "https://randomuser.me/api/portraits/women/70.jpg"
+          "avatar": "/avatar-default.jpg"
         }
       ]
     },
@@ -99,9 +99,9 @@
       "rating": 3.8,
       "testimonials": [
         {
-          "name": "Sneha T.",
+          "name": "Samantha T.",
           "text": "Curl defining cream works wonders for my curls.",
-          "avatar": "https://randomuser.me/api/portraits/women/82.jpg"
+          "avatar": "/avatar-default.jpg"
         }
       ]
     },
@@ -118,9 +118,9 @@
       "rating": 4.8,
       "testimonials": [
         {
-          "name": "Rashmi V.",
+          "name": "Rachel V.",
           "text": "Rose Eau de Parfum smells divine and lasts all day.",
-          "avatar": "https://randomuser.me/api/portraits/women/74.jpg"
+          "avatar": "/avatar-default.jpg"
         }
       ]
     },
@@ -135,9 +135,9 @@
       "rating": 4.0,
       "testimonials": [
         {
-          "name": "Neha L.",
+          "name": "Hannah L.",
           "text": "Floral body mist is so refreshing and light.",
-          "avatar": "https://randomuser.me/api/portraits/women/83.jpg"
+          "avatar": "/avatar-default.jpg"
         }
       ]
     },
@@ -165,12 +165,11 @@
       "rating": 4.4,
       "testimonials": [
         {
-          "name": "Nisha T.",
+          "name": "Olivia T.",
           "text": "Blends foundation flawlessly!",
-          "avatar": "https://randomuser.me/api/portraits/women/97.jpg"
+          "avatar": "/avatar-default.jpg"
         }
       ]
     }
   ]
 }
-     

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { colors, fontSizes } from '../../assets/styles/theme';
 
 const FormInput = ({ label, error, ...props }) => {
   return (
@@ -18,27 +19,27 @@ const InputContainer = styled.div`
 `;
 
 const Label = styled.label`
-  font-size: 14px;
+  font-size: ${fontSizes.sm};
   font-weight: 500;
-  color: #333;
+  color: ${colors.text};
 `;
 
 const Input = styled.input`
   padding: 10px 15px;
-  border: 1px solid #ddd;
+  border: 1px solid ${colors.border};
   border-radius: 4px;
-  font-size: 14px;
+  font-size: ${fontSizes.sm};
   width: 100%;
 
   &:focus {
     outline: none;
-    border-color: #666;
+    border-color: ${colors.muted};
   }
 `;
 
 const ErrorMessage = styled.span`
-  color: #ff6b6b;
-  font-size: 12px;
+  color: ${colors.warning};
+  font-size: ${fontSizes.xs};
 `;
 
 export default FormInput;

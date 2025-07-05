@@ -142,25 +142,38 @@ const CheckoutLayout = styled.div`
   display: flex;
   gap: 40px;
   max-width: 1100px;
+  width: 100%;
   margin: 40px auto;
   padding: 0 20px;
   align-items: flex-start;
   @media (max-width: 900px) {
-    flex-direction: column;
-    gap: 30px;
+    flex-direction: column-reverse;
+    gap: 24px;
+    margin: 18px auto;
+    padding: 0 20px;
+  }
+  @media (max-width: 600px) {
+    gap: 10px;
+    padding: 0 20px;
     margin: 20px auto;
-    padding: 0 8px;
   }
 `;
 
 const FormSection = styled.div`
-  flex: 2;
+  flex: 0 0 60%;
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.07);
   padding: 30px 20px;
   min-width: 0;
-  /* Add a class for reference */
+  @media (max-width: 900px) {
+    padding: 20px 10px;
+    flex:none;
+    width: 100%;
+  }
+  @media (max-width: 600px) {
+    padding:20px 20px;
+  }
 `;
 
 const OrderSummarySection = styled.div`
@@ -176,11 +189,7 @@ const OrderSummarySection = styled.div`
   align-self: flex-start;
   display: flex;
   flex-direction: column;
-  max-height: 650px; /* fallback for SSR */
-  @media (min-width: 901px) {
-    /* Match the form section height using JS if needed, but CSS fallback */
-    
-  }
+  max-height: 650px;
   @media (max-width: 900px) {
     max-width: 100%;
     width: 100%;
@@ -188,6 +197,11 @@ const OrderSummarySection = styled.div`
     position: static;
     top: unset;
     max-height: unset;
+    padding: 18px 10px 10px 10px;
+  }
+  @media (max-width: 600px) {
+    padding: 10px 10px 8px 10px;
+    min-width: 0;
   }
 `;
 
@@ -196,6 +210,10 @@ const OrderSummaryTitle = styled.h2`
   color: #e74c3c;
   margin-bottom: 18px;
   text-align: left;
+  @media (max-width: 600px) {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
 `;
 
 const OrderItems = styled.div`
@@ -204,8 +222,12 @@ const OrderItems = styled.div`
   gap: 18px;
   margin-bottom: 18px;
   overflow-y: auto;
-  /* Make it scrollable if too tall */
   max-height: calc(100vh - 180px);
+  @media (max-width: 600px) {
+    gap: 10px;
+    margin-bottom: 10px;
+    max-height: 220px;
+  }
 `;
 
 const OrderItem = styled.div`
@@ -216,6 +238,10 @@ const OrderItem = styled.div`
   border-radius: 7px;
   padding: 10px 10px;
   box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  @media (max-width: 600px) {
+    gap: 6px;
+    padding: 7px 4px;
+  }
 `;
 
 const OrderItemImg = styled.img`
@@ -224,6 +250,10 @@ const OrderItemImg = styled.img`
   object-fit: contain;
   border-radius: 6px;
   background: #fafafa;
+  @media (max-width: 600px) {
+    width: 38px;
+    height: 38px;
+  }
 `;
 
 const OrderItemInfo = styled.div`
@@ -231,23 +261,35 @@ const OrderItemInfo = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2px;
+  @media (max-width: 600px) {
+    gap: 1px;
+  }
 `;
 
 const OrderItemTitle = styled.div`
   font-size: 15px;
   color: #222;
   font-weight: 500;
+  @media (max-width: 600px) {
+    font-size: 13px;
+  }
 `;
 
 const OrderItemQty = styled.div`
   font-size: 14px;
   color: #888;
+  @media (max-width: 600px) {
+    font-size: 12px;
+  }
 `;
 
 const OrderItemPrice = styled.div`
   font-size: 15px;
   color: #e74c3c;
   font-weight: 600;
+  @media (max-width: 600px) {
+    font-size: 13px;
+  }
 `;
 
 const OrderTotalRow = styled.div`
@@ -258,12 +300,21 @@ const OrderTotalRow = styled.div`
   border-top: 1px solid #eee;
   padding-top: 14px;
   margin-top: 10px;
+  @media (max-width: 600px) {
+    font-size: 15px;
+    padding-top: 8px;
+    margin-top: 6px;
+  }
 `;
 
 const PaymentSection = styled.div`
   margin-top: 40px;
   padding-top: 20px;
   border-top: 1px solid #eee;
+  @media (max-width: 600px) {
+    margin-top: 18px;
+    padding-top: 10px;
+  }
 `;
 
 const PaymentOption = styled.div`
@@ -281,6 +332,10 @@ const Note = styled.div`
   color: #e74c3c;
   font-size: 14px;
   margin-top: 8px;
+  @media (max-width: 600px) {
+    font-size: 12px;
+    margin-top: 4px;
+  }
 `;
 
 const BackButton = styled.button`
@@ -300,6 +355,11 @@ const BackButton = styled.button`
     border-color: #e74c3c;
     background: #fff7f5;
   }
+  @media (max-width: 600px) {
+    font-size: 13px;
+    padding: 5px 10px 5px 7px;
+    margin-bottom: 10px;
+  }
 `;
 
 const EmptyMsg = styled.div`
@@ -307,6 +367,10 @@ const EmptyMsg = styled.div`
   font-size: 15px;
   text-align: center;
   padding: 20px 0;
+  @media (max-width: 600px) {
+    font-size: 12px;
+    padding: 10px 0;
+  }
 `;
 
 const UpsellSection = styled.div`
@@ -404,4 +468,3 @@ const RemoveBtn = styled.button`
 `;
 
 export default CheckoutPage;
-  

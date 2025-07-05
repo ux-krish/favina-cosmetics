@@ -18,6 +18,7 @@ import PromoBanner, { BannerHighlight } from '../../components/common/PromoBanne
 import promoImg from '../../assets/images/main-bg2.png';
 import { useAuth } from '../../redux/hooks';
 import { FaHeart } from 'react-icons/fa';
+import { colors, fontSizes } from '../../assets/styles/theme';
 
 const SwiperNavStyles = createGlobalStyle`
   .product-detail-swiper .swiper-button-next,
@@ -505,7 +506,7 @@ const ProductDetail = () => {
 
 const ProductDetailContainer = styled.div`
   display: flex;
-  gap: 48px;
+  gap: 24px;
   padding: 40px 20px;
   max-width: 1320px;
   margin: 0 auto;
@@ -519,15 +520,19 @@ const ProductDetailContainer = styled.div`
 
 const ProductImageSection = styled.div`
   width: 50%;
-  background: #fff;
-  border-radius: 16px;
-  padding: 32px 24px 18px 24px;
-  box-shadow: 0 2px 16px rgba(168,132,202,0.06);
+  //background: #fff;
+  border-radius: 10px;
+  //padding: 32px 24px 18px 24px;
+  //box-shadow: 0 2px 16px rgba(168,132,202,0.06);
   display: flex;
   flex-direction: column;
   align-items: center;
   min-width: 0;
   max-width: 100%;
+  .swiper{
+    width: 100%;
+    max-width: 100% !important;
+  }
   @media (max-width: 900px) {
     width: 100%;
     max-width: 100%;
@@ -537,20 +542,20 @@ const ProductImageSection = styled.div`
 
 const ProductImage = styled.img`
   width: 100%;
-  max-height: 380px;
+  max-height: 480px;
   object-fit: contain;
   border-radius: 12px;
   background: #f9f9f9;
-  margin-bottom: 18px;
+  margin-bottom: 0;
   border: 1.5px solid #ede7f6;
 `;
 
 
 const ThumbImage = styled.img`
-  width: 64px;
-  height: 64px;
+  width: 100px;
+  height: 100px;
   object-fit: contain;
-  border-radius: 8px;
+  border-radius: 6px;
   border: 2px solid #eee;
   background: #fff;
   cursor: pointer;
@@ -564,7 +569,7 @@ const ProductInfoSection = styled.div`
   width: 50%;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 24px;
   min-width: 0;
   max-width: 100%;
   @media (max-width: 900px) {
@@ -574,16 +579,16 @@ const ProductInfoSection = styled.div`
 `;
 
 const ProductTitle = styled.h1`
-  font-size: 2rem;
+  font-size: ${fontSizes.xl};
   font-weight: 800;
-  color: #5b4a44;
+  color: ${colors.text};
   margin: 0 0 8px 0;
   letter-spacing: -1px;
 `;
 
 const ProductCategory = styled.div`
-  color: #a084ca;
-  font-size: 1rem;
+  color: ${colors.secondary};
+  font-size: ${fontSizes.base};
   font-weight: 600;
   margin-bottom: 8px;
   text-transform: capitalize;
@@ -597,20 +602,20 @@ const ProductRatingRow = styled.div`
 `;
 
 const RatingValue = styled.span`
-  color: #222;
-  font-size: 1.1rem;
+  color: ${colors.dark};
+  font-size: ${fontSizes.base};
   font-weight: 700;
   margin-right: 4px;
 `;
 
 const RatingStar = styled.span`
   color: #ffc107;
-  font-size: 1.1rem;
+  font-size: ${fontSizes.base};
 `;
 
 const RatingCount = styled.span`
-  color: #888;
-  font-size: 1rem;
+  color: ${colors.muted};
+  font-size: ${fontSizes.base};
   font-weight: 500;
   margin-left: 8px;
 `;
@@ -623,23 +628,23 @@ const ProductPriceRow = styled.div`
 `;
 
 const OfferPrice = styled.span`
-  color: #222;
-  font-size: 2rem;
+  color: ${colors.text};
+  font-size: ${fontSizes.xl};
   font-weight: 900;
 `;
 
 const RegularPrice = styled.span`
   color: #bdbdbd;
   text-decoration: line-through;
-  font-size: 1.2rem;
+  font-size: ${fontSizes.md};
   font-weight: 500;
 `;
 
 const DiscountBadge = styled.span`
   background: #f7d7d7;
-  color: #e74c3c;
+  color: ${colors.primary};
   font-weight: 700;
-  font-size: 1rem;
+  font-size: ${fontSizes.base};
   border-radius: 6px;
   padding: 4px 12px;
   margin-left: 4px;
@@ -647,7 +652,7 @@ const DiscountBadge = styled.span`
 
 const ProductDesc = styled.p`
   color: #444;
-  font-size: 1.1rem;
+  font-size: ${fontSizes.base};
   margin-bottom: 10px;
 `;
 
@@ -708,7 +713,7 @@ const ActionRow = styled.div`
 `;
 
 const AddToCartBtn = styled(Button)`
-  flex: 1.2;
+  flex: 1;
   background: #ede7f6;
   color: #a084ca;
   font-weight: 700;
@@ -722,7 +727,7 @@ const AddToCartBtn = styled(Button)`
 `;
 
 const BuyNowBtn = styled(Button)`
-  flex: 1.2;
+  flex: 1;
   background: #5b4a44;
   color: #fff;
   font-weight: 700;
@@ -741,8 +746,8 @@ const WishlistBtn = styled.button`
   border-radius: 8px;
   color: ${({ wished }) => (wished ? '#e74c3c' : '#a084ca')};
   font-size: 22px;
-  width: 44px;
-  height: 44px;
+  width: 50px;
+  height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -771,12 +776,13 @@ const CustomTestimonialSection = styled.section`
 `;
 
 const TestimonialLeft = styled.div`
-  flex: 1;
+  width: 50%;
   background: linear-gradient(120deg, #fbeaec 0%, #f8f3fa 100%);
   padding: 48px 38px 38px 48px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  border-radius: 10px 0 0 10px;
   @media (max-width: 900px) {
     padding: 28px 18px 18px 18px;
   }
@@ -847,13 +853,14 @@ const VerifiedIcon = styled.span`
 
 
 const TestimonialRight = styled.div`
-  flex: 1.2;
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 38px 28px;
   background: #fff;
+  border-radius: 0 10px 10px 0;
   @media (max-width: 900px) {
     padding: 24px 12px;
   }
