@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-// --- Move login/register logic here ---
 const loginUser = async (credentials) => {
   await new Promise(resolve => setTimeout(resolve, 500));
   const users = JSON.parse(localStorage.getItem('users') || '[]');

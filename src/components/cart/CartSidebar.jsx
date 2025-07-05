@@ -179,6 +179,15 @@ const CartSidebar = () => {
               {cartItems.length === 0 ? (
                 <>
                   <EmptyCart>Your cart is empty</EmptyCart>
+                  <ShopNowBtn
+                    type="button"
+                    onClick={() => {
+                      dispatch(toggleCart());
+                      navigate('/products');
+                    }}
+                  >
+                    Shop Now
+                  </ShopNowBtn>
                   {/* Removed Recommended for you section */}
                 </>
               ) : (
@@ -274,6 +283,23 @@ const EmptyCart = styled.p`
   text-align: center;
   color: #666;
   margin-top: 50px;
+`;
+
+const ShopNowBtn = styled.button`
+  display: block;
+  margin: 18px auto 0 auto;
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 28px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s;
+  &:hover {
+    background: #c0392b;
+  }
 `;
 
 const CartFooter = styled.div`

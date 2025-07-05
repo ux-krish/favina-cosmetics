@@ -45,6 +45,14 @@ const CheckoutForm = () => {
     const newOrder = { ...order, id: Date.now().toString() };
     const updatedOrders = [...orders, newOrder];
     localStorage.setItem('orders', JSON.stringify(updatedOrders));
+
+    // Clear cart for logged in user in localStorage
+    if (isAuthenticated && user?.id) {
+      const allCarts = JSON.parse(localStorage.getItem('carts') || '{}');
+      allCarts[user.id] = [];
+      localStorage.setItem('carts', JSON.stringify(allCarts));
+    }
+
     dispatch(clearCart());
     orderIdRef.current = newOrder.id;
     navigate(`/order-confirmation/${newOrder.id}`);
