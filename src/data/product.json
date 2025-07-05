@@ -1,6 +1,6 @@
 {
   "products": [
-  
+   
     {
       "id": 1,
       "title": "Matte Liquid Lipstick",
@@ -32,34 +32,6 @@
           "name": "Aarti P.",
           "text": "Love the volumizing mascara, my lashes look amazing!",
           "avatar": "https://randomuser.me/api/portraits/women/81.jpg"
-        }
-      ]
-    },
-    {
-      "id": 9,
-      "title": "Long-lasting Foundation",
-      "price": 32.99,
-      "offerPrice": 27.99,
-      "image": "long-lasting-foundation.jpg",
-      "images": ["long-lasting-foundation.jpg", "long-lasting-foundation-1.jpg", "long-lasting-foundation-2.jpg", "long-lasting-foundation-3.jpg"],
-      "category": "Makeup",
-      "rating": 4.2,
-      "testimonials": []
-    },
-    {
-      "id": 13,
-      "title": "Blush Palette",
-      "price": 25.99,
-      "offerPrice": 21.99,
-      "image": "blush-palette.jpg",
-      "images": ["blush-palette.jpg", "blush-palette-1.jpg", "blush-palette-2.jpg", "blush-palette-3.jpg"],
-      "category": "Makeup",
-      "rating": 4.6,
-      "testimonials": [
-        {
-          "name": "Simran K.",
-          "text": "Beautiful shades and easy to blend!",
-          "avatar": "https://randomuser.me/api/portraits/women/90.jpg"
         }
       ]
     },
@@ -98,42 +70,7 @@
         }
       ]
     },
-    {
-      "id": 10,
-      "title": "Vitamin C Night Cream",
-      "price": 36.99,
-      "offerPrice": 31.99,
-      "image": "vitamin-c-night-cream.jpg",
-      "images": ["vitamin-c-night-cream.jpg", "vitamin-c-night-cream-1.jpg", "vitamin-c-night-cream-2.jpg", "vitamin-c-night-cream-3.jpg"],
-      "category": "Skincare",
-      "rating": 4.7,
-      "testimonials": [
-        {
-          "name": "Ritu S.",
-          "text": "Vitamin C night cream improved my skin texture.",
-          "avatar": "https://randomuser.me/api/portraits/women/88.jpg"
-        }
-      ]
-    },
-    {
-      "id": 14,
-      "title": "Gentle Face Cleanser",
-      "price": 18.99,
-      "offerPrice": 15.99,
-      "image": "gentle-face-cleanser.jpg",
-      "images": ["gentle-face-cleanser.jpg", "gentle-face-cleanser-1.jpg", "gentle-face-cleanser-2.jpg", "gentle-face-cleanser-3.jpg"],
-      "category": "Skincare",
-      "rating": 4.3,
-      "testimonials": [
-        {
-          "name": "Megha D.",
-          "text": "Leaves my skin soft and clean.",
-          "avatar": "https://randomuser.me/api/portraits/women/91.jpg"
-        }
-      ]
-    },
 
-  
     {
       "id": 4,
       "title": "Nourishing Shampoo",
@@ -168,42 +105,8 @@
         }
       ]
     },
-    {
-      "id": 15,
-      "title": "Herbal Hair Oil",
-      "price": 14.99,
-      "offerPrice": 12.49,
-      "image": "herbal-hair-oil.jpg",
-      "images": ["herbal-hair-oil.jpg", "herbal-hair-oil-1.jpg", "herbal-hair-oil-2.jpg", "herbal-hair-oil-3.jpg"],
-      "category": "Haircare",
-      "rating": 4.2,
-      "testimonials": [
-        {
-          "name": "Rina G.",
-          "text": "Reduced my hair fall and improved shine.",
-          "avatar": "https://randomuser.me/api/portraits/women/92.jpg"
-        }
-      ]
-    },
-    {
-      "id": 16,
-      "title": "Repair Conditioner",
-      "price": 17.99,
-      "offerPrice": 14.99,
-      "image": "repair-conditioner.jpg",
-      "images": ["repair-conditioner.jpg", "repair-conditioner-1.jpg", "repair-conditioner-2.jpg", "repair-conditioner-3.jpg"],
-      "category": "Haircare",
-      "rating": 4.0,
-      "testimonials": [
-        {
-          "name": "Shweta P.",
-          "text": "My hair feels so much healthier!",
-          "avatar": "https://randomuser.me/api/portraits/women/93.jpg"
-        }
-      ]
-    },
 
-    
+  
     {
       "id": 5,
       "title": "Rose Eau de Parfum",
@@ -238,40 +141,6 @@
         }
       ]
     },
-    {
-      "id": 17,
-      "title": "Citrus Splash Perfume",
-      "price": 44.99,
-      "offerPrice": 39.99,
-      "image": "citrus-splash-perfume.jpg",
-      "images": ["citrus-splash-perfume.jpg", "citrus-splash-perfume-1.jpg", "citrus-splash-perfume-2.jpg", "citrus-splash-perfume-3.jpg"],
-      "category": "Fragrance",
-      "rating": 4.5,
-      "testimonials": [
-        {
-          "name": "Ayesha M.",
-          "text": "Fresh and energizing scent, lasts long.",
-          "avatar": "https://randomuser.me/api/portraits/women/94.jpg"
-        }
-      ]
-    },
-    {
-      "id": 18,
-      "title": "Woody Musk Cologne",
-      "price": 54.99,
-      "offerPrice": 47.99,
-      "image": "woody-musk-cologne.jpg",
-      "images": ["woody-musk-cologne.jpg", "woody-musk-cologne-1.jpg", "woody-musk-cologne-2.jpg", "woody-musk-cologne-3.jpg"],
-      "category": "Fragrance",
-      "rating": 4.3,
-      "testimonials": [
-        {
-          "name": "Deepa S.",
-          "text": "Unique woody notes, my new favorite.",
-          "avatar": "https://randomuser.me/api/portraits/women/95.jpg"
-        }
-      ]
-    },
 
     
     {
@@ -284,34 +153,6 @@
       "category": "Tools",
       "rating": 4.0,
       "testimonials": []
-    },
-    {
-      "id": 12,
-      "title": "Facial Cleansing Brush",
-      "price": 29.99,
-      "offerPrice": 24.99,
-      "image": "facial-cleansing-brush.jpg",
-      "images": ["facial-cleansing-brush.jpg", "facial-cleansing-brush-1.jpg", "facial-cleansing-brush-2.jpg", "facial-cleansing-brush-3.jpg"],
-      "category": "Tools",
-      "rating": 3.5,
-      "testimonials": []
-    },
-    {
-      "id": 19,
-      "title": "Eyelash Curler",
-      "price": 12.99,
-      "offerPrice": 9.99,
-      "image": "eyelash-curler.jpg",
-      "images": ["eyelash-curler.jpg", "eyelash-curler-1.jpg", "eyelash-curler-2.jpg", "eyelash-curler-3.jpg"],
-      "category": "Tools",
-      "rating": 4.1,
-      "testimonials": [
-        {
-          "name": "Kavita R.",
-          "text": "Easy to use and gives a perfect curl.",
-          "avatar": "https://randomuser.me/api/portraits/women/96.jpg"
-        }
-      ]
     },
     {
       "id": 20,
@@ -332,4 +173,4 @@
     }
   ]
 }
-
+     

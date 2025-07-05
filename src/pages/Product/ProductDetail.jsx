@@ -2,7 +2,7 @@ import { createGlobalStyle , styled} from 'styled-components';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { useAppDispatch } from '../../redux/hooks';
-import { addToCart } from '../../redux/slices/cartSlice';
+import { addToCart, toggleCart } from '../../redux/slices/cartSlice';
 import Button from '../../components/common/Button';
 import productData from '../../data/product.json';
 // Add Swiper imports
@@ -110,7 +110,7 @@ const ProductDetail = () => {
       setUserCart(updatedCart);
     }
     dispatch(addToCart({ ...product, quantity }));
-    
+    dispatch(toggleCart()); // Open cart sidebar after adding to cart
   };
 
   // --- Buy Now handler ---

@@ -1,5 +1,34 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { loadCart, saveCart, clearCart as clearCartService } from '../../services/cartService';
+
+// --- Cart localStorage logic in this file ---
+function getCartKey(user) {
+  if (user && user.email) {
+    return `cart_${user.email}`;
+  }
+  return 'cart_guest';
+}
+function loadCart(user) {
+  try {
+    const key = getCartKey(user);
+    const data = localStorage.getItem(key);
+    return data ? JSON.parse(data) : [];
+  } catch {
+    return [];
+  }
+}
+function saveCart(user, items) {
+  try {
+    const key = getCartKey(user);
+    localStorage.setItem(key, JSON.stringify(items));
+  } catch {}
+}
+function clearCartStorage(user) {
+  try {
+    const key = getCartKey(user);
+    localStorage.removeItem(key);
+  } catch {}
+}
+// --- End cart localStorage logic ---
 
 const initialState = {
   items: [],
@@ -32,7 +61,7 @@ const cartSlice = createSlice({
     },
     clearCart: (state, action) => {
       state.items = [];
-      clearCartService(action?.payload);
+      clearCartStorage(action?.payload);
     },
     toggleCart: (state) => {
       state.isCartOpen = !state.isCartOpen;

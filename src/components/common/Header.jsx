@@ -154,7 +154,6 @@ const Header = () => {
         <Nav>
           <NavLink to="/" title="Home">Home</NavLink>
           <NavLink to="/products" title="Browse all products">Products</NavLink>
-          <NavLink to="/category" title="Shop by Category">Category</NavLink>
           <NavLink to="/contact" title="Contact us">Contact</NavLink>
         </Nav>
         <Icons>

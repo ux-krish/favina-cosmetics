@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+// (Delete this file)
 import { Link } from 'react-router-dom';
 import ProductGrid from '../../components/product/ProductGrid';
 import productData from '../../data/product.json';

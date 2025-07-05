@@ -1,5 +1,35 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { loginUser, registerUser } from '../../services/authService';
+
+// --- Move login/register logic here ---
+const loginUser = async (credentials) => {
+  await new Promise(resolve => setTimeout(resolve, 500));
+  const users = JSON.parse(localStorage.getItem('users') || '[]');
+  const found = users.find(
+    u => u.email === credentials.email && u.password === credentials.password
+  );
+  if (!found) {
+    throw new Error('Invalid email or password');
+  }
+  const { password, ...userWithoutPassword } = found;
+  return userWithoutPassword;
+};
+
+const registerUser = async (userData) => {
+  await new Promise(resolve => setTimeout(resolve, 500));
+  const users = JSON.parse(localStorage.getItem('users') || '[]');
+  if (users.some(u => u.email === userData.email)) {
+    throw new Error('User already exists');
+  }
+  const newUser = {
+    ...userData,
+    id: Date.now().toString(),
+  };
+  users.push(newUser);
+  localStorage.setItem('users', JSON.stringify(users));
+  const { password, ...userWithoutPassword } = newUser;
+  return userWithoutPassword;
+};
+// --- End move ---
 
 // Async thunks (not using createAsyncThunk)
 export const loginThunk = (credentials) => async (dispatch) => {

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-// Helper function to get orders from localStorage
+// --- Order localStorage logic in this file ---
 const getOrdersFromStorage = () => {
   if (typeof window !== 'undefined') {
     const orders = localStorage.getItem('orders');
@@ -9,7 +9,18 @@ const getOrdersFromStorage = () => {
   return [];
 };
 
-// Async thunk (not using createAsyncThunk)
+const saveOrdersToStorage = (orders) => {
+  try {
+    localStorage.setItem('orders', JSON.stringify(orders));
+  } catch {}
+};
+
+const getOrderById = (orderId) => {
+  const orders = getOrdersFromStorage();
+  return orders.find(o => o.id === orderId) || null;
+};
+// --- End order localStorage logic ---
+
 export const createOrderThunk = (orderData) => async (dispatch) => {
   dispatch(orderSlice.actions.createOrderPending());
   try {
@@ -20,12 +31,14 @@ export const createOrderThunk = (orderData) => async (dispatch) => {
     };
     const currentOrders = getOrdersFromStorage();
     const updatedOrders = [...currentOrders, newOrder];
-    localStorage.setItem('orders', JSON.stringify(updatedOrders));
+    saveOrdersToStorage(updatedOrders);
     dispatch(orderSlice.actions.createOrderFulfilled(newOrder));
   } catch (error) {
     dispatch(orderSlice.actions.createOrderRejected(error.message));
   }
 };
+
+export { getOrdersFromStorage, getOrderById };
 
 const orderSlice = createSlice({
   name: 'order',

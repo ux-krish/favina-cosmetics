@@ -6,7 +6,7 @@ import Button from '../../components/common/Button';
 import FormInput from '../../components/ui/FormInput';
 import { clearCart } from '../../redux/slices/cartSlice';
 import { updateProfile } from '../../redux/slices/authSlice';
-import { addOrder } from '../../services/orderService';
+import { getOrdersFromStorage } from '../../redux/slices/orderSlice'; // import helper
 import { useEffect, useRef } from 'react';
 
 const CheckoutForm = () => {
@@ -29,7 +29,6 @@ const CheckoutForm = () => {
   }, [isAuthenticated, user, reset]);
 
   const onSubmit = (data) => {
-    // Save checkout details to profile for future orders
     if (isAuthenticated) {
       dispatch(updateProfile(data));
     }
@@ -41,11 +40,14 @@ const CheckoutForm = () => {
       status: 'pending',
     };
 
-    // Use orderService to add order
-    const createdOrder = addOrder(order);
+    // Add order to localStorage directly
+    const orders = getOrdersFromStorage();
+    const newOrder = { ...order, id: Date.now().toString() };
+    const updatedOrders = [...orders, newOrder];
+    localStorage.setItem('orders', JSON.stringify(updatedOrders));
     dispatch(clearCart());
-    orderIdRef.current = createdOrder.id;
-    navigate(`/order-confirmation/${createdOrder.id}`);
+    orderIdRef.current = newOrder.id;
+    navigate(`/order-confirmation/${newOrder.id}`);
   };
 
   return (

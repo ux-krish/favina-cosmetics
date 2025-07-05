@@ -90,85 +90,7 @@ const CheckoutPage = () => {
         </BackButton>
         <h1>Checkout</h1>
         {/* --- Upsell Section --- */}
-        <UpsellSection>
-          <UpsellTitle>Recommended for You</UpsellTitle>
-          <div style={{ position: 'relative' }}>
-            <Swiper
-              modules={[Navigation]}
-              navigation={{
-                prevEl: prevRef.current,
-                nextEl: nextRef.current,
-              }}
-              onInit={swiper => {
-                // Swiper v9+ requires this for custom navigation refs
-                swiper.params.navigation.prevEl = prevRef.current;
-                swiper.params.navigation.nextEl = nextRef.current;
-                swiper.navigation.init();
-                swiper.navigation.update();
-              }}
-              spaceBetween={18}
-              slidesPerView={2}
-              breakpoints={{
-                0: { slidesPerView: 1 },
-                600: { slidesPerView: 2 },
-                900: { slidesPerView: 3 },
-                1200: { slidesPerView: 4 }
-              }}
-              style={{ marginBottom: 10, paddingBottom: 8 }}
-              className="checkout-upsell-swiper"
-            >
-              {upsellProducts.map(product => (
-                <SwiperSlide key={product.id}>
-                  <UpsellCard
-                    onClick={() => navigate(`/products/${product.id}`)}
-                    tabIndex={0}
-                    title={product.title}
-                  >
-                    <UpsellImg
-                      src={
-                        product.image.startsWith('/') || product.image.startsWith('http')
-                          ? product.image
-                          : `/${product.image}`
-                      }
-                      alt={product.title}
-                    />
-                    <UpsellInfo>
-                      <UpsellName>{product.title}</UpsellName>
-                      <UpsellPrice>
-                        ${product.offerPrice && product.offerPrice < product.price
-                          ? product.offerPrice.toFixed(2)
-                          : product.price.toFixed(2)}
-                      </UpsellPrice>
-                    </UpsellInfo>
-                    <UpsellAddBtn
-                      onClick={e => {
-                        e.stopPropagation();
-                        handleAddUpsell(product);
-                      }}
-                    >
-                      Add to Order
-                    </UpsellAddBtn>
-                  </UpsellCard>
-                </SwiperSlide>
-              ))}
-              {/* Custom navigation buttons */}
-              <div
-                ref={prevRef}
-                className="swiper-button-prev"
-                tabIndex={0}
-                role="button"
-                aria-label="Previous slide"
-              ></div>
-              <div
-                ref={nextRef}
-                className="swiper-button-next"
-                tabIndex={0}
-                role="button"
-                aria-label="Next slide"
-              ></div>
-            </Swiper>
-          </div>
-        </UpsellSection>
+        {/* Removed Recommended for You upsell section */}
         {/* --- End Upsell Section --- */}
         <CheckoutForm />
         <PaymentSection>
@@ -482,3 +404,4 @@ const RemoveBtn = styled.button`
 `;
 
 export default CheckoutPage;
+  

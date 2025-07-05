@@ -2,14 +2,13 @@ import styled from 'styled-components';
 import { useParams, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Button from '../components/common/Button';
-import { getOrderById } from '../services/orderService';
+import { getOrderById } from '../redux/slices/orderSlice'; // changed import
 
 const OrderConfirmation = () => {
   const { orderId } = useParams();
   const [order, setOrder] = useState(null);
 
   useEffect(() => {
-    // Use orderService to get order by id
     setOrder(getOrderById(orderId));
   }, [orderId]);
 
