@@ -73,11 +73,11 @@
 
     {
       "id": 4,
-      "title": "Nourishing Shampoo",
+      "title": "L'Oreal Paris Extraordinary Oil Nourishing Shampoo",
       "price": 16.99,
       "offerPrice": 12.99,
-      "image": "nourishing-shampoo.jpg",
-      "images": ["nourishing-shampoo.jpg", "nourishing-shampoo-1.jpg", "nourishing-shampoo-2.jpg", "nourishing-shampoo-3.jpg"],
+      "image": "/ace06428901526588978_1.jpg",
+      "images": ["/ace06428901526588978_1.jpg", "/ace06428901526588978_1.jpg", "/ace06428901526588978_1.jpg", "/ace06428901526588978_1.jpg"],
       "category": "Haircare",
       "rating": 3.0,
       "testimonials": [
@@ -90,11 +90,11 @@
     },
     {
       "id": 8,
-      "title": "Curl Defining Cream",
+      "title": "Livon Style Pro Curl Cream",
       "price": 19.99,
       "offerPrice": 16.99,
-      "image": "curl-defining-cream.jpg",
-      "images": ["curl-defining-cream.jpg", "curl-defining-cream-1.jpg", "curl-defining-cream-2.jpg", "curl-defining-cream-3.jpg"],
+      "image": "/ceeb628LIVON00000019_1.jpg",
+      "images": ["/ceeb628LIVON00000019_1.jpg", "/ceeb628LIVON00000019_1.jpg", "/ceeb628LIVON00000019_1.jpg", "/ceeb628LIVON00000019_1.jpg"],
       "category": "Haircare",
       "rating": 3.8,
       "testimonials": [
@@ -112,8 +112,8 @@
       "title": "Rose Eau de Parfum",
       "price": 59.99,
       "offerPrice": 49.99,
-      "image": "rose-eau-de-parfum.jpg",
-      "images": ["rose-eau-de-parfum.jpg", "rose-eau-de-parfum-1.jpg", "rose-eau-de-parfum-2.jpg", "rose-eau-de-parfum-3.jpg"],
+      "image": "/a7531a53614272629370_1.jpg",
+      "images": ["/a7531a53614272629370_1.jpg", "/a7531a53614272629370_1.jpg", "/a7531a53614272629370_1.jpg", "/a7531a53614272629370_1.jpg"],
       "category": "Fragrance",
       "rating": 4.8,
       "testimonials": [
@@ -126,11 +126,11 @@
     },
     {
       "id": 11,
-      "title": "Floral Body Mist",
+      "title": "Bella Vita Senorita Woman Body Mist",
       "price": 24.99,
       "offerPrice": 19.99,
-      "image": "floral-body-mist.jpg",
-      "images": ["floral-body-mist.jpg", "floral-body-mist-1.jpg", "floral-body-mist-2.jpg", "floral-body-mist-3.jpg"],
+      "image": "/b506d62BELAB00000378_1.jpg",
+      "images": ["/b506d62BELAB00000378_1.jpg", "/b506d62BELAB00000378_1.jpg", "/b506d62BELAB00000378_1.jpg", "/b506d62BELAB00000378_1.jpg"],
       "category": "Fragrance",
       "rating": 4.0,
       "testimonials": [
