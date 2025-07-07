@@ -253,7 +253,7 @@ const Sidebar = styled.aside`
     pointer-events: ${({ $open }) => ($open ? 'auto' : 'none')};
     visibility: ${({ $open }) => ($open ? 'visible' : 'hidden')};
     transition: transform 0.28s cubic-bezier(.4,0,.2,1), visibility 0.18s;
-    z-index: 2001;
+    z-index: 9999;
     display: block;
   }
 `;
@@ -487,6 +487,7 @@ const SortDropdownWrapper = styled.div`
   justify-content: flex-end;
   gap: 8px;
   flex: 1;
+  text-align:right;
 `;
 
 const SortLabel = styled.label`

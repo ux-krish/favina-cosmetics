@@ -38,11 +38,11 @@
 
     {
       "id": 2,
-      "title": "Hydrating Face Serum",
+      "title": "L'Oreal Paris Revitalift Serum",
       "price": 34.99,
       "offerPrice": 29.99,
-      "image": "/facecreme1.png",
-      "images": ["/facecreme1.png", "/facecreme1.png", "/facecreme1.png", "/facecreme1.png"],
+      "image": "/ce6cb41LOREA00000002_1.jpg",
+      "images": ["/ce6cb41LOREA00000002_1.jpg", "/ce6cb41LOREA00000002_1.jpg", "/ce6cb41LOREA00000002_1.jpg", "/ce6cb41LOREA00000002_1.jpg"],
       "category": "Skincare",
       "rating": 5.0,
       "testimonials": [
@@ -55,11 +55,11 @@
     },
     {
       "id": 6,
-      "title": "Moisturizing Day Cream",
+      "title": "Cerave AM Facial Moisturizing Lotion With Sunscreen",
       "price": 27.99,
       "offerPrice": 22.99,
-      "image": "moisturizing-day-cream.jpg",
-      "images": ["moisturizing-day-cream.jpg", "moisturizing-day-cream-1.jpg", "moisturizing-day-cream-2.jpg", "moisturizing-day-cream-3.jpg"],
+      "image": "/52690dfCERAV00000044_1a.jpg",
+      "images": ["/52690dfCERAV00000044_1a.jpg", "/52690dfCERAV00000044_1a.jpg", "/52690dfCERAV00000044_1a.jpg", "/52690dfCERAV00000044_1a.jpg"],
       "category": "Skincare",
       "rating": 4.5,
       "testimonials": [
@@ -145,22 +145,22 @@
     
     {
       "id": 7,
-      "title": "Makeup Brush Set",
+      "title": "MARS Professional Makeup Brush - Set Of 12",
       "price": 39.99,
       "offerPrice": 34.99,
-      "image": "makeup-brush-set.jpg",
-      "images": ["makeup-brush-set.jpg", "makeup-brush-set-1.jpg", "makeup-brush-set-2.jpg", "makeup-brush-set-3.jpg"],
+      "image": "/f674195MARSX00000882-new_1.jpg",
+      "images": ["/f674195MARSX00000882-new_1.jpg", "/f674195MARSX00000882-new_1.jpg.jpg", "/f674195MARSX00000882-new_1.jpg", "/f674195MARSX00000882-new_1.jpg"],
       "category": "Tools",
       "rating": 4.0,
       "testimonials": []
     },
     {
       "id": 20,
-      "title": "Beauty Blender Sponge",
+      "title": "Bronson Professional Beauty Blender Sponge Makeup Applicator, Puffs",
       "price": 8.99,
       "offerPrice": 6.99,
-      "image": "beauty-blender-sponge.jpg",
-      "images": ["beauty-blender-sponge.jpg", "beauty-blender-sponge-1.jpg", "beauty-blender-sponge-2.jpg", "beauty-blender-sponge-3.jpg"],
+      "image": "/e71c2dd7452225850152_1.jpeg",
+      "images": ["/e71c2dd7452225850152_1.jpeg", "/e71c2dd7452225850152_1.jpeg", "/e71c2dd7452225850152_1.jpeg", "/e71c2dd7452225850152_1.jpeg"],
       "category": "Tools",
       "rating": 4.4,
       "testimonials": [
