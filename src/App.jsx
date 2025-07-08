@@ -1,7 +1,7 @@
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
 import { GlobalStyles } from './assets/styles/globalStyles';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { HashRouter as Router } from 'react-router-dom';
 import AppRoutes from './routes';
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';

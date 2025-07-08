@@ -80,17 +80,17 @@ const Testimonials = ({ testimonials = [], title = "What Our Customers Say", loo
 
 const TestimonialSection = styled.section`
   max-width: 1320px;
-  margin: 50px auto 0 auto;
+  margin: 30px auto 0 auto;
   padding: 30px 20px;
   overflow: hidden;
   width: 100%;
 `;
 
 const TestimonialTitle = styled.h3`
-  font-size: 24px;
-  color: #e74c3c;
-  margin-bottom: 18px;
-  text-align: center;
+ text-align: center;
+    margin-bottom: 30px;
+    font-size: 32px;
+    width: 100%;
 `;
 
 const TestimonialCard = styled.div`
