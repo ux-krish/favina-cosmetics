@@ -4,7 +4,6 @@ import Layout from './components/common/Layout';
 import Home from './pages/Home';
 import Products from './pages/Product';
 import ProductDetail from './pages/Product/ProductDetail';
-import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import Account from './pages/Account';
 import Login from './pages/Auth/Login';
@@ -34,7 +33,6 @@ const AppRoutes = () => (
       <Route index element={<Home />} />
       <Route path="products" element={<Products />} />
       <Route path="products/:id" element={<ProductDetail />} />
-      <Route path="cart" element={<Cart />} />
       <Route path="wishlist" element={<Wishlist />} />
       <Route path="contact" element={<Contact />} />
       <Route path="checkout" element={
