@@ -60,7 +60,6 @@ const ProductDetail = () => {
   const [toast, setToast] = useState(null);
 
   useEffect(() => {
-    // Find product by id from productData
     if (!id) return;
     const found = Array.isArray(productData.products)
       ? productData.products.find(p => String(p.id) === String(id))
@@ -111,7 +110,7 @@ const ProductDetail = () => {
       setUserCart(updatedCart);
     }
     dispatch(addToCart({ ...product, quantity }));
-    dispatch(toggleCart()); // Open cart sidebar after adding to cart
+    dispatch(toggleCart()); 
   };
 
   // --- Buy Now handler ---
@@ -203,7 +202,6 @@ const ProductDetail = () => {
     setTimeout(() => setToast(null), 1500);
   };
 
-  // Toast in document body, not inside card
   useEffect(() => {
     if (!toast) return;
     const toastDiv = document.createElement('div');
@@ -224,16 +222,14 @@ const ProductDetail = () => {
   if (loading) return <div>Loading...</div>;
   if (!product) return <div>Product not found</div>;
 
-  // Related products: same category, exclude current product
   const relatedProducts = (productData.products || [])
-    .filter(
-      (p) =>
-        p.category === product.category &&
-        p.id !== product.id
-    )
+    .filter((p) => p.id !== product.id)
     .slice(0, 4);
 
-  // Example testimonial slides for the slider (replace with your own data as needed)
+  const otherProducts = (productData.products || [])
+    .filter((p) => p.id !== product.id)
+    .slice(0, 4);
+
   const testimonialSlides = [
     {
       rating: 5.0,
@@ -272,7 +268,6 @@ const ProductDetail = () => {
     },
   ];
 
-  // Combine user reviews (object values) and product testimonials for the Swiper
   const allTestimonials = [
     ...Object.values(userReviews || {}),
     ...(product.testimonials || []),
@@ -288,14 +283,13 @@ const ProductDetail = () => {
       <SwiperNavStyles />
       <ProductDetailContainer>
         <ProductImageSection>
-          {/* Swiper main image slider */}
           <Swiper
             modules={[Thumbs, Navigation]}
             navigation
             thumbs={{ swiper: thumbsSwiper }}
             spaceBetween={10}
             slidesPerView={1}
-            style={{ width: '100%', maxWidth: 340, marginBottom: 18 }}
+            style={{ width: '100%', maxWidth: 440, marginBottom: 18 }}
             className="product-detail-swiper"
             onSlideChange={swiper => setActiveImgIdx(swiper.activeIndex)}
             initialSlide={activeImgIdx}
@@ -313,14 +307,13 @@ const ProductDetail = () => {
               </SwiperSlide>
             ))}
           </Swiper>
-          {/* Swiper thumbs */}
           <Swiper
             modules={[Thumbs]}
             onSwiper={setThumbsSwiper}
             spaceBetween={10}
             slidesPerView={Math.min((product.images || [product.image]).length, 5)}
             watchSlidesProgress
-            style={{ width: '100%', maxWidth: 340 }}
+            style={{ width: '100%', maxWidth: 440 }}
           >
             {(product.images || [product.image]).map((img, idx) => (
               <SwiperSlide key={idx}>
@@ -394,7 +387,6 @@ const ProductDetail = () => {
           </ActionRow>
         </ProductInfoSection>
       </ProductDetailContainer>
-
       <PromoBanner
         image={promoImg}
         titlePink="Special Offer"
@@ -411,7 +403,6 @@ const ProductDetail = () => {
         buttonText="Buy Now"
         buttonTo="/products"
       />
-
       <CustomTestimonialSection className="container">
         <TestimonialLeft>
           <Swiper
@@ -494,12 +485,11 @@ const ProductDetail = () => {
           </FeatureList>
         </TestimonialRight>
       </CustomTestimonialSection>
-      {/* --- Related Products Section --- */}
+
       <RelatedSection className="container">
-        <RelatedTitle>Related Products</RelatedTitle>
-        <ProductGrid products={relatedProducts} />
+        <RelatedTitle>Other Products</RelatedTitle>
+        <ProductGrid products={otherProducts} />
       </RelatedSection>
-      {/* --- End Related Products Section --- */}
     </>
   );
 };

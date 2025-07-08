@@ -24,6 +24,8 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   padding: 30px 20px;
+  position: relative;
+  
 `;
 
 const Container = styled.div`
@@ -34,6 +36,22 @@ const Container = styled.div`
   height: 54px;
   display: flex;
   align-items: center;
+  &::before, &::after{
+    content: '';
+    position: absolute;
+    top: 0;
+    left:-80px;
+    width: 150px;
+    height: 100%;
+    background: #fff;
+    filter:blur(8px);
+    z-index: 2;
+  }
+  &::after{
+    top: 0;
+    left:inherit;
+    right:-80px;
+  }
 `;
 
 const TextSlider = styled.div`
