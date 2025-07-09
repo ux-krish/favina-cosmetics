@@ -359,10 +359,10 @@ const Actions = styled.div`
 `;
 
 const IconButton = styled.button`
-  background: #f7f7f7;
-  border: 1.5px solid #eee;
+  //background: #f7f7f7;
+  border: 1.5px solid #ddd;
   border-radius: 4px;
-  color: ${({ wished }) => (wished ? '#e74c3c' : '#888')};
+  color: ${({ wished }) => (wished ? '${colors.accent}' : '#888')};
   font-size: 18px;
   width: 38px;
   height: 38px;
@@ -372,9 +372,9 @@ const IconButton = styled.button`
   cursor: pointer;
   transition: color 0.18s, border 0.18s, background 0.18s;
   &:hover {
-    color: #e74c3c;
-    border-color: #e74c3c;
-    background: #fff7f5;
+    color: ${colors.textLight};
+    border-color: ${colors.primary};
+    background: ${colors.primary};
   }
 `;
 
@@ -394,9 +394,9 @@ const ViewButton = styled(Link)`
   text-decoration: none;
   transition: background 0.18s, color 0.18s, border 0.18s;
   &:hover {
-    background: #f5f5f5;
-    color: #e74c3c;
-    border-color: #e74c3c;
+    background: ${colors.info};
+    color: ${colors.textLight};
+    border-color: ${colors.info};
   }
 `;
 
@@ -417,7 +417,7 @@ const WishlistBtn = styled.button`
   border: none;
   cursor: pointer;
   transition: background 0.18s, transform 0.18s;
-  color: ${({ wished }) => (wished ? '#e74c3c' : '#888')};
+  color: ${({ wished }) => (wished ? '${colors.accent}' : '#888')};
   &:hover {
     background: #f0f0f0;
     transform: scale(1.05);

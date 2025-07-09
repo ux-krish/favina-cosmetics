@@ -77,7 +77,7 @@ const TextSliderTrack = styled.div`
 const TextSliderItem = styled.div`
   font-size: 2rem;
   font-weight: 700;
-  color: ${({ $highlight }) => ($highlight ? '#f7b7a3' : '#5b4a44')};
+  color: ${({ $highlight }) => ($highlight ? '#e5a6a6' : '#5b4a44')};
   margin: 0 60px;
   font-family: 'Montserrat', sans-serif;
   opacity: ${({ $highlight }) => ($highlight ? 1 : 0.85)};

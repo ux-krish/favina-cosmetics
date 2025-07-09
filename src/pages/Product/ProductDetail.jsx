@@ -352,9 +352,7 @@ const ProductDetail = () => {
               <OfferPrice>₹{product.price}</OfferPrice>
             )}
           </ProductPriceRow>
-          <ProductDesc>
-            Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing. Sed lectus.
-          </ProductDesc>
+          
           <QtyRow>
             <QtyLabel>Qty:</QtyLabel>
             <QtyControl>
@@ -396,7 +394,6 @@ const ProductDetail = () => {
         offerHighlight="50% OFF"
         sub={
           <>
-            Use code <BannerHighlight>GLOW15</BannerHighlight> at checkout.<br />
             Offer valid for <BannerHighlight>today only!</BannerHighlight>
           </>
         }
