@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 import Button from './Button';
-import { colors, fontSizes } from '../../assets/styles/theme';
+import { colors, fontSizes, fonts } from '../../assets/styles/theme';
 import txtBg1 from '../../assets/images/txt-bg1.png';
-
 const PromoBanner = ({
   image,
   titlePink = "Limited Edition",
@@ -104,7 +103,7 @@ const BannerTitle = styled.div`
 const BannerTitlePink = styled.span`
   color: ${colors.accent};
   font-weight: 900;
-  font-family: 'Montserrat', sans-serif;
+  font-family: ${fonts.title};
 `;
 
 const BannerTitlePurple = styled.span`

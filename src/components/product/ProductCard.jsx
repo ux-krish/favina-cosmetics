@@ -359,10 +359,9 @@ const Actions = styled.div`
 `;
 
 const IconButton = styled.button`
-  //background: #f7f7f7;
   border: 1.5px solid #ddd;
   border-radius: 4px;
-  color: ${({ wished }) => (wished ? '${colors.accent}' : '#888')};
+  color: ${({ wished }) => (wished ? colors.accent : '#888')};
   font-size: 18px;
   width: 38px;
   height: 38px;
@@ -416,11 +415,12 @@ const WishlistBtn = styled.button`
   justify-content: center;
   border: none;
   cursor: pointer;
-  transition: background 0.18s, transform 0.18s;
-  color: ${({ wished }) => (wished ? '${colors.accent}' : '#888')};
+  transition: background 0.18s, transform 0.18s, color 0.18s;
+  color: ${({ wished }) => (wished ? colors.accent : '#888')};
   &:hover {
     background: #f0f0f0;
     transform: scale(1.05);
+    color: ${colors.accent};
   }
 `;
 

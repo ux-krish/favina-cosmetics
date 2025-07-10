@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-
+import { fonts } from '../../assets/styles/theme';
 const TextSliderWrapper = ({ messages, duration = 22 }) => (
   <Wrapper>
     <Container>
@@ -79,7 +79,7 @@ const TextSliderItem = styled.div`
   font-weight: 700;
   color: ${({ $highlight }) => ($highlight ? '#e5a6a6' : '#5b4a44')};
   margin: 0 60px;
-  font-family: 'Montserrat', sans-serif;
+  font-family: ${fonts.title};
   opacity: ${({ $highlight }) => ($highlight ? 1 : 0.85)};
   transition: color 0.2s;
   white-space: nowrap;

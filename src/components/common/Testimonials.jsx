@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { fonts, fontSizes, colors } from '../../assets/styles/theme';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -80,55 +81,98 @@ const Testimonials = ({ testimonials = [], title = "What Our Customers Say", loo
 
 const TestimonialSection = styled.section`
   max-width: 1320px;
-  margin: 30px auto 0 auto;
-  padding: 30px 20px;
+  margin: 48px auto 0 auto;
+  padding: 48px 20px 40px 20px;
   overflow: hidden;
   width: 100%;
+  background: linear-gradient(120deg, #fbeaec 0%, #f8f3fa 100%);
+  border-radius: 18px;
+  box-shadow: 0 4px 32px 0 rgba(160,132,202,0.10), 0 1.5px 8px 0 rgba(160,132,202,0.06);
+  border: 1.5px solid #ede7f6;
 `;
 
 const TestimonialTitle = styled.h3`
- text-align: center;
-    margin-bottom: 30px;
-    font-size: 32px;
-    width: 100%;
+  text-align: center;
+  margin-bottom: 38px;
+  font-size: ${fontSizes.xl};
+  font-family: ${fonts.title};
+  font-weight: 800;
+  color: ${colors.text};
+  letter-spacing: -1px;
+  width: 100%;
 `;
 
 const TestimonialCard = styled.div`
-  display: grid;
-  grid-template-rows: auto 1fr auto;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   text-align: center;
   background: #fff;
-  border-radius: 10px;
-  padding: 24px 16px 18px 16px;
-  min-height: 220px;
-  height: 220px;
-  box-shadow: 0 2px 8px rgba(231, 76, 60, 0.08);
+  border-radius: 16px;
+  padding: 32px 24px 24px 24px;
+  min-height: 260px;
+  height: 260px;
+  box-shadow: 0 4px 24px rgba(160,132,202,0.10), 0 1.5px 8px rgba(160,132,202,0.06);
+  border: 1.5px solid #ede7f6;
+  transition: box-shadow 0.18s, border 0.18s, transform 0.18s;
+  position: relative;
+  &:hover {
+    box-shadow: 0 8px 32px rgba(160,132,202,0.18), 0 2px 12px rgba(160,132,202,0.10);
+    border-color: ${colors.accent};
+    transform: translateY(-4px) scale(1.025);
+  }
 `;
 
 const TestimonialAvatar = styled.img`
-  width: 56px;
-  height: 56px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 18px;
-  border: 2px solid #e74c3c;
+  border: 3px solid ${colors.accent};
+  box-shadow: 0 2px 8px rgba(229,166,166,0.13);
   display: block;
   margin-left: auto;
   margin-right: auto;
 `;
 
 const TestimonialText = styled.div`
-  font-size: 16px;
-  color: #444;
-  margin-bottom: 12px;
+  font-size: ${fontSizes.md};
+  font-family: ${fonts.body};
+  color: #5A4E4D;
+  margin-bottom: 16px;
   font-style: italic;
+  line-height: 1.5;
+  position: relative;
+  &:before {
+    content: '“';
+    font-size: 2.2em;
+    color: ${colors.accent};
+    position: absolute;
+    left: -18px;
+    top: -18px;
+    opacity: 0.18;
+    font-family: ${fonts.title};
+  }
+  &:after {
+    content: '”';
+    font-size: 2.2em;
+    color: ${colors.accent};
+    position: absolute;
+    right: -18px;
+    bottom: -18px;
+    opacity: 0.18;
+    font-family: ${fonts.title};
+  }
 `;
 
 const TestimonialName = styled.div`
-  font-size: 15px;
-  color: #e74c3c;
-  font-weight: 500;
+  font-size: ${fontSizes.base};
+  font-family: ${fonts.title};
+  color: ${colors.accent};
+  font-weight: 700;
+  margin-top: 8px;
+  letter-spacing: 0.01em;
 `;
 
 export default Testimonials;

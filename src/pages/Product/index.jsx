@@ -1,10 +1,12 @@
 import styled from 'styled-components';
+
+import { pxToRem, colors } from '../../assets/styles/theme';
 import { useEffect, useState } from 'react';
 import ProductGrid from '../../components/product/ProductGrid';
 import productData from '../../data/product.json';
 import { FaFilter } from 'react-icons/fa';
 
-const categories = ['All', 'Makeup', 'Skincare', 'Haircare', 'Fragrance', 'Tools'];
+const categories = ['Makeup', 'Skincare', 'Haircare', 'Fragrance', 'Tools'];
 
 const MAX_PRICE = 500;
 const MIN_PRICE = 0;
@@ -13,13 +15,14 @@ const PRODUCTS_PER_PAGE = 9;
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedCategories, setSelectedCategories] = useState([]);
   const [priceRange, setPriceRange] = useState([MIN_PRICE, MAX_PRICE]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [sortOrder, setSortOrder] = useState('none');
   const [testimonials, setTestimonials] = useState([]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [selectedDiscount, setSelectedDiscount] = useState('');
 
   useEffect(() => {
     // Fetch products and testimonials from src/product.json
@@ -43,15 +46,25 @@ const ProductsPage = () => {
 
   useEffect(() => {
     let filtered = products;
-    if (selectedCategory !== 'All') {
-      filtered = filtered.filter(p => p.category === selectedCategory);
+    if (selectedCategories.length > 0) {
+      filtered = filtered.filter(p => selectedCategories.includes(p.category));
     }
     // Only show products within the selected price range (min and max)
     filtered = filtered.filter(
       p => p.price >= Math.min(priceRange[0], priceRange[1]) && p.price <= Math.max(priceRange[0], priceRange[1])
     );
+    // Discount filter
+    if (selectedDiscount) {
+      if (selectedDiscount === '10') {
+        filtered = filtered.filter(p => p.discount >= 10);
+      } else if (selectedDiscount === '20') {
+        filtered = filtered.filter(p => p.discount >= 20);
+      } else if (selectedDiscount === '30') {
+        filtered = filtered.filter(p => p.discount >= 30);
+      }
+    }
     setFilteredProducts(filtered);
-  }, [products, selectedCategory, priceRange]);
+  }, [products, selectedCategories, priceRange, selectedDiscount]);
 
   // Sorting logic
   const sortedProducts = [...filteredProducts];
@@ -75,7 +88,7 @@ const ProductsPage = () => {
   // Reset to page 1 when filters change
   useEffect(() => {
     setCurrentPage(1);
-  }, [selectedCategory, priceRange]);
+  }, [selectedCategories, priceRange]);
 
   if (loading) return <div>Loading...</div>;
 
@@ -87,6 +100,22 @@ const ProductsPage = () => {
   const handleMaxChange = (e) => {
     const val = Math.max(Number(e.target.value), priceRange[0] + 1);
     setPriceRange([priceRange[0], val]);
+  };
+
+  // Handle category checkbox change
+  const handleCategoryChange = (cat) => {
+    setSelectedCategories(prev =>
+      prev.includes(cat)
+        ? prev.filter(c => c !== cat)
+        : [...prev, cat]
+    );
+  };
+
+  // Clear all filters
+  const handleClearFilters = () => {
+    setSelectedCategories([]);
+    setPriceRange([MIN_PRICE, MAX_PRICE]);
+    setSelectedDiscount('');
   };
 
   return (
@@ -104,12 +133,12 @@ const ProductsPage = () => {
           {categories.map(cat => (
             <FilterOption key={cat}>
               <input
-                type="radio"
+                type="checkbox"
                 id={`cat-${cat}`}
                 name="category"
                 value={cat}
-                checked={selectedCategory === cat}
-                onChange={() => setSelectedCategory(cat)}
+                checked={selectedCategories.includes(cat)}
+                onChange={() => handleCategoryChange(cat)}
               />
               <label htmlFor={`cat-${cat}`}>{cat}</label>
             </FilterOption>
@@ -150,12 +179,65 @@ const ProductsPage = () => {
             </SliderTrack>
           </CustomRangeSlider>
         </FilterSection>
+        <FilterSection>
+          <DiscountTitle>Discount</DiscountTitle>
+          <DiscountOptions>
+            <DiscountOption>
+              <input
+                type="radio"
+                id="discount-any"
+                name="discount"
+                value=""
+                checked={selectedDiscount === ''}
+                onChange={() => setSelectedDiscount('')}
+              />
+              <label htmlFor="discount-any">Any</label>
+            </DiscountOption>
+            <DiscountOption>
+              <input
+                type="radio"
+                id="discount-10"
+                name="discount"
+                value="10"
+                checked={selectedDiscount === '10'}
+                onChange={() => setSelectedDiscount('10')}
+              />
+              <label htmlFor="discount-10">10% or more</label>
+            </DiscountOption>
+            <DiscountOption>
+              <input
+                type="radio"
+                id="discount-20"
+                name="discount"
+                value="20"
+                checked={selectedDiscount === '20'}
+                onChange={() => setSelectedDiscount('20')}
+              />
+              <label htmlFor="discount-20">20% or more</label>
+            </DiscountOption>
+            <DiscountOption>
+              <input
+                type="radio"
+                id="discount-30"
+                name="discount"
+                value="30"
+                checked={selectedDiscount === '30'}
+                onChange={() => setSelectedDiscount('30')}
+              />
+              <label htmlFor="discount-30">30% or more</label>
+            </DiscountOption>
+          </DiscountOptions>
+        </FilterSection>
+        <FilterSection>
+          <ClearButton type="button" onClick={handleClearFilters}>
+            Clear Filters
+          </ClearButton>
+        </FilterSection>
       </Sidebar>
       <Main>
         <PageHeader>
           <h1>All Cosmetics Products</h1>
           <HeaderRow>
-            
             <FilterBox>
               <FilterIconBtn
                 type="button"
@@ -167,8 +249,6 @@ const ProductsPage = () => {
               <p style={{ margin: 0 }}>
                 {filteredProducts.length} products available
               </p>
-              {/* Filter icon for mobile */}
-              
             </FilterBox>
             <SortDropdownWrapper>
               <SortLabel htmlFor="sortOrder">Sort by:</SortLabel>
@@ -219,22 +299,22 @@ const ProductsPage = () => {
 
 const ProductsLayout = styled.div`
   display: flex;
-  max-width: 1320px;
+  max-width: ${pxToRem(1320)};
   margin: 0 auto;
-  padding: 24px 0 24px 0;
+  padding: ${pxToRem(24)} 0 ${pxToRem(24)} 0;
   gap: 0;
-  background: #f6f3fa;
-  border-radius: 14px;
-  box-shadow: 0 2px 16px rgba(168,132,202,0.06);
+  /* background: #f6f3fa; */
+  border-radius: ${pxToRem(14)};
+  /* box-shadow: 0 2px 16px rgba(168,132,202,0.06); */
 `;
 
 const Sidebar = styled.aside`
-  width: 270px;
-  background: #f5f1fa;
-  border-radius: 14px 0 0 14px;
-  padding: 32px 22px 18px 22px;
-  border-right: 1px solid #ede7f6;
-  min-width: 220px;
+  width: ${pxToRem(270)};
+  background: ${colors.sidebarBg};
+  border-radius: ${pxToRem(14)} 0 0 ${pxToRem(14)};
+  padding: ${pxToRem(32)} ${pxToRem(22)} ${pxToRem(18)} ${pxToRem(22)};
+  border-right: 1px solid ${colors.border};
+  min-width: ${pxToRem(220)};
   height: 100%;
   z-index: 1001;
   transition: transform 0.28s cubic-bezier(.4,0,.2,1);
@@ -243,13 +323,13 @@ const Sidebar = styled.aside`
     top: 0;
     left: 0;
     height: 100vh;
-    max-width: 270px;
+    max-width: ${pxToRem(270)};
     width: 82vw;
     min-width: 0;
-    background: #f5f1fa;
-    box-shadow: 2px 0 16px rgba(0,0,0,0.13);
-    border-radius: 0 14px 14px 0;
-    transform: ${({ $open }) => ($open ? 'translateX(0)' : 'translateX(-270px)')};
+    background: ${colors.sidebarBg};
+    box-shadow: 2px 0 ${pxToRem(16)} rgba(0,0,0,0.13);
+    border-radius: 0 ${pxToRem(14)} ${pxToRem(14)} 0;
+    transform: ${({ $open }) => ($open ? 'translateX(0)' : `translateX(-${pxToRem(270)})`)};
     pointer-events: ${({ $open }) => ($open ? 'auto' : 'none')};
     visibility: ${({ $open }) => ($open ? 'visible' : 'hidden')};
     transition: transform 0.28s cubic-bezier(.4,0,.2,1), visibility 0.18s;
@@ -264,11 +344,11 @@ const SidebarCloseBtn = styled.button`
     display: block;
     background: none;
     border: none;
-    font-size: 2rem;
+    font-size: ${pxToRem(32)};
     color: #888;
     position: absolute;
-    top: 18px;
-    right: 18px;
+    top: ${pxToRem(18)};
+    right: ${pxToRem(18)};
     z-index: 10;
     cursor: pointer;
     &:hover {
@@ -283,13 +363,13 @@ const FilterIconBtn = styled.button`
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin-left: 6px;
+    margin-left: ${pxToRem(6)};
     background: #f5f1fa;
     border: 1.5px solid #ede7f6;
-    border-radius: 7px;
+    border-radius: ${pxToRem(7)};
     color: #a084ca;
-    font-size: 1.3rem;
-    padding: 7px 12px;
+    font-size: ${pxToRem(21)};
+    padding: ${pxToRem(7)} ${pxToRem(12)};
     cursor: pointer;
     transition: color 0.18s, border 0.18s, background 0.18s;
     &:hover {
@@ -301,15 +381,15 @@ const FilterIconBtn = styled.button`
 `;
 
 const FilterSection = styled.div`
-  margin-bottom: 32px;
+  margin-bottom: ${pxToRem(32)};
 `;
 
 const FilterTitle = styled.div`
   font-weight: 700;
-  margin-bottom: 14px;
-  font-size: 15px;
+  margin-bottom: ${pxToRem(14)};
+  font-size: ${pxToRem(15)};
   color: #a084ca;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.031rem;
 `;
 const FilterBox = styled.div`
   display: flex;
@@ -318,51 +398,101 @@ const FilterBox = styled.div`
   flex:auto;
   `
 const FilterOption = styled.div`
-  margin-bottom: 12px;
+  margin-bottom: ${pxToRem(12)};
   display: flex;
   align-items: center;
 
-  input[type="radio"] {
-    margin-right: 10px;
-    accent-color: #a084ca;
-    width: 18px;
-    height: 18px;
+  input[type="checkbox"] {
+    margin-right: ${pxToRem(10)};
+    accent-color: ${colors.accent};
+    width: ${pxToRem(18)};
+    height: ${pxToRem(18)};
   }
   label {
-    font-size: 15px;
-    color: #5b4a44;
+    font-size: ${pxToRem(15)};
+    color: ${colors.textDark};
     cursor: pointer;
     font-weight: 500;
     letter-spacing: 0;
   }
 `;
 
+const DiscountTitle = styled.div`
+  font-weight: 700;
+  margin-bottom: 14px;
+  font-size: 15px;
+  color: ${colors.accent};
+  letter-spacing: -0.5px;
+`;
+
+const DiscountOptions = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
+const DiscountOption = styled.div`
+  display: flex;
+  align-items: center;
+  input[type="radio"] {
+    margin-right: 10px;
+    accent-color: ${colors.accent};
+    width: 18px;
+    height: 18px;
+  }
+  label {
+    font-size: 15px;
+    color: ${colors.textDark};
+    cursor: pointer;
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+`;
+
+const ClearButton = styled.button`
+  background: #fff;
+  color: ${colors.accent};
+  border: 1.5px solid ${colors.accent};
+  border-radius: ${pxToRem(7)};
+  padding: ${pxToRem(7)} ${pxToRem(18)};
+  font-size: ${pxToRem(15)};
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: ${pxToRem(8)};
+  transition: background 0.18s, color 0.18s, border 0.18s;
+  &:hover {
+    background: ${colors.accent};
+    color: #fff;
+    border-color: ${colors.accent};
+  }
+`;
+
 const CustomRangeSlider = styled.div`
-  margin-top: 10px;
+  margin-top: ${pxToRem(10)};
   width: 100%;
-  padding: 16px 0 8px 0;
+  padding: ${pxToRem(16)} 0 ${pxToRem(8)} 0;
 `;
 
 const SliderTrack = styled.div`
   position: relative;
-  height: 6px;
-  background: #ede7f6;
-  border-radius: 3px;
+  height: ${pxToRem(6)};
+  background: ${colors.sliderTrack};
+  border-radius: ${pxToRem(3)};
 `;
 
 const SliderRange = styled.div`
   position: absolute;
   height: 100%;
-  background: #a084ca;
-  border-radius: 3px;
+  background: ${colors.accent};
+  border-radius: ${pxToRem(3)};
   z-index: 2;
 `;
 
 const RangeInput = styled.input`
   position: absolute;
   width: 100%;
-  height: 24px;
-  top: -9px;
+  height: ${pxToRem(24)};
+  top: -${pxToRem(9)};
   left: 0;
   background: none;
   -webkit-appearance: none;
@@ -372,52 +502,52 @@ const RangeInput = styled.input`
   &::-webkit-slider-thumb {
     pointer-events: auto;
     -webkit-appearance: none;
-    height: 20px;
-    width: 20px;
+    height: ${pxToRem(20)};
+    width: ${pxToRem(20)};
     border-radius: 50%;
     background: #fff;
-    border: 3px solid #a084ca;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.10);
+    border: ${pxToRem(3)} solid ${colors.accent};
+    box-shadow: 0 ${pxToRem(2)} ${pxToRem(6)} rgba(0,0,0,0.10);
     cursor: pointer;
-    margin-top: -7px;
+    margin-top: -${pxToRem(7)};
     position: relative;
     transition: border 0.2s;
   }
   &::-webkit-slider-thumb:hover {
-    border: 3px solid #e74c3c;
+    border: ${pxToRem(3)} solid ${colors.danger};
   }
   &::-moz-range-thumb {
     pointer-events: auto;
-    height: 20px;
-    width: 20px;
+    height: ${pxToRem(20)};
+    width: ${pxToRem(20)};
     border-radius: 50%;
     background: #fff;
-    border: 3px solid #a084ca;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.10);
+    border: ${pxToRem(3)} solid ${colors.accent};
+    box-shadow: 0 ${pxToRem(2)} ${pxToRem(6)} rgba(0,0,0,0.10);
     cursor: pointer;
     position: relative;
     transition: border 0.2s;
   }
   &::-moz-range-thumb:hover {
-    border: 3px solid #e74c3c;
+    border: ${pxToRem(3)} solid ${colors.danger};
   }
   &::-ms-thumb {
     pointer-events: auto;
-    height: 20px;
-    width: 20px;
+    height: ${pxToRem(20)};
+    width: ${pxToRem(20)};
     border-radius: 50%;
     background: #fff;
-    border: 3px solid #a084ca;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.10);
+    border: ${pxToRem(3)} solid ${colors.accent};
+    box-shadow: 0 ${pxToRem(2)} ${pxToRem(6)} rgba(0,0,0,0.10);
     cursor: pointer;
     position: relative;
     transition: border 0.2s;
   }
   &::-ms-thumb:hover {
-    border: 3px solid #e74c3c;
+    border: ${pxToRem(3)} solid ${colors.danger};
   }
   &::-webkit-slider-runnable-track {
-    height: 6px;
+    height: ${pxToRem(6)};
     background: transparent;
   }
   &::-ms-fill-lower, &::-ms-fill-upper {

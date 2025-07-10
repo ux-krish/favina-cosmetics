@@ -10,7 +10,7 @@ import TextSliderWrapper from '../../components/common/TextSliderWrapper';
 import PromoBanner, { BannerHighlight } from '../../components/common/PromoBanner';
 import promoImg from '../../assets/images/main-bg1.png';
 import { Link } from 'react-router-dom';
-import { colors, fontSizes } from '../../assets/styles/theme';
+import { colors, fontSizes, fonts } from '../../assets/styles/theme';
 
 const sliderMessages = [
   { text: "Limited Time Only", highlight: true },
@@ -188,7 +188,8 @@ const HeroInner = styled.div`
 
 const HeroHeading = styled.h1`
   font-size: ${fontSizes.xxl};
-  font-weight: 700;
+  font-family: ${fonts.title};
+  font-weight: 800;
   color: ${colors.text};
   margin: 0 0 12px 0;
   line-height: 1.1;
@@ -204,6 +205,7 @@ const Highlight = styled.span`
 
 const HeroSubtitle = styled.p`
   font-size: ${fontSizes.md};
+  font-family: ${fonts.body};
   color: ${colors.text};
   margin: 0 0 18px 0;
   font-weight: 400;
@@ -275,7 +277,7 @@ const BeautyPicksSection = styled.section`
 const BeautyPicksTitle = styled.h2`
   text-align: center;
   font-size: 2.4rem;
-  font-family: 'Montserrat', sans-serif;
+  font-family: ${fonts.title};
   font-weight: 900;
   margin-bottom: 32px;
   letter-spacing: -1px;

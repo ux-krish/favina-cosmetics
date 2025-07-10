@@ -18,27 +18,27 @@ import PromoBanner, { BannerHighlight } from '../../components/common/PromoBanne
 import promoImg from '../../assets/images/main-bg2.png';
 import { useAuth } from '../../redux/hooks';
 import { FaHeart } from 'react-icons/fa';
-import { colors, fontSizes } from '../../assets/styles/theme';
+import { colors, fontSizes, pxToRem, fonts } from '../../assets/styles/theme.js';
 
 const SwiperNavStyles = createGlobalStyle`
   .product-detail-swiper .swiper-button-next,
   .product-detail-swiper .swiper-button-prev {
-    width: 30px !important;
-    height: 30px !important;
-    min-width: 30px !important;
-    min-height: 30px !important;
-    max-width: 30px !important;
-    max-height: 30px !important;
+    width: ${pxToRem(30)} !important;
+    height: ${pxToRem(30)} !important;
+    min-width: ${pxToRem(30)} !important;
+    min-height: ${pxToRem(30)} !important;
+    max-width: ${pxToRem(30)} !important;
+    max-height: ${pxToRem(30)} !important;
     border-radius: 50%;
     background: #fff;
-    color: #e74c3c;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    font-size: 16px !important;
+    color: ${colors.primary};
+    box-shadow: 0 ${pxToRem(2)} ${pxToRem(8)} rgba(0,0,0,0.08);
+    font-size: ${pxToRem(16)} !important;
     top: 40%;
   }
   .product-detail-swiper .swiper-button-next:after,
   .product-detail-swiper .swiper-button-prev:after {
-    font-size: 16px !important;
+    font-size: ${pxToRem(16)} !important;
   }
 `;
 
@@ -136,24 +136,6 @@ const ProductDetail = () => {
     navigate('/checkout');
   };
 
-  // Handle review form submit
-  const onSubmitReview = (data) => {
-    if (!user?.id) {
-      navigate('/login', { replace: true });
-      return;
-    }
-    const newReview = {
-      name: user.firstName || user.email || "User",
-      text: data.text,
-      avatar: user.avatar || `https://randomuser.me/api/portraits/lego/${Math.floor(Math.random() * 10)}.jpg`,
-      userId: user.id
-    };
-    // Store reviews as an object keyed by userId
-    const updated = { ...userReviews, [user.id]: newReview };
-    setUserReviews(updated);
-    localStorage.setItem(`reviews_${product.id}`, JSON.stringify(updated));
-    reset();
-  };
 
   // Helper to get/set wishlist as array of product IDs in localStorage per user
   const getUserWishlist = () => {
@@ -222,9 +204,6 @@ const ProductDetail = () => {
   if (loading) return <div>Loading...</div>;
   if (!product) return <div>Product not found</div>;
 
-  const relatedProducts = (productData.products || [])
-    .filter((p) => p.id !== product.id)
-    .slice(0, 4);
 
   const otherProducts = (productData.products || [])
     .filter((p) => p.id !== product.id)
@@ -311,7 +290,7 @@ const ProductDetail = () => {
             modules={[Thumbs]}
             onSwiper={setThumbsSwiper}
             spaceBetween={10}
-            slidesPerView={Math.min((product.images || [product.image]).length, 5)}
+            slidesPerView={4}
             watchSlidesProgress
             style={{ width: '100%', maxWidth: 440 }}
           >
@@ -493,15 +472,18 @@ const ProductDetail = () => {
 
 const ProductDetailContainer = styled.div`
   display: flex;
-  gap: 24px;
-  padding: 40px 20px;
-  max-width: 1320px;
-  margin: 0 auto;
-  align-items: flex-start;
-  @media (max-width: 900px) {
+  align-items: stretch;
+  justify-content: center;
+  gap: ${pxToRem(40)};
+  max-width: ${pxToRem(1320)};
+  margin: ${pxToRem(32)} auto ${pxToRem(32)} auto;
+  padding: ${pxToRem(0)} ${pxToRem(20)};
+  @media (max-width: 1100px) {
     flex-direction: column;
-    gap: 32px;
-    padding: 20px 20px;
+    gap: ${pxToRem(32)};
+    max-width: 98vw;
+    padding: ${pxToRem(18)} ${pxToRem(6)};
+    border-radius: ${pxToRem(12)};
   }
 `;
 
@@ -529,26 +511,29 @@ const ProductImageSection = styled.div`
 
 const ProductImage = styled.img`
   width: 100%;
-  max-height: 480px;
+  max-height: ${pxToRem(480)};
   object-fit: contain;
-  border-radius: 12px;
+  border-radius: ${pxToRem(12)};
   background: #f9f9f9;
   margin-bottom: 0;
-  border: 1.5px solid #ede7f6;
+  border: ${pxToRem(1.5)} solid #ede7f6;
 `;
 
 
 const ThumbImage = styled.img`
-  width: 100px;
-  height: 100px;
+  width: ${pxToRem(140)};
+  height: ${pxToRem(140)};
   object-fit: contain;
-  border-radius: 6px;
-  border: 2px solid #eee;
+  border-radius: ${pxToRem(22)};
+  border: ${pxToRem(2.5)} solid #eee;
   background: #fff;
   cursor: pointer;
-  transition: border 0.18s;
+  margin: 0 ${pxToRem(4)};
+  box-shadow: 0 ${pxToRem(2)} ${pxToRem(12)} rgba(63,136,197,0.10);
+  transition: border 0.18s, box-shadow 0.18s;
   &:hover {
-    border: 2px solid #a084ca;
+    border: ${pxToRem(2.5)} solid ${colors.primary};
+    box-shadow: 0 ${pxToRem(4)} ${pxToRem(18)} rgba(215,38,96,0.13);
   }
 `;
 
@@ -567,6 +552,7 @@ const ProductInfoSection = styled.div`
 
 const ProductTitle = styled.h1`
   font-size: ${fontSizes.xl};
+  font-family: ${fonts.title};
   font-weight: 800;
   color: ${colors.text};
   margin: 0 0 8px 0;
@@ -576,42 +562,52 @@ const ProductTitle = styled.h1`
 const ProductCategory = styled.div`
   color: ${colors.secondary};
   font-size: ${fontSizes.base};
+  font-family: ${fonts.body};
   font-weight: 600;
-  margin-bottom: 8px;
+  margin-bottom: ${pxToRem(8)};
   text-transform: capitalize;
 `;
 
 const ProductRatingRow = styled.div`
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 8px;
+  gap: ${pxToRem(0)};
+  padding: ${pxToRem(2)} ${pxToRem(5)};
+  margin-bottom: ${pxToRem(8)};
+  width:${pxToRem(125)};
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: ${pxToRem(6)};
+  background: ${colors.gray};
+  border: ${pxToRem(1)} solid ${colors.dark};
 `;
 
 const RatingValue = styled.span`
   color: ${colors.dark};
-  font-size: ${fontSizes.base};
-  font-weight: 700;
-  margin-right: 4px;
+  font-size: ${fontSizes.sm};
+  font-weight: 600;
+  margin-right: ${pxToRem(4)};
 `;
 
 const RatingStar = styled.span`
   color: #ffc107;
-  font-size: ${fontSizes.base};
+  font-size: ${fontSizes.sm};
 `;
 
 const RatingCount = styled.span`
-  color: ${colors.muted};
-  font-size: ${fontSizes.base};
-  font-weight: 500;
-  margin-left: 8px;
+  color: ${colors.dark};
+  font-size: ${fontSizes.sm};
+  font-weight: 600;
+  margin-left: ${pxToRem(8)};
 `;
 
 const ProductPriceRow = styled.div`
   display: flex;
   align-items: center;
   gap: 14px;
-  margin-bottom: 8px;
+  margin-bottom: ${pxToRem(8)};
 `;
 
 const OfferPrice = styled.span`
@@ -632,22 +628,23 @@ const DiscountBadge = styled.span`
   color: ${colors.primary};
   font-weight: 700;
   font-size: ${fontSizes.base};
-  border-radius: 6px;
-  padding: 4px 12px;
-  margin-left: 4px;
+  border-radius: ${pxToRem(6)};
+  padding: ${pxToRem(4)} ${pxToRem(12)};
+  margin-left: ${pxToRem(4)};
 `;
 
 const ProductDesc = styled.p`
   color: #444;
   font-size: ${fontSizes.base};
-  margin-bottom: 10px;
+  font-family: ${fonts.body};
+  margin-bottom: ${pxToRem(10)};
 `;
 
 const QtyRow = styled.div`
   display: flex;
   align-items: center;
-  gap: 16px;
-  margin: 18px 0 18px 0;
+  gap: ${pxToRem(16)};
+  margin: ${pxToRem(18)} 0 ${pxToRem(18)} 0;
 `;
 
 const QtyLabel = styled.span`
@@ -661,14 +658,14 @@ const QtyControl = styled.div`
   align-items: center;
   gap: 0;
   background: #f6f3fa;
-  border-radius: 30px;
-  border: 1.5px solid #ede7f6;
+  border-radius: ${pxToRem(30)};
+  border: ${pxToRem(1.5)} solid #ede7f6;
   overflow: hidden;
 `;
 
 const QtyBtn = styled.button`
-  width: 38px;
-  height: 38px;
+  width: ${pxToRem(38)};
+  height: ${pxToRem(38)};
   background: none;
   border: none;
   color: #a084ca;
@@ -682,8 +679,8 @@ const QtyBtn = styled.button`
 `;
 
 const QtyInput = styled.input`
-  width: 44px;
-  height: 38px;
+  width: ${pxToRem(44)};
+  height: ${pxToRem(38)};
   text-align: center;
   border: none;
   background: none;
@@ -695,8 +692,8 @@ const QtyInput = styled.input`
 
 const ActionRow = styled.div`
   display: flex;
-  gap: 14px;
-  margin: 18px 0 0 0;
+  gap: ${pxToRem(14)};
+  margin: ${pxToRem(18)} 0 0 0;
 `;
 
 const AddToCartBtn = styled(Button)`
@@ -705,7 +702,7 @@ const AddToCartBtn = styled(Button)`
   color: #a084ca;
   font-weight: 700;
   font-size: 1.1rem;
-  border-radius: 7px;
+  border-radius: ${pxToRem(6)};
   border: none;
   &:hover {
     background: #a084ca;
@@ -719,7 +716,7 @@ const BuyNowBtn = styled(Button)`
   color: #fff;
   font-weight: 700;
   font-size: 1.1rem;
-  border-radius: 7px;
+  border-radius: ${pxToRem(6)};
   border: none;
   &:hover {
     background: #a084ca;
@@ -729,12 +726,12 @@ const BuyNowBtn = styled(Button)`
 
 const WishlistBtn = styled.button`
   background: #fff;
-  border: 1.5px solid #e5a6a6;
-  border-radius: 8px;
+  border: ${pxToRem(1.5)} solid #e5a6a6;
+  border-radius: ${pxToRem(8)};
   color: ${({ wished }) => (wished ? '#e74c3c' : '#a084ca')};
-  font-size: 22px;
-  width: 50px;
-  height: 50px;
+  font-size: ${pxToRem(22)};
+  width: ${pxToRem(50)};
+  height: ${pxToRem(50)};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -750,10 +747,10 @@ const WishlistBtn = styled.button`
 const CustomTestimonialSection = styled.section`
   display: flex;
   overflow: hidden;
-  border-radius: 10px;
-  margin: 40px auto 0 auto;
+  border-radius: ${pxToRem(10)};
+  margin: ${pxToRem(40)} auto 0 auto;
   overflow: hidden;
-  min-height: 340px;
+  min-height: ${pxToRem(340)};
   max-width: 1320px;
   width: 100%;
   @media (max-width: 900px) {
@@ -799,14 +796,15 @@ const StarIcon = styled.span`
 
 const TestimonialQuote = styled.div`
   font-size: 2rem;
+  font-family: ${fonts.title};
   font-weight: 700;
   color: #222;
-  margin-bottom: 18px;
-  font-family: 'Montserrat', sans-serif;
+  margin-bottom: ${pxToRem(18)};
 `;
 
 const TestimonialText = styled.div`
-  font-size: 17px;
+  font-size: ${pxToRem(17)};
+  font-family: ${fonts.body};
   color: #444;
   margin-bottom: 22px;
   max-width: 600px;
@@ -943,11 +941,6 @@ const ReviewButton = styled.button`
   }
 `;
 
-const ReviewError = styled.div`
-  color: #e74c3c;
-  font-size: 13px;
-  margin-top: -6px;
-`;
 
 const TestimonialSlide = styled.div`
   display: flex;

@@ -1,11 +1,10 @@
 import styled from 'styled-components';
+import { colors ,fontSizes, pxToRem } from '../../assets/styles/theme';
 import CheckoutForm from './CheckoutForm';
 import { useNavigate } from 'react-router-dom';
 import { useCart, useAuth } from '../../redux/hooks';
 import productData from '../../data/product.json';
 import { useState, useEffect, useRef } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 
@@ -207,7 +206,7 @@ const OrderSummarySection = styled.div`
 
 const OrderSummaryTitle = styled.h2`
   font-size: 22px;
-  color: #e74c3c;
+  color: ${colors.danger};
   margin-bottom: 18px;
   text-align: left;
   @media (max-width: 600px) {
@@ -285,7 +284,7 @@ const OrderItemQty = styled.div`
 
 const OrderItemPrice = styled.div`
   font-size: 15px;
-  color: #e74c3c;
+  color: ${colors.danger};
   font-weight: 600;
   @media (max-width: 600px) {
     font-size: 13px;
@@ -324,12 +323,12 @@ const PaymentOption = styled.div`
 
   input[type="radio"] {
     margin-right: 10px;
-    accent-color: #e74c3c;
+    accent-color: ${colors.danger};
   }
 `;
 
 const Note = styled.div`
-  color: #e74c3c;
+  color: ${colors.danger};
   font-size: 14px;
   margin-top: 8px;
   @media (max-width: 600px) {
@@ -384,7 +383,7 @@ const UpsellSection = styled.div`
 const UpsellTitle = styled.div`
   font-size: 18px;
   font-weight: 700;
-  color: #e74c3c;
+  color: ${colors.danger};
   margin-bottom: 12px;
 `;
 
@@ -429,12 +428,12 @@ const UpsellName = styled.div`
 
 const UpsellPrice = styled.div`
   font-size: 14px;
-  color: #e74c3c;
+  color: ${colors.danger};
   font-weight: 600;
 `;
 
 const UpsellAddBtn = styled.button`
-  background: #e74c3c;
+  background: ${colors.danger};
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -446,14 +445,14 @@ const UpsellAddBtn = styled.button`
   cursor: pointer;
   transition: background 0.18s;
   &:hover {
-    background: #c0392b;
+    background: ${colors.dangerDark};
   }
 `;
 
 const RemoveBtn = styled.button`
   background: none;
   border: none;
-  color: #e74c3c;
+  color: ${colors.danger};
   font-size: 22px;
   font-weight: bold;
   cursor: pointer;
@@ -461,7 +460,7 @@ const RemoveBtn = styled.button`
   padding: 0 6px;
   line-height: 1;
   &:hover {
-    color: #c0392b;
+    color: ${colors.dangerDark};
     background: #fff0f0;
     border-radius: 50%;
   }
