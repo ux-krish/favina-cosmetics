@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useImageBasePath } from '../../context/ImagePathContext';
 import { useAuth } from '../../redux/hooks';
-import { colors, fontSizes } from '../../assets/styles/theme';
+import { colors, fontSizes, pxToRem } from '../../assets/styles/theme';
 
 const ProductCard = ({ product }) => {
   const dispatch = useAppDispatch();
@@ -160,11 +160,13 @@ const ProductCard = ({ product }) => {
         <Image src={imageSrc} alt={product.title} />
       </ImageContainer>
       <Details>
-        <Title title={product.title}>{product.title}</Title>
-        <RatingRow>
-          <StarIcon>★</StarIcon>
-          <RatingValue>{product.rating ? product.rating.toFixed(1) : '4.0'}</RatingValue>
-        </RatingRow>
+        <DetailsHeader>
+          <Title title={product.title}>{product.title}</Title>
+          <RatingRow>
+            <StarIcon>★</StarIcon>
+            <RatingValue>{product.rating ? product.rating.toFixed(1) : '4.0'}</RatingValue>
+          </RatingRow>
+        </DetailsHeader>
         <GroupBox>
           <MetaRow>
           <Weight>80g</Weight>
@@ -263,6 +265,13 @@ const Details = styled.div`
   flex: 1 1 auto;
 `;
 
+const DetailsHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+`;
+
 const Title = styled.h3`
   font-size: ${fontSizes.sm};
   margin: 0 0 2px 0;
@@ -279,6 +288,9 @@ const RatingRow = styled.div`
   gap: 4px;
   font-size: 14px;
   margin-bottom: 2px;
+  border:${pxToRem(1)} solid ${colors.gray};
+  padding: 1px 6px;
+  border-radius: 4px;
 `;
 
 const StarIcon = styled.span`

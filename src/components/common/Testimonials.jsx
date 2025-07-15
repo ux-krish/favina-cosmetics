@@ -50,7 +50,6 @@ const Testimonials = ({ testimonials = [], title = "What Our Customers Say", loo
           {testimonials.map((testimonial, idx) => (
             <SwiperSlide key={idx}>
               <TestimonialCard>
-                <TestimonialAvatar src={testimonial.avatar} alt={testimonial.name} />
                 <TestimonialText>"{testimonial.text}"</TestimonialText>
                 <TestimonialName>
                   - {testimonial.name}
@@ -80,13 +79,11 @@ const Testimonials = ({ testimonials = [], title = "What Our Customers Say", loo
 };
 
 const TestimonialSection = styled.section`
-  max-width: 1320px;
   margin: 48px auto 0 auto;
   padding: 48px 20px 40px 20px;
   overflow: hidden;
   width: 100%;
   background: linear-gradient(120deg, #fbeaec 0%, #f8f3fa 100%);
-  border-radius: 18px;
   box-shadow: 0 4px 32px 0 rgba(160,132,202,0.10), 0 1.5px 8px 0 rgba(160,132,202,0.06);
   border: 1.5px solid #ede7f6;
 `;
@@ -108,7 +105,7 @@ const TestimonialCard = styled.div`
   align-items: center;
   text-align: center;
   background: #fff;
-  border-radius: 16px;
+  border-radius: 3px;
   padding: 32px 24px 24px 24px;
   min-height: 260px;
   height: 260px;
