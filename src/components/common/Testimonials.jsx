@@ -15,7 +15,7 @@ const Testimonials = ({ testimonials = [], title = "What Our Customers Say", loo
   return (
     <TestimonialSection>
       <TestimonialTitle>{title}</TestimonialTitle>
-      <div style={{ position: 'relative' }}>
+      <TestimonialSwiperContainer>
         <Swiper
           modules={[Navigation, Autoplay]}
           navigation={{
@@ -50,10 +50,17 @@ const Testimonials = ({ testimonials = [], title = "What Our Customers Say", loo
           {testimonials.map((testimonial, idx) => (
             <SwiperSlide key={idx}>
               <TestimonialCard>
-                <TestimonialText>"{testimonial.text}"</TestimonialText>
+                {testimonial.avatar && (
+                  <TestimonialAvatar src={testimonial.avatar} alt={testimonial.name} />
+                )}
+                <TestimonialText>{testimonial.text}</TestimonialText>
                 <TestimonialName>
                   - {testimonial.name}
                   {testimonial.category && ` (${testimonial.category})`}
+                  <VerifiedBadge>
+                    <VerifiedIcon />
+                    Verified Buyer
+                  </VerifiedBadge>
                 </TestimonialName>
               </TestimonialCard>
             </SwiperSlide>
@@ -73,10 +80,18 @@ const Testimonials = ({ testimonials = [], title = "What Our Customers Say", loo
             aria-label="Next slide"
           ></div>
         </Swiper>
-      </div>
+      </TestimonialSwiperContainer>
     </TestimonialSection>
   );
 };
+
+const TestimonialSwiperContainer = styled.div`
+  position: relative;
+  .swiper{
+    padding: 20px 0 0;
+  }
+`;
+
 
 const TestimonialSection = styled.section`
   margin: 48px auto 0 auto;
@@ -102,21 +117,24 @@ const TestimonialTitle = styled.h3`
 const TestimonialCard = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  background: #fff;
-  border-radius: 3px;
-  padding: 32px 24px 24px 24px;
-  min-height: 260px;
-  height: 260px;
-  box-shadow: 0 4px 24px rgba(160,132,202,0.10), 0 1.5px 8px rgba(160,132,202,0.06);
+  align-items: flex-start;
+  text-align: left;
+  background: linear-gradient(120deg, #fff 60%, #fbeaec 100%);
+  border-radius: 18px;
+  padding: 38px 28px 28px 28px;
+  min-height: 200px;
+  height: 200px;
+  box-shadow: 0 6px 32px rgba(160,132,202,0.13), 0 1.5px 8px rgba(160,132,202,0.06);
   border: 1.5px solid #ede7f6;
+  border-top: 5px solid ${colors.accent};
   transition: box-shadow 0.18s, border 0.18s, transform 0.18s;
   position: relative;
+  margin-bottom: 8px;
   &:hover {
-    box-shadow: 0 8px 32px rgba(160,132,202,0.18), 0 2px 12px rgba(160,132,202,0.10);
+    box-shadow: 0 12px 36px rgba(160,132,202,0.18), 0 2px 12px rgba(160,132,202,0.10);
     border-color: ${colors.accent};
-    transform: translateY(-4px) scale(1.025);
+    border-top: 5px solid ${colors.primary};
+    transform: translateY(-6px) scale(1.035);
   }
 `;
 
@@ -141,6 +159,7 @@ const TestimonialText = styled.div`
   font-style: italic;
   line-height: 1.5;
   position: relative;
+  text-align: left;
   &:before {
     content: '“';
     font-size: 2.2em;
@@ -163,6 +182,26 @@ const TestimonialText = styled.div`
   }
 `;
 
+const VerifiedBadge = styled.span`
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f8f3fa;
+  color: #27ae60;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 2px 10px 2px 6px;
+  margin-left: 12px;
+`;
+
+const VerifiedIcon = styled.span`
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background: url('https://cdn-icons-png.flaticon.com/512/190/190411.png') center/cover no-repeat;
+`;
+
 const TestimonialName = styled.div`
   font-size: ${fontSizes.base};
   font-family: ${fonts.title};
@@ -170,6 +209,10 @@ const TestimonialName = styled.div`
   font-weight: 700;
   margin-top: 8px;
   letter-spacing: 0.01em;
+  display:flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 `;
 
 export default Testimonials;

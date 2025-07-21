@@ -12,13 +12,13 @@ const AccountPage = () => {
     <Container>
       <Sidebar>
         <Tab 
-          active={activeTab === 'profile'} 
+          $active={activeTab === 'profile'} 
           onClick={() => setActiveTab('profile')}
         >
           Profile
         </Tab>
         <Tab 
-          active={activeTab === 'orders'} 
+          $active={activeTab === 'orders'} 
           onClick={() => setActiveTab('orders')}
         >
           Orders
@@ -67,11 +67,11 @@ const Tab = styled.button`
   width: 100%;
   padding: 15px;
   margin-bottom: 10px;
-  background: ${({ active }) => (active ? '#f0f0f0' : 'transparent')};
+  background: ${({ $active }) => ($active ? '#f0f0f0' : 'transparent')};
   border: none;
   text-align: left;
   cursor: pointer;
-  font-weight: ${({ active }) => (active ? 'bold' : 'normal')};
+  font-weight: ${({ $active }) => ($active ? 'bold' : 'normal')};
   border-radius: 5px;
   
   @media (max-width: 768px) {

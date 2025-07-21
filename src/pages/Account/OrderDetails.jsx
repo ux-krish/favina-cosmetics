@@ -35,7 +35,7 @@ const OrderDetails = () => {
                   <strong>Total:</strong> ${order.total.toFixed(2)}
                 </div>
                 <div>
-                  <Status status={order.status}>{order.status}</Status>
+                  <Status $status={order.status}>{order.status}</Status>
                 </div>
               </OrderHeader>
               
@@ -103,12 +103,12 @@ const Status = styled.span`
   padding: 5px 10px;
   border-radius: 4px;
   font-size: 14px;
-  background: ${({ status }) => 
-    status === 'completed' ? '#d4edda' : 
-    status === 'cancelled' ? '#f8d7da' : '#fff3cd'};
-  color: ${({ status }) => 
-    status === 'completed' ? '#155724' : 
-    status === 'cancelled' ? '#721c24' : '#856404'};
+  background: ${({ $status }) => 
+    $status === 'completed' ? '#d4edda' : 
+    $status === 'cancelled' ? '#f8d7da' : '#fff3cd'};
+  color: ${({ $status }) => 
+    $status === 'completed' ? '#155724' : 
+    $status === 'cancelled' ? '#721c24' : '#856404'};
 `;
 
 const OrderProducts = styled.div`

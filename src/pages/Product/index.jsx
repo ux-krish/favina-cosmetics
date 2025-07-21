@@ -279,7 +279,7 @@ const ProductsPage = () => {
           {Array.from({ length: totalPages }, (_, i) => (
             <PageButton
               key={i + 1}
-              active={currentPage === i + 1}
+              $active={currentPage === i + 1}
               onClick={() => setCurrentPage(i + 1)}
             >
               {i + 1}
@@ -664,8 +664,8 @@ const PageButton = styled.button`
   padding: 6px 14px;
   border-radius: 4px;
   border: none;
-  background: ${({ active }) => (active ? '#a084ca' : '#f0f0f0')};
-  color: ${({ active }) => (active ? '#fff' : '#5b4a44')};
+  background: ${({ $active }) => ($active ? '#a084ca' : '#f0f0f0')};
+  color: ${({ $active }) => ($active ? '#fff' : '#5b4a44')};
   font-weight: 500;
   cursor: pointer;
   font-size: 15px;
