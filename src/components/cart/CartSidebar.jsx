@@ -7,8 +7,8 @@ import CartItem from './CartItem';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState, useMemo } from 'react';
 import productData from '../../data/product.json';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
+
+import { colors, fontSizes, pxToRem, fonts } from '../../assets/styles/theme.js';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css';
@@ -288,7 +288,7 @@ const EmptyCart = styled.p`
 const ShopNowBtn = styled.button`
   display: block;
   margin: 18px auto 0 auto;
-  background: #e74c3c;
+  background: ${colors.highlight};
   color: #fff;
   border: none;
   border-radius: 6px;
@@ -327,15 +327,15 @@ const CartActionButton = styled.button`
   font-weight: 600;
   border: none;
   border-radius: 6px;
-  background: ${({ $outline }) => ($outline ? '#fff' : '#e74c3c')};
-  color: ${({ $outline }) => ($outline ? '#e74c3c' : '#fff')};
-  border: ${({ $outline }) => ($outline ? '2px solid #e74c3c' : 'none')};
+  background: ${({ $outline }) => ($outline ? '#fff' : `${colors.info}`)};
+  color: ${({ $outline }) => ($outline ? `${colors.highlight}` : '#fff')};
+  border: ${({ $outline }) => ($outline ? `2px solid ${colors.highlight}` : 'none')};
   transition: background 0.18s, color 0.18s, border 0.18s;
   cursor: pointer;
   &:hover:enabled {
-    background: ${({ $outline }) => ($outline ? '#fff7f5' : '#c0392b')};
-    color: #e74c3c;
-    border-color: #e74c3c;
+    background: ${({ $outline }) => ($outline ? '#fff' : `${colors.highlight}`)};
+    color: ${colors.white};
+    border-color: ${colors.highlight};
   }
   &:disabled {
     opacity: 0.6;

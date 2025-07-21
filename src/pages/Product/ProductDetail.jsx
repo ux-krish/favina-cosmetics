@@ -392,8 +392,9 @@ const ProductDetail = () => {
         buttonText="Buy Now"
         buttonTo="/products"
       />
-      <CustomTestimonialSection className="container">
-        <TestimonialLeft>
+      <CustomTestimonialSection>
+        <TestimonialContainer>
+          <TestimonialLeft>
           <Swiper
             modules={[Pagination, Autoplay]}
             spaceBetween={24}
@@ -473,9 +474,10 @@ const ProductDetail = () => {
             </Feature>
           </FeatureList>
         </TestimonialRight>
+        </TestimonialContainer>
       </CustomTestimonialSection>
 
-      <RelatedSection className="container">
+      <RelatedSection>
         <RelatedTitle>Other Products</RelatedTitle>
         <ProductGrid products={otherProducts} />
       </RelatedSection>
@@ -488,7 +490,7 @@ const ProductDetailContainer = styled.div`
   align-items: stretch;
   justify-content: center;
   gap: ${pxToRem(40)};
-  max-width: ${pxToRem(1320)};
+  max-width: ${pxToRem(900)};
   margin: ${pxToRem(32)} auto ${pxToRem(32)} auto;
   padding: ${pxToRem(0)} ${pxToRem(20)};
   @media (max-width: 1100px) {
@@ -511,11 +513,24 @@ const ProductImageSection = styled.div`
   align-items: center;
   min-width: 0;
   max-width: 100%;
+  border: ${pxToRem(1.5)} solid #ede7f6;
+  padding:${pxToRem(24)} ${pxToRem(16)} ${pxToRem(16)} ${pxToRem(16)};
+  .swiper-slide{
+      background: #fff;
+      overflow: hidden;
+      border-radius: ${pxToRem(6)};
+    }
   .swiper{
     width: 100%;
     max-width: 100% !important;
+    
   }
-  @media (max-width: 900px) {
+    .swiper-thumbs{
+      .swiper-slide{
+      border-radius: ${pxToRem(6)};
+      background: transparent;}
+    }
+  @media (max-width: 1099px) {
     width: 100%;
     max-width: 100%;
     padding: 18px 8px 8px 8px;
@@ -524,29 +539,27 @@ const ProductImageSection = styled.div`
 
 const ProductImage = styled.img`
   width: 100%;
-  max-height: ${pxToRem(480)};
   object-fit: contain;
-  border-radius: ${pxToRem(12)};
-  background: #f9f9f9;
   margin-bottom: 0;
-  border: ${pxToRem(1.5)} solid #ede7f6;
+  aspect-ratio: 1 / 1;
 `;
 
 
 const ThumbImage = styled.img`
+display: block;
   width: 100%;
   height:auto;
   object-fit: contain;
-  border-radius: ${pxToRem(22)};
-  border: ${pxToRem(2.5)} solid #eee;
+  border-radius: ${pxToRem(6)};
+  //border: ${pxToRem(2.5)} solid #eee;
   background: #fff;
   cursor: pointer;
-  margin: 0 ${pxToRem(4)};
+  //margin: 0 ${pxToRem(4)};
   box-shadow: 0 ${pxToRem(2)} ${pxToRem(12)} rgba(63,136,197,0.10);
   transition: border 0.18s, box-shadow 0.18s;
   &:hover {
     border: ${pxToRem(2.5)} solid ${colors.primary};
-    box-shadow: 0 ${pxToRem(4)} ${pxToRem(18)} rgba(215,38,96,0.13);
+    //box-shadow: 0 ${pxToRem(4)} ${pxToRem(18)} rgba(215,38,96,0.13);
   }
 `;
 
@@ -554,10 +567,11 @@ const ProductInfoSection = styled.div`
   width: 50%;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: ${pxToRem(10)};
+  padding: ${pxToRem(12)} ${pxToRem(0)} ${pxToRem(12)} ${pxToRem(0)};
   min-width: 0;
   max-width: 100%;
-  @media (max-width: 900px) {
+  @media (max-width: 1099px) {
     width: 100%;
     max-width: 100%;
   }
@@ -567,6 +581,7 @@ const ProductTitle = styled.h1`
   font-size: ${fontSizes.xl};
   font-family: ${fonts.title};
   font-weight: 800;
+  line-height: 1.2;
   color: ${colors.text};
   margin: 0 0 8px 0;
   letter-spacing: -1px;
@@ -646,18 +661,13 @@ const DiscountBadge = styled.span`
   margin-left: ${pxToRem(4)};
 `;
 
-const ProductDesc = styled.p`
-  color: #444;
-  font-size: ${fontSizes.base};
-  font-family: ${fonts.body};
-  margin-bottom: ${pxToRem(10)};
-`;
+
 
 const QtyRow = styled.div`
   display: flex;
   align-items: center;
   gap: ${pxToRem(16)};
-  margin: ${pxToRem(18)} 0 ${pxToRem(18)} 0;
+  margin: ${pxToRem(5)} 0 ${pxToRem(5)} 0;
 `;
 
 const QtyLabel = styled.span`
@@ -758,19 +768,32 @@ const WishlistBtn = styled.button`
 `;
 
 const CustomTestimonialSection = styled.section`
-  display: flex;
   overflow: hidden;
-  border-radius: ${pxToRem(10)};
   margin: ${pxToRem(40)} auto 0 auto;
   overflow: hidden;
   min-height: ${pxToRem(340)};
-  max-width: 1320px;
   width: 100%;
-  @media (max-width: 900px) {
+    max-width: 1320px;
+  padding: ${pxToRem(0)} ${pxToRem(20)};
+  @media (max-width: 1099px) {
     flex-direction: column;
     min-height: 0;
   }
 `;
+
+const TestimonialContainer = styled.div`
+  box-shadow: 0 2px 18px rgba(0,0,0,0.06);
+  border-radius: ${pxToRem(10)};
+  display: flex;
+  width: 100%;
+
+  
+  margin: auto;
+  @media (max-width: 1099px) {
+    flex-direction: column;
+  }
+`;
+
 
 const TestimonialLeft = styled.div`
   width: 50%;
@@ -780,7 +803,7 @@ const TestimonialLeft = styled.div`
   flex-direction: column;
   justify-content: center;
   border-radius: 10px 0 0 10px;
-  @media (max-width: 900px) {
+  @media (max-width: 1099px) {
   width: 100%;
     padding: 28px 18px 18px 18px;
   }
@@ -860,7 +883,7 @@ const TestimonialRight = styled.div`
   padding: 38px 28px;
   background: #fff;
   border-radius: 0 10px 10px 0;
-  @media (max-width: 900px) {
+  @media (max-width: 1099px) {
     padding: 24px 12px;
   }
 `;
@@ -871,7 +894,6 @@ const ProductImg = styled.img`
   object-fit: contain;
   margin-bottom: 28px;
   border-radius: 12px;
-  background: #f8f3fa;
   box-shadow: 0 2px 8px rgba(231,76,60,0.08);
 `;
 
@@ -902,58 +924,6 @@ const FeatureText = styled.div`
   text-align: center;
 `;
 
-const WriteReviewBox = styled.div`
-  padding: 24px 18px;
-  background: #f8f8f8;
-  border-radius: 10px;
-  max-width: 600px;
-  margin: 24px auto 0;
-`;
-
-const WriteReviewTitle = styled.div`
-  font-size: 18px;
-  font-weight: 600;
-  color: #e74c3c;
-  margin-bottom: 12px;
-`;
-
-const ReviewForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-`;
-
-const ReviewInput = styled.input`
-  padding: 10px 14px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 15px;
-`;
-
-const ReviewTextarea = styled.textarea`
-  padding: 10px 14px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 15px;
-  min-height: 70px;
-  resize: vertical;
-`;
-
-const ReviewButton = styled.button`
-  background: #e74c3c;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 0;
-  font-size: 16px;
-  font-weight: 500;
-  cursor: pointer;
-  margin-top: 6px;
-  transition: background 0.18s;
-  &:hover {
-    background: #c0392b;
-  }
-`;
 
 
 const TestimonialSlide = styled.div`
