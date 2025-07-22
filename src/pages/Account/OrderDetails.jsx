@@ -60,6 +60,7 @@ const OrderDetails = () => {
 };
 
 const OrdersContainer = styled.div`
+
   h2 {
     margin-bottom: 20px;
   }
@@ -75,12 +76,14 @@ const OrdersList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 30px;
+  
 `;
 
 const OrderItem = styled.div`
   border: 1px solid #eee;
   border-radius: 8px;
   overflow: hidden;
+   background: #fff;
 `;
 
 const OrderHeader = styled.div`
@@ -88,7 +91,7 @@ const OrderHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 15px;
-  background: #f9f9f9;
+  background: #fff;
   border-bottom: 1px solid #eee;
   flex-wrap: wrap;
   gap: 10px;

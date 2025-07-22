@@ -47,9 +47,13 @@ const WishlistPage = () => {
 };
 
 const Container = styled.div`
-  max-width: 1200px;
+  max-width: 1320px;
   margin: 0 auto;
   padding: 30px 20px;
+  h1{
+    margin-bottom: 20px;
+    font-size: 24px;
+  }
 `;
 
 const EmptyMsg = styled.div`

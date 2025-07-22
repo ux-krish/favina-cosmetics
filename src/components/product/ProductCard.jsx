@@ -332,7 +332,6 @@ const DiscountBadge = styled.span`
   border-radius: 4px;
   padding: 2px 8px;
   font-weight: 500;
-  margin-left: 4px;
 `;
 
 const PriceRow = styled.div`

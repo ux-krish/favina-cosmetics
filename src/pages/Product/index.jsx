@@ -643,7 +643,7 @@ const ProductGridWrapper = styled.div`
   width: 100%;
   background: #fff;
   border-radius: 8px;
-  padding: 30px 30px 18px 30px;
+  padding: 30px 30px 30px 30px;
   min-height: 480px;
   box-shadow: 0 2px 8px rgba(168,132,202,0.06);
   @media (max-width: 900px) {
