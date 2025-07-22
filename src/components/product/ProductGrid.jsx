@@ -17,11 +17,12 @@ const Grid = styled.div`
   flex: 0 0 100%;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
+  gap: 24px;
   padding: 10px 0;
 
   @media (max-width: 700px) {
     grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
   }
 `;
 

@@ -2,38 +2,27 @@ import styled from 'styled-components';
 import { fonts, fontSizes, colors } from '../../assets/styles/theme';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import 'swiper/css/navigation';
-import { Navigation, Autoplay } from 'swiper/modules';
-import { useRef } from 'react';
+import 'swiper/css/pagination';
+import { Pagination, Autoplay } from 'swiper/modules';
 
 const Testimonials = ({ testimonials = [], title = "What Our Customers Say", loop = true, autoplay = true }) => {
   if (!testimonials.length) return null;
 
-  const prevRef = useRef(null);
-  const nextRef = useRef(null);
+
 
   return (
     <TestimonialSection>
       <TestimonialTitle>{title}</TestimonialTitle>
       <TestimonialSwiperContainer>
         <Swiper
-          modules={[Navigation, Autoplay]}
-          navigation={{
-            prevEl: prevRef.current,
-            nextEl: nextRef.current,
-          }}
-          onInit={swiper => {
-            swiper.params.navigation.prevEl = prevRef.current;
-            swiper.params.navigation.nextEl = nextRef.current;
-            swiper.navigation.init();
-            swiper.navigation.update();
-          }}
+          modules={[Pagination, Autoplay]}
+          pagination={{ clickable: true }}
           spaceBetween={24}
           slidesPerView={4}
           breakpoints={{
             0: { slidesPerView: 1 },
-            480: { slidesPerView: 2 },
-            900: { slidesPerView: 4 },
+            640: { slidesPerView: 3 },
+            1024: { slidesPerView: 4 },
           }}
           style={{ paddingBottom: 40 }}
           loop={loop}
@@ -50,9 +39,6 @@ const Testimonials = ({ testimonials = [], title = "What Our Customers Say", loo
           {testimonials.map((testimonial, idx) => (
             <SwiperSlide key={idx}>
               <TestimonialCard>
-                {testimonial.avatar && (
-                  <TestimonialAvatar src={testimonial.avatar} alt={testimonial.name} />
-                )}
                 <TestimonialText>{testimonial.text}</TestimonialText>
                 <TestimonialName>
                   - {testimonial.name}
@@ -65,20 +51,6 @@ const Testimonials = ({ testimonials = [], title = "What Our Customers Say", loo
               </TestimonialCard>
             </SwiperSlide>
           ))}
-          <div
-            ref={prevRef}
-            className="testimonial-swiper-prev swiper-button-prev"
-            tabIndex={0}
-            role="button"
-            aria-label="Previous slide"
-          ></div>
-          <div
-            ref={nextRef}
-            className="testimonial-swiper-next swiper-button-next"
-            tabIndex={0}
-            role="button"
-            aria-label="Next slide"
-          ></div>
         </Swiper>
       </TestimonialSwiperContainer>
     </TestimonialSection>
@@ -89,6 +61,24 @@ const TestimonialSwiperContainer = styled.div`
   position: relative;
   .swiper{
     padding: 20px 0 0;
+  }
+  .swiper-pagination {
+    bottom: 0 !important;
+    margin-top: 12px;
+  }
+  .swiper-pagination-bullet {
+    background: ${colors.accent};
+    opacity: 0.4;
+    width: 12px;
+    height: 12px;
+    margin: 0 6px !important;
+    transition: background 0.2s, opacity 0.2s;
+  }
+  .swiper-pagination-bullet-active {
+    background: ${colors.primary};
+    opacity: 1;
+    width: 18px;
+    border-radius: 8px;
   }
 `;
 
@@ -159,7 +149,8 @@ const TestimonialText = styled.div`
   font-style: italic;
   line-height: 1.5;
   position: relative;
-  text-align: left;
+  text-align: center;
+  width: 100%;
   &:before {
     content: '“';
     font-size: 2.2em;
@@ -213,6 +204,7 @@ const TestimonialName = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  flex-direction: column;
 `;
 
 export default Testimonials;
