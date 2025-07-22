@@ -66,7 +66,7 @@ const BannerImage = styled.img`
   background: ${colors.background};
   @media (max-width: 900px) {
     width: 100%;
-    height: 180px;
+    height: auto;
     min-width: 0;
   }
 `;

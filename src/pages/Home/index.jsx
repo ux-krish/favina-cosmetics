@@ -158,7 +158,9 @@ const HeroSection = styled.section`
   width: 100%;
   min-height: 40vh;
   padding: 100px 30px 100px;
-  background: url(${props => props.$banner}) center center/cover no-repeat;
+  background: url(${props => props.$banner}) no-repeat;
+  background-size: cover;
+  background-position: left center;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -166,10 +168,9 @@ const HeroSection = styled.section`
     padding-top:50px;
     padding-left: 0;
     padding-right: 0;
-    padding-bottom: 200px;
+    padding-bottom: 20px;
     min-height: 420px;
     justify-content: center;
-    background-position: center;
   }
 `;
 

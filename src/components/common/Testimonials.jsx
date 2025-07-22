@@ -18,6 +18,7 @@ const Testimonials = ({ testimonials = [], title = "What Our Customers Say", loo
           modules={[Pagination, Autoplay]}
           pagination={{ clickable: true }}
           spaceBetween={24}
+          autoHeight={true}
           slidesPerView={4}
           breakpoints={{
             0: { slidesPerView: 1 },
@@ -30,7 +31,7 @@ const Testimonials = ({ testimonials = [], title = "What Our Customers Say", loo
           autoplay={
             autoplay
               ? {
-                  delay: 10000, // 10 seconds
+                  delay: 10000, 
                   disableOnInteraction: false,
                 }
               : false
@@ -102,6 +103,7 @@ const TestimonialTitle = styled.h3`
   color: ${colors.text};
   letter-spacing: -1px;
   width: 100%;
+  
 `;
 
 const TestimonialCard = styled.div`
@@ -113,7 +115,7 @@ const TestimonialCard = styled.div`
   border-radius: 18px;
   padding: 38px 28px 28px 28px;
   min-height: 200px;
-  height: 200px;
+  //height: 200px;
   box-shadow: 0 6px 32px rgba(160,132,202,0.13), 0 1.5px 8px rgba(160,132,202,0.06);
   border: 1.5px solid #ede7f6;
   border-top: 5px solid ${colors.accent};
@@ -128,18 +130,6 @@ const TestimonialCard = styled.div`
   }
 `;
 
-const TestimonialAvatar = styled.img`
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 18px;
-  border: 3px solid ${colors.accent};
-  box-shadow: 0 2px 8px rgba(229,166,166,0.13);
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-`;
 
 const TestimonialText = styled.div`
   font-size: ${fontSizes.md};
@@ -151,6 +141,7 @@ const TestimonialText = styled.div`
   position: relative;
   text-align: center;
   width: 100%;
+  min-height: 80px;
   &:before {
     content: '“';
     font-size: 2.2em;
@@ -184,6 +175,7 @@ const VerifiedBadge = styled.span`
   border-radius: 6px;
   padding: 2px 10px 2px 6px;
   margin-left: 12px;
+  margin-top: 8px;
 `;
 
 const VerifiedIcon = styled.span`
