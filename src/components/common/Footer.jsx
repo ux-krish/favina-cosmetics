@@ -30,7 +30,7 @@ const Footer = () => {
 };
 
 const FooterContainer = styled.footer`
-  background: ${colors.text};
+  background: ${colors.dark};
   color: ${colors.textLight};
   padding: 40px 20px 20px;
 `;

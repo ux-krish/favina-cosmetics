@@ -624,7 +624,7 @@ const MobileMenuHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 22px 20px 10px 20px;
+  padding: 22px 20px 17px 20px;
   border-bottom: 1px solid #eee;
   background: #fff;
   position: sticky;

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Button from './Button';
-import { colors, fontSizes, fonts } from '../../assets/styles/theme';
+import { colors, fontSizes, fonts, pxToRem } from '../../assets/styles/theme';
 import txtBg1 from '../../assets/images/txt-bg1.png';
 const PromoBanner = ({
   image,
@@ -88,9 +88,9 @@ const BannerContent = styled.div`
 `;
 
 const BannerTitle = styled.div`
-  font-size: 2.3rem;
+  font-size: ${fontSizes.xl};
   font-weight: 900;
-  margin-bottom: 10px;
+  margin-bottom: ${pxToRem(25)};
   line-height: 1.1;
   display: flex;
   flex-direction: column;
@@ -102,29 +102,30 @@ const BannerTitle = styled.div`
 
 const BannerTitlePink = styled.span`
   color: ${colors.accent};
-  font-weight: 900;
+  font-weight: 400;
   font-family: ${fonts.title};
+  font-size: ${fontSizes.xl};
 `;
 
 const BannerTitlePurple = styled.span`
   color: ${colors.highlight};
   font-weight: 900;
-  margin-top: -2px;
+  margin-top: ${pxToRem(-2)};
 `;
 
 const BannerDesc = styled.div`
   font-size: ${fontSizes.md};
   color: #444;
-  margin-bottom: 18px;
+  margin-bottom: ${pxToRem(10)};
   max-width: 480px;
   font-weight: 400;
 `;
 
 const BannerOffer = styled.div`
-  font-size: 2.2rem;
+  font-size: ${fontSizes.xl};
   font-weight: 900;
   color: ${colors.text};
-  margin-bottom: 10px;
+  //margin-bottom: 10px;
   display: flex;
   align-items: center;
   gap: 12px;

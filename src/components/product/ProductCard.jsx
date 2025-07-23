@@ -185,16 +185,6 @@ const ProductCard = ({ product }) => {
         </GroupBox>
       </Details>
       <Actions>
-        {/* Hide wishlist button here on mobile */}
-        <IconButton
-          aria-label="Add to wishlist"
-          $wished={isWished ? 1 : 0}
-          onClick={handleAddToWishlist}
-          type="button"
-          style={{ display: 'none' }}
-        >
-          <FaHeart />
-        </IconButton>
         <IconButton
           aria-label="Add to cart"
           onClick={(e) => {

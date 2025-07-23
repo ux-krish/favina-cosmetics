@@ -2,8 +2,8 @@
 export const pxToRem = (px) => `${px / 16}rem`;
 export const colors = {
   primary: "#e5a6a6",
-  secondary: "#5A4E4D",
-  accent: "#e5a6a6",
+  secondary: "#b49be0",
+  accent: "#ff6b6b",
   background: "#f9f9f9",
   sidebarBg: "#f3f0f8",
   text: "#5A4E4D",

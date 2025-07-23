@@ -5,7 +5,6 @@ import { useAppDispatch } from '../../redux/hooks';
 import { addToCart, toggleCart } from '../../redux/slices/cartSlice';
 import Button from '../../components/common/Button';
 import productData from '../../data/product.json';
-// Add Swiper imports
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay, Thumbs, Navigation } from 'swiper/modules';
 import 'swiper/css';
@@ -16,6 +15,7 @@ import ProductGrid from '../../components/product/ProductGrid';
 import { useImageBasePath } from '../../context/ImagePathContext';
 import PromoBanner, { BannerHighlight } from '../../components/common/PromoBanner';
 import promoImg from '../../assets/images/main-bg2.png';
+import bgTestimonial from '../../assets/images/pawel-czerwinski-fcZU7mRWImY-unsplash1.png';
 import { useAuth } from '../../redux/hooks';
 import { FaHeart } from 'react-icons/fa';
 import { colors, fontSizes, pxToRem, fonts } from '../../assets/styles/theme.js';
@@ -337,19 +337,25 @@ const ProductDetail = () => {
           <QtyRow>
             <QtyLabel>Qty:</QtyLabel>
             <QtyControl>
-              <QtyBtn onClick={() => setQuantity(Math.max(1, quantity - 1))}>-</QtyBtn>
+              <QtyBtn onClick={() => setQuantity(Math.max(1, quantity - 1))}><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M5 12H19" stroke="#4E4E4E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+</svg>
+</QtyBtn>
               <QtyInput
-                type="number"
+                type="tel"
                 value={quantity}
                 onChange={e => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
                 min="1"
               />
-              <QtyBtn onClick={() => setQuantity(quantity + 1)}>+</QtyBtn>
+              <QtyBtn onClick={() => setQuantity(quantity + 1)}><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 5V19M5 12H19" stroke="#4E4E4E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+</svg>
+</QtyBtn>
             </QtyControl>
           </QtyRow>
           <ActionRow>
             <AddToCartBtn onClick={handleAddToCart} fullWidth={false}>
-              <span style={{ marginRight: 8, fontSize: 18 }}><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <span><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M8.4673 18.7499C9.40673 18.7499 10.1683 17.9883 10.1683 17.0489C10.1683 16.1095 9.40673 15.3479 8.4673 15.3479C7.52786 15.3479 6.7663 16.1095 6.7663 17.0489C6.7663 17.9883 7.52786 18.7499 8.4673 18.7499Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
 <path d="M15.8782 18.7499C16.8177 18.7499 17.5792 17.9883 17.5792 17.0489C17.5792 16.1095 16.8177 15.3479 15.8782 15.3479C14.9388 15.3479 14.1772 16.1095 14.1772 17.0489C14.1772 17.9883 14.9388 18.7499 15.8782 18.7499Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
 <path d="M4.52427 3.555L6.53427 9.919C6.84327 10.897 6.99727 11.386 7.29427 11.748C7.55427 12.068 7.89327 12.315 8.27627 12.468C8.71127 12.641 9.22327 12.641 10.2493 12.641H14.1043C15.1303 12.641 15.6423 12.641 16.0763 12.468C16.4603 12.315 16.7983 12.068 17.0593 11.748C17.3553 11.386 17.5093 10.897 17.8193 9.919L18.2283 8.623L18.4683 7.857L18.7993 6.807C18.9174 6.4325 18.9456 6.03544 18.8817 5.648C18.8178 5.26055 18.6635 4.89361 18.4313 4.57691C18.1991 4.26021 17.8956 4.00266 17.5454 3.82511C17.1951 3.64757 16.808 3.55503 16.4153 3.555H4.52427ZM4.52427 3.555L4.51327 3.518C4.47105 3.37656 4.42436 3.23649 4.37327 3.098C4.17082 2.58554 3.82751 2.14082 3.383 1.81523C2.93849 1.48963 2.41093 1.29645 1.86127 1.258C1.75827 1.25 1.64527 1.25 1.41827 1.25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -357,7 +363,7 @@ const ProductDetail = () => {
 </span>Add to cart
             </AddToCartBtn>
             <BuyNowBtn onClick={handleBuyNow}>
-              <span style={{ marginRight: 8, fontSize: 18 }}><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <span><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M8.4673 18.7499C9.40673 18.7499 10.1683 17.9883 10.1683 17.0489C10.1683 16.1095 9.40673 15.3479 8.4673 15.3479C7.52786 15.3479 6.7663 16.1095 6.7663 17.0489C6.7663 17.9883 7.52786 18.7499 8.4673 18.7499Z" stroke="#FFF9F4" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
 <path d="M15.8782 18.7499C16.8177 18.7499 17.5792 17.9883 17.5792 17.0489C17.5792 16.1095 16.8177 15.3479 15.8782 15.3479C14.9388 15.3479 14.1772 16.1095 14.1772 17.0489C14.1772 17.9883 14.9388 18.7499 15.8782 18.7499Z" stroke="#FFF9F4" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
 <path d="M4.52427 3.555L6.53427 9.919C6.84327 10.897 6.99727 11.386 7.29427 11.748C7.55427 12.068 7.89327 12.315 8.27627 12.468C8.71127 12.641 9.22327 12.641 10.2493 12.641H14.1043C15.1303 12.641 15.6423 12.641 16.0763 12.468C16.4603 12.315 16.7983 12.068 17.0593 11.748C17.3553 11.386 17.5093 10.897 17.8193 9.919L18.2283 8.623L18.4683 7.857L18.7993 6.807C18.9174 6.4325 18.9456 6.03544 18.8817 5.648C18.8178 5.26055 18.6635 4.89361 18.4313 4.57691C18.1991 4.26021 17.8956 4.00266 17.5454 3.82511C17.1951 3.64757 16.808 3.55503 16.4153 3.555H4.52427ZM4.52427 3.555L4.51327 3.518C4.47105 3.37656 4.42436 3.23649 4.37327 3.098C4.17082 2.58554 3.82751 2.14082 3.383 1.81523C2.93849 1.48963 2.41093 1.29645 1.86127 1.258C1.75827 1.25 1.64527 1.25 1.41827 1.25" stroke="#FFF9F4" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -371,9 +377,7 @@ const ProductDetail = () => {
               onClick={handleWishlist}
               title={isWished ? "Remove from wishlist" : "Add to wishlist"}
             >
-              <svg width="22" height="20" viewBox="0 0 22 20" fill={isWished ? 'red' : 'black'} xmlns="http://www.w3.org/2000/svg">
-                <path d="M8.50977 17.1304C8.88959 17.4238 9.25799 17.6926 9.62207 17.9048V17.9038C9.92659 18.0823 10.2177 18.2153 10.5 18.2896V18.8013C10.113 18.7186 9.73477 18.5504 9.36914 18.3364C8.97905 18.1081 8.58844 17.8225 8.2002 17.5229L8.50977 17.1304ZM13.7988 17.5229C13.5407 17.7222 13.2819 17.9154 13.0225 18.0894L12.6309 18.3364C12.2648 18.55 11.8867 18.7174 11.5 18.8003V18.2896C11.7824 18.215 12.0737 18.0821 12.3779 17.9048C12.7418 17.6927 13.1097 17.4236 13.4893 17.1304L13.7988 17.5229ZM1.26562 7.74463C1.39236 9.85714 2.3168 11.5139 3.56348 12.9194L3.56445 12.9204C4.79967 14.3105 6.33266 15.4395 7.7207 16.5161L7.41113 16.9087C6.0394 15.8454 4.45843 14.6791 3.19043 13.2515C1.8839 11.7817 0.892508 10.0121 0.764648 7.74463H1.26562ZM21.2354 7.74463C21.1075 10.0119 20.1162 11.7806 18.8096 13.2515L18.8086 13.2524C17.5405 14.6809 15.96 15.8446 14.5879 16.9087L14.2783 16.5161C15.6665 15.4394 17.2002 14.3107 18.4355 12.9204L18.4365 12.9194C19.6832 11.5139 20.6076 9.85714 20.7344 7.74463H21.2354ZM11.749 2.59033C13.8133 0.96311 16.0154 0.810443 17.792 1.62256C19.6859 2.48872 21.056 4.43601 21.2305 6.74463H20.7285C20.5671 4.76889 19.4605 3.09959 17.9238 2.24854L17.584 2.07764C16.0089 1.35753 14.0184 1.45756 12.0996 2.94971L11.9004 2.74268C11.8505 2.69081 11.7993 2.64056 11.749 2.59033ZM4.20801 1.62256C5.98401 0.810705 8.18637 0.963294 10.249 2.58936C10.1992 2.63914 10.1491 2.68933 10.0996 2.74072L9.89844 2.94873C8.11939 1.56561 6.27934 1.37873 4.76562 1.93311L4.41602 2.07764C2.70482 2.86058 1.44464 4.62696 1.27148 6.74463H0.769531C0.938246 4.51346 2.22437 2.61979 4.01953 1.71338L4.20801 1.62256Z" fill={isWished ? 'red' : 'black'} stroke={isWished ? 'red' : 'black'} />
-                </svg>
+              <FaHeart />
 
             </WishlistBtn>
           </ActionRow>
@@ -428,7 +432,13 @@ const ProductDetail = () => {
                     ~ {slide.user}
                     {slide.verified && (
                       <VerifiedBadge>
-                        <VerifiedIcon />
+                        <VerifiedIcon>
+                          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M9.56252 1.03957C9.76494 0.993048 9.97682 1.01071 10.1687 1.09009C10.3607 1.16948 10.5231 1.30665 10.6335 1.48257L11.6275 3.06957C11.7077 3.19739 11.8157 3.30542 11.9435 3.38557L13.5305 4.37957C13.7068 4.4899 13.8443 4.65245 13.9239 4.84459C14.0035 5.03673 14.0212 5.2489 13.9745 5.45157L13.5545 7.27557C13.5206 7.42298 13.5206 7.57616 13.5545 7.72357L13.9745 9.54857C14.0207 9.75095 14.0028 9.96268 13.9232 10.1544C13.8437 10.3461 13.7064 10.5084 13.5305 10.6186L11.9435 11.6136C11.8157 11.6937 11.7077 11.8017 11.6275 11.9296L10.6335 13.5166C10.5233 13.6927 10.3609 13.8301 10.1689 13.9096C9.977 13.9892 9.76504 14.007 9.56252 13.9606L7.73752 13.5406C7.59043 13.5068 7.43761 13.5068 7.29052 13.5406L5.46552 13.9606C5.263 14.007 5.05104 13.9892 4.85911 13.9096C4.66717 13.8301 4.50479 13.6927 4.39452 13.5166L3.40052 11.9296C3.32009 11.8016 3.21171 11.6936 3.08352 11.6136L1.49752 10.6196C1.32142 10.5093 1.18404 10.3469 1.10447 10.155C1.0249 9.96305 1.00709 9.75109 1.05352 9.54857L1.47252 7.72357C1.5064 7.57616 1.5064 7.42298 1.47252 7.27557L1.05252 5.45157C1.00596 5.2488 1.02381 5.03655 1.10358 4.8444C1.18334 4.65225 1.32105 4.48976 1.49752 4.37957L3.08352 3.38557C3.21171 3.30554 3.32009 3.1975 3.40052 3.06957L4.39452 1.48257C4.50487 1.30684 4.66715 1.16979 4.85887 1.09042C5.05059 1.01104 5.26225 0.993272 5.46452 1.03957L7.29052 1.45857C7.43761 1.4923 7.59043 1.4923 7.73752 1.45857L9.56252 1.03957Z" fill="#F6C6A7" stroke="#5A4E4D"/>
+                          <path d="M5.0285 8.03565L7.0635 9.98465L9.9985 5.01465" fill="#F6C6A7"/>
+                          <path d="M5.0285 8.03565L7.0635 9.98465L9.9985 5.01465" stroke="#5A4E4D" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
+                        </VerifiedIcon>
                         Verified Buyers
                       </VerifiedBadge>
                     )}
@@ -495,18 +505,20 @@ const ProductDetailContainer = styled.div`
   max-width: ${pxToRem(900)};
   margin: ${pxToRem(32)} auto ${pxToRem(32)} auto;
   padding: ${pxToRem(0)} ${pxToRem(20)};
+  position: relative;
   @media (max-width: 1100px) {
     flex-direction: column;
     gap: ${pxToRem(32)};
-    max-width: 98vw;
-    padding: ${pxToRem(18)} ${pxToRem(6)};
+    max-width: 100%;
+    padding: ${pxToRem(18)} ${pxToRem(20)};
     border-radius: ${pxToRem(12)};
+    margin: ${pxToRem(0)} auto 0;
   }
 `;
 
 const ProductImageSection = styled.div`
   width: 50%;
-  //background: #fff;
+  background: #f9f9f9;
   border-radius: 10px;
   //padding: 32px 24px 18px 24px;
   //box-shadow: 0 2px 16px rgba(168,132,202,0.06);
@@ -516,7 +528,7 @@ const ProductImageSection = styled.div`
   min-width: 0;
   max-width: 100%;
   border: ${pxToRem(1.5)} solid #ede7f6;
-  padding:${pxToRem(24)} ${pxToRem(16)} ${pxToRem(16)} ${pxToRem(16)};
+  padding:${pxToRem(24)} ${pxToRem(20)} ${pxToRem(20)} ${pxToRem(16)};
   .swiper-slide{
       background: #fff;
       overflow: hidden;
@@ -525,7 +537,9 @@ const ProductImageSection = styled.div`
   .swiper{
     width: 100%;
     max-width: 100% !important;
-    
+    &:not(.swiper + .swiper){
+      margin-bottom: ${pxToRem(10)} !important;
+    }
   }
     .swiper-thumbs{
       .swiper-slide{
@@ -535,7 +549,7 @@ const ProductImageSection = styled.div`
   @media (max-width: 1099px) {
     width: 100%;
     max-width: 100%;
-    padding: 18px 8px 8px 8px;
+    padding: 10px 8px 10px 8px;
   }
 `;
 
@@ -586,7 +600,7 @@ const ProductTitle = styled.h1`
   line-height: 1.2;
   color: ${colors.text};
   margin: 0 0 8px 0;
-  letter-spacing: -1px;
+  letter-spacing: 1px;
 `;
 
 const ProductCategory = styled.div`
@@ -648,7 +662,7 @@ const ProductPriceRow = styled.div`
 const OfferPrice = styled.span`
   color: ${colors.text};
   font-size: ${fontSizes.xl};
-  font-weight: 900;
+  font-weight: 700;
 `;
 
 const RegularPrice = styled.span`
@@ -686,54 +700,64 @@ const QtyLabel = styled.span`
 const QtyControl = styled.div`
   display: flex;
   align-items: center;
-  gap: 0;
-  background: #f6f3fa;
-  border-radius: ${pxToRem(30)};
-  border: ${pxToRem(1.5)} solid #ede7f6;
-  overflow: hidden;
+  gap: ${pxToRem(8)};
 `;
 
 const QtyBtn = styled.button`
   width: ${pxToRem(38)};
   height: ${pxToRem(38)};
+  border-radius: ${pxToRem(30)};
   background: none;
   border: none;
-  color: #a084ca;
-  font-size: 1.5rem;
-  font-weight: 700;
   cursor: pointer;
+  background: ${colors.info};
+  border: ${pxToRem(1.5)} solid #ede7f6;
   transition: background 0.15s;
+  display: flex;
+  align-items: center;  
+  justify-content: center;
+  svg{
+    width: ${pxToRem(18)};
+    height: ${pxToRem(18)};
+  }
   &:hover {
     background: #ede7f6;
   }
 `;
 
 const QtyInput = styled.input`
-  width: ${pxToRem(44)};
+  max-width: ${pxToRem(38)};
   height: ${pxToRem(38)};
+  border-radius: ${pxToRem(30)};
+   border: ${pxToRem(1.5)} solid #ede7f6;
+  background: #fff;
   text-align: center;
-  border: none;
-  background: none;
-  font-size: 1.1rem;
+  font-size: ${fontSizes.sm};
   color: #5b4a44;
   font-weight: 600;
   outline: none;
+  text-align: center;
 `;
 
 const ActionRow = styled.div`
   display: flex;
   gap: ${pxToRem(14)};
   margin: ${pxToRem(18)} 0 0 0;
+  justify-content: flex-start;
 `;
 
 const AddToCartBtn = styled(Button)`
   flex: 1;
-  background: #ede7f6;
-  color: ${colors.text};
-  font-weight: 700;
-  font-size: 1.1rem;
+  background: ${colors.secondary};
+  color: ${colors.textLight};
+  font-weight: 600;
+  font-size: ${fontSizes.base};
   border-radius: ${pxToRem(6)};
   border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: ${pxToRem(8)};
   &:hover {
     background: #a084ca;
     color: #fff;
@@ -742,12 +766,16 @@ const AddToCartBtn = styled(Button)`
 
 const BuyNowBtn = styled(Button)`
   flex: 1;
-  background: #5b4a44;
+  background: ${colors.primary};
   color: #fff;
   font-weight: 700;
   font-size: 1.1rem;
   border-radius: ${pxToRem(6)};
   border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: ${pxToRem(8)};
   &:hover {
     background: #a084ca;
     color: #fff;
@@ -756,9 +784,9 @@ const BuyNowBtn = styled(Button)`
 
 const WishlistBtn = styled.button`
   background: #fff;
-  border: ${pxToRem(1.5)} solid #e5a6a6;
+border: ${pxToRem(1)} solid ${({ $wished }) => ($wished ? colors.accent : '#d3d3d3')};
   border-radius: ${pxToRem(8)};
-  color: ${({ $wished }) => ($wished ? '#e74c3c' : '#a084ca')};
+  color: ${({ $wished }) => ($wished ? `${colors.accent}` : '#d3d3d3')};
   font-size: ${pxToRem(22)};
   width: ${pxToRem(50)};
   height: ${pxToRem(50)};
@@ -772,6 +800,12 @@ const WishlistBtn = styled.button`
     border-color: ${colors.warning};
     background: #fff;
   }
+    @media (max-width: 1099px) {
+      position: absolute;
+      top: ${pxToRem(40)};
+      right: ${pxToRem(30)};
+      z-index: 10;
+    }
 `;
 
 const CustomTestimonialSection = styled.section`
@@ -824,7 +858,7 @@ const RatingBox = styled.div`
   display: inline-flex;
   align-items: center;
   background: #fff;
-  color: #222;
+  color: ${colors.text};
   font-weight: 700;
   font-size: 20px;
   border-radius: 8px;
@@ -842,23 +876,24 @@ const TestimonialQuote = styled.div`
   font-size: 2rem;
   font-family: ${fonts.title};
   font-weight: 700;
-  color: #222;
+  color: ${colors.text};
   margin-bottom: ${pxToRem(18)};
 `;
 
 const TestimonialText = styled.div`
   font-size: ${pxToRem(17)};
   font-family: ${fonts.body};
-  color: #444;
+  color: ${colors.text};
   margin-bottom: 22px;
   max-width: 600px;
 `;
 
 const TestimonialUser = styled.div`
   font-size: 16px;
-  color: #222;
+  color: ${colors.text};
   margin-bottom: 18px;
   display: flex;
+  justify-content: flex-end;
   align-items: center;
   gap: 10px;
 `;
@@ -876,7 +911,6 @@ const VerifiedIcon = styled.span`
   display: inline-block;
   width: 16px;
   height: 16px;
-  background: url('https://cdn-icons-png.flaticon.com/512/190/190411.png') center/cover no-repeat;
 `;
 
 
@@ -944,50 +978,19 @@ const TestimonialSlide = styled.div`
 const RelatedSection = styled.section`
   margin: 40px auto 0 auto;
   max-width: 1320px;
-  padding-bottom: 40px;
+  padding:0 20px 40px;
 `;
 
 const RelatedTitle = styled.h3`
-  font-size: 22px;
-  color: #e74c3c;
+  font-size: ${fontSizes.xl};
+  color: ${colors.text};
+  font-weight: 800;
   margin-bottom: 24px;
   text-align: center;
 `;
 
-const ButtonRow = styled.div`
-  display: flex;
-  gap: 14px;
-  margin-top: 10px;
-`;
 
-const BuyNowButton = styled(Button)`
-  background: #27ae60;
-  color: #fff;
-  &:hover {
-    background: #219150;
-    color: #fff;
-  }
-`;
 
-const WishlistButton = styled.button`
-  background: #fff;
-  border: 1.5px solid #eee;
-  border-radius: 8px;
-  color: ${({ wished }) => (wished ? '#e74c3c' : '#888')};
-  font-size: 22px;
-  width: 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: color 0.18s, border 0.18s, background 0.18s;
-  &:hover {
-    color: #e74c3c;
-    border-color: #e74c3c;
-    background: #fff7f5;
-  }
-`;
 
 // Add global styles for the toast if not already present
 if (typeof document !== 'undefined' && !document.getElementById('global-toast-style')) {
@@ -999,7 +1002,7 @@ if (typeof document !== 'undefined' && !document.getElementById('global-toast-st
       top: 300px;
       right: 0;
       transform: translateX(110%);
-      background: #222;
+      background: ${colors.text};
       color: #fff;
       padding: 10px 22px;
       border-radius: 6px 0 0 6px;

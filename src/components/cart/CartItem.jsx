@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-
+import { colors, fontSizes, pxToRem, fonts } from '../../assets/styles/theme.js';
 const CartItem = ({ item, onRemove, onQuantityChange }) => {
   const [quantity, setQuantity] = useState(item.quantity);
 
@@ -17,15 +17,19 @@ const CartItem = ({ item, onRemove, onQuantityChange }) => {
         <Title>{item.title}</Title>
         <Price>${item.price.toFixed(2)}</Price>
         <QuantityControls>
-          <Button onClick={() => handleQuantityChange(quantity - 1)}>-</Button>
+          <Button onClick={() => handleQuantityChange(quantity - 1)}><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M5 12H19" stroke="#4E4E4E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+</svg></Button>
           <Input 
-            type="number" 
+            type="tel" 
             value={quantity} 
             onChange={(e) => handleQuantityChange(parseInt(e.target.value))}
             min="0"
             max="99"
           />
-          <Button onClick={() => handleQuantityChange(quantity + 1)}>+</Button>
+          <Button onClick={() => handleQuantityChange(quantity + 1)}><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 5V19M5 12H19" stroke="#4E4E4E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+</svg></Button>
         </QuantityControls>
       </Details>
       <RemoveButton onClick={() => onRemove(item.id)}>×</RemoveButton>
@@ -58,11 +62,13 @@ const Details = styled.div`
 const Title = styled.h4`
   margin: 0;
   font-size: 14px;
+  color: ${colors.text};
 `;
 
 const Price = styled.span`
   font-weight: bold;
   font-size: 16px;
+  color: ${colors.primary};
 `;
 
 const QuantityControls = styled.div`
@@ -73,21 +79,32 @@ const QuantityControls = styled.div`
 `;
 
 const Button = styled.button`
-  width: 25px;
-  height: 25px;
-  background: #f0f0f0;
+width: ${pxToRem(25)};
+  height: ${pxToRem(25)};
+  border-radius: ${pxToRem(30)};
+  background: ${colors.info};
   border: none;
-  border-radius: 4px;
   font-size: 14px;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  svg{
+    width: ${pxToRem(18)};
+    height: ${pxToRem(18)};
+  }
 `;
 
 const Input = styled.input`
-  width: 40px;
-  height: 25px;
+  width: ${pxToRem(25)};
+  height: ${pxToRem(25)};
+  border-radius: ${pxToRem(30)};
   text-align: center;
   border: 1px solid #ddd;
-  border-radius: 4px;
+  color: ${colors.text};
+  display: inline-block;
+  align-items: center;
+  justify-content: center;
 `;
 
 const RemoveButton = styled.button`

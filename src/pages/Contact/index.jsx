@@ -71,7 +71,7 @@ const ContactPage = () => {
 const Container = styled.div`
 
   max-width: 1320px;
-  margin: 40px auto;
+  margin: 0 auto;
   padding: ${pxToRem(20)} ${pxToRem(20)};
   
   
@@ -81,7 +81,7 @@ const ContentWrapper = styled.div`
 border-radius: ${pxToRem(6)};
   box-shadow: 0 8px 32px 0 rgba(160,132,202,0.13), 0 2px 10px rgba(160,132,202,0.07);
   backdrop-filter: blur(10px);
-background: rgba(255,255,255,0.85);
+background: ${colors.background};
 max-width: 1320px;
 overflow: hidden;
   display: flex;
@@ -95,8 +95,8 @@ overflow: hidden;
 
 const FormSection = styled.div`
   flex: 1;
-  min-width: 320px;
-  background: rgba(255,249,244,0.95);
+  
+  background: ${colors.card};
   border-radius: ${pxToRem(0)};
   box-shadow: 0 2px 12px rgba(168,132,202,0.18);
   padding: ${pxToRem(36)} ${pxToRem(32)};

@@ -220,6 +220,7 @@ const HeroOfferRow = styled.div`
   align-items: center;
   gap: 14px;
   margin-bottom: 28px;
+  flex-wrap: wrap;
 `;
 
 const DiscountBadge = styled.span`
@@ -231,6 +232,10 @@ const DiscountBadge = styled.span`
   padding: 7px 22px;
   display: inline-block;
   margin-right: 8px;
+  @media (max-width: 600px) {
+    font-size: ${fontSizes.sm};
+    padding: 5px 16px;
+  }
 `;
 
 const OfferText = styled.span`
@@ -268,121 +273,5 @@ const FeaturedSection = styled.section`
   }
 `;
 
-const BeautyPicksSection = styled.section`
-  width: 100%;
-  max-width: 1320px;
-  margin: 0 auto 40px auto;
-  padding: 0 0 0 0;
-`;
-
-const BeautyPicksTitle = styled.h2`
-  text-align: center;
-  font-size: 2.4rem;
-  font-family: ${fonts.title};
-  font-weight: 900;
-  margin-bottom: 32px;
-  letter-spacing: -1px;
-`;
-
-const BeautyPicksGrid = styled.div`
-  display: flex;
-  gap: 32px;
-  justify-content: center;
-  flex-wrap: wrap;
-  @media (max-width: 900px) {
-    gap: 18px;
-  }
-  @media (max-width: 700px) {
-    flex-direction: column;
-    gap: 18px;
-    align-items: center;
-  }
-`;
-
-const BeautyPickCard = styled(Link)`
-  display: block;
-  position: relative;
-  flex: 1;
-  width: 100%;
-  height: 220px;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 2px 18px rgba(0,0,0,0.08);
-  background: #f9f9f9;
-  text-decoration: none;
-  transition: box-shadow 0.18s, transform 0.18s;
-  &:hover {
-    box-shadow: 0 8px 32px rgba(0,0,0,0.13);
-    transform: translateY(-2px) scale(1.01);
-  }
-  &:hover .beauty-pick-shop-btn {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-  }
-  @media (max-width: 700px) {
-    width: 100%;
-    max-width: 340px;
-    height: 180px;
-  }
-`;
-
-const BeautyPickImg = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-`;
-
-const BeautyPickOverlay = styled.div`
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  padding: 0 0 24px 24px;
-  background: linear-gradient(0deg, rgba(0,0,0,0.32) 60%, rgba(0,0,0,0.01) 100%);
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-`;
-
-const BeautyPickLabel = styled.div`
-  font-size: 1.1rem;
-  font-weight: 500;
-  margin-bottom: 2px;
-  position: relative;
-`;
-
-const BeautyPickOffer = styled.div`
-  font-size: 1.3rem;
-  font-weight: 900;
-  color: #fff;
-`;
-
-const BeautyPickShopBtn = styled.button`
-  position: absolute;
-  left: 0;
-  bottom: 100%;
-  margin-top: 10px;
-  background: #fff;
-  color: #e74c3c;
-  border: none;
-  border-radius: 22px;
-  font-size: 15px;
-  font-weight: 700;
-  padding: 7px 28px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  cursor: pointer;
-  opacity: 0;
-  transform: translateY(-200px);
-  pointer-events: none;
-  transition: opacity 0.28s cubic-bezier(.4,0,.2,1), transform 0.28s cubic-bezier(.4,0,.2,1);
-  z-index: 2;
-  &:hover {
-    background: #ffecec;
-    color: #c0392b;
-  }
-`;
 
 export default HomePage;
