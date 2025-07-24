@@ -63,7 +63,7 @@ const OrderConfirmationWrapper = styled.div`
 `;
 const Container = styled.div`
   width: 100%;
-  margin: 40px 0 0;
+  margin: 40px 0 40px;
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.07);

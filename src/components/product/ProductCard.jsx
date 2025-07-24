@@ -362,7 +362,7 @@ const Actions = styled.div`
 const IconButton = styled.button`
   border: 1.5px solid #ddd;
   border-radius: 4px;
-  color: ${({ $wished }) => ($wished ? colors.accent : '#888')};
+  color: ${({ $wished }) => ($wished ? colors.accent : `${colors.text}`)};
   font-size: 18px;
   width: 38px;
   height: 38px;
@@ -381,7 +381,7 @@ const IconButton = styled.button`
 const ViewButton = styled(Link)`
   flex: 1;
   background: #fff;
-  color: #222;
+  color: ${colors.text};
   border: 1.5px solid #ddd;
   border-radius: 4px;
   font-size: 15px;

@@ -60,8 +60,7 @@ const Testimonials = ({ testimonials = [], title = "What Our Customers Say", loo
 
 const TestimonialSwiperContainer = styled.div`
   position: relative;
-  max-width: 1320px;
-
+  width: 100%;
   margin: 0 auto;
   padding:0 0 0 20px;
   .swiper{

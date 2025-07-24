@@ -44,27 +44,30 @@ const ProductsPage = () => {
     // eslint-disable-next-line
   }, [priceRange[0], priceRange[1]]);
 
-  useEffect(() => {
-    let filtered = products;
-    if (selectedCategories.length > 0) {
-      filtered = filtered.filter(p => selectedCategories.includes(p.category));
+useEffect(() => {
+  // Add discount property to each product
+  const productsWithDiscount = products.map(p => {
+    let discount = 0;
+    if (p.offerPrice && p.offerPrice < p.price) {
+      discount = Math.round(((p.price - p.offerPrice) / p.price) * 100);
     }
-    // Only show products within the selected price range (min and max)
-    filtered = filtered.filter(
-      p => p.price >= Math.min(priceRange[0], priceRange[1]) && p.price <= Math.max(priceRange[0], priceRange[1])
-    );
-    // Discount filter
-    if (selectedDiscount) {
-      if (selectedDiscount === '10') {
-        filtered = filtered.filter(p => p.discount >= 10);
-      } else if (selectedDiscount === '20') {
-        filtered = filtered.filter(p => p.discount >= 20);
-      } else if (selectedDiscount === '30') {
-        filtered = filtered.filter(p => p.discount >= 30);
-      }
-    }
-    setFilteredProducts(filtered);
-  }, [products, selectedCategories, priceRange, selectedDiscount]);
+    return { ...p, discount };
+  });
+  let filtered = productsWithDiscount;
+  if (selectedCategories.length > 0) {
+    filtered = filtered.filter(p => selectedCategories.includes(p.category));
+  }
+  // Only show products within the selected price range (min and max)
+  filtered = filtered.filter(
+    p => p.price >= Math.min(priceRange[0], priceRange[1]) && p.price <= Math.max(priceRange[0], priceRange[1])
+  );
+  // Discount filter
+  if (selectedDiscount) {
+    const minDiscount = Number(selectedDiscount);
+    filtered = filtered.filter(p => p.discount >= minDiscount);
+  }
+  setFilteredProducts(filtered);
+}, [products, selectedCategories, priceRange, selectedDiscount]);
 
   // Sorting logic
   const sortedProducts = [...filteredProducts];
@@ -299,6 +302,7 @@ const ProductsPage = () => {
 
 const ProductsLayout = styled.div`
   display: flex;
+  align-items: stretch;
   max-width: ${pxToRem(1320)};
   margin: 0 auto;
   padding: ${pxToRem(24)} 0 ${pxToRem(24)} 0;
@@ -373,9 +377,9 @@ const FilterIconBtn = styled.button`
     cursor: pointer;
     transition: color 0.18s, border 0.18s, background 0.18s;
     &:hover {
-      color: #e74c3c;
-      border-color: #e74c3c;
-      background: #fff7f5;
+      color: ${colors.accent};
+      border-color: ${colors.accent};
+      background: ${colors.background};
     }
   }
 `;
@@ -388,7 +392,7 @@ const FilterTitle = styled.div`
   font-weight: 700;
   margin-bottom: ${pxToRem(14)};
   font-size: ${pxToRem(15)};
-  color: #a084ca;
+  color: ${colors.highlight};
   letter-spacing: -0.031rem;
 `;
 const FilterBox = styled.div`
@@ -450,7 +454,7 @@ const DiscountOption = styled.div`
 `;
 
 const ClearButton = styled.button`
-  background: #fff;
+  background: ${colors.textLight};
   color: ${colors.accent};
   border: 1.5px solid ${colors.accent};
   border-radius: ${pxToRem(7)};
