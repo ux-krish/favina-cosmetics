@@ -200,7 +200,7 @@ const ProductCard = ({ product }) => {
           to={`/products/${product.id}`}
           onClick={e => e.stopPropagation()}
         >
-          View Product
+          <span>View Product</span>
         </ViewButton>
       </Actions>
     </Card>
@@ -370,11 +370,35 @@ const IconButton = styled.button`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  overflow: visible;
   transition: color 0.18s, border 0.18s, background 0.18s;
+  position: relative;
+  overflow: hidden;
+  svg{
+    position: relative;
+    z-index: 1;
+  }
   &:hover {
     color: ${colors.textLight};
     border-color: ${colors.primary};
+    //background: ${colors.primary};
+  }
+  &:after {
+    content: '';
+    position: absolute;
+    left: -300%;
+    bottom: -200%;
+    width: 70px;
+    height: 70px;
     background: ${colors.primary};
+    border-radius: 50%;
+    z-index: 0;
+    transition: left 0.4s ease-in-out, bottom 0.4s ease-in-out;
+    pointer-events: none;
+  }
+  &:hover:after {
+    left: -30%;
+    bottom: -40%;
   }
 `;
 
@@ -392,11 +416,34 @@ const ViewButton = styled(Link)`
   align-items: center;
   justify-content: center;
   text-decoration: none;
+  position: relative;
+  overflow: hidden;
   transition: background 0.18s, color 0.18s, border 0.18s;
+  span{
+    position: relative;
+    z-index: 1;
+  }
   &:hover {
-    background: ${colors.info};
+    
     color: ${colors.textLight};
     border-color: ${colors.info};
+  }
+     &:after {
+    content: '';
+    position: absolute;
+    left: -150%;
+    bottom: -300%;
+    width: 300px;
+    height: 70px;
+    background: ${colors.info};
+    border-radius: 50%;
+    z-index: 0;
+    transition: left 0.4s ease-in-out, bottom 0.4s ease-in-out;
+    pointer-events: none;
+  }
+  &:hover:after {
+    left: -10%;
+    bottom: -40%;
   }
 `;
 

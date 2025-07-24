@@ -201,7 +201,7 @@ const HeroHeading = styled.h1`
 `;
 
 const Highlight = styled.span`
-  color: ${colors.accent};
+  color: ${colors.primary};
 `;
 
 const HeroSubtitle = styled.p`

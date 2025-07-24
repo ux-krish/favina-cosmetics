@@ -814,7 +814,7 @@ const CustomTestimonialSection = styled.section`
   overflow: hidden;
   min-height: ${pxToRem(340)};
   width: 100%;
-    max-width: 1320px;
+   // max-width: 1320px;
   padding: ${pxToRem(0)} ${pxToRem(20)};
   @media (max-width: 1099px) {
     flex-direction: column;

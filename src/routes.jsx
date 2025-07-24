@@ -24,11 +24,8 @@ const PrivateRoute = ({ children }) => {
 
 const AppRoutes = () => (
   <Routes>
-    {/* Public routes outside the main layout */}
     <Route path="/login" element={<Login />} />
     <Route path="/register" element={<Register />} />
-
-    {/* Main app routes inside the layout */}
     <Route path="/" element={<Layout />}>
       <Route index element={<Home />} />
       <Route path="products" element={<Products />} />

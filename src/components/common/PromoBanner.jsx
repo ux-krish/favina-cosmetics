@@ -40,7 +40,7 @@ const PromoBanner = ({
 
 const BannerWrapper = styled.div`
   width: 100%;
-  max-width: 1320px;
+  //max-width: 1320px;
   margin: 0 auto 40px auto;
   padding: 0 20px;
 `;
@@ -101,7 +101,7 @@ const BannerTitle = styled.div`
 `;
 
 const BannerTitlePink = styled.span`
-  color: ${colors.accent};
+  color: ${colors.primary};
   font-weight: 400;
   font-family: ${fonts.title};
   font-size: ${fontSizes.xl};
@@ -137,7 +137,7 @@ const BannerOfferLabel = styled.span`
 `;
 
 const BannerOfferHighlight = styled.span`
-  color: ${colors.accent};
+  color: ${colors.primary};
   font-weight: 900;
   margin-left: 8px;
 `;

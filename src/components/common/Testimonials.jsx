@@ -65,7 +65,8 @@ const TestimonialSwiperContainer = styled.div`
   padding:0 0 0 20px;
   .swiper{
     overflow:visible;
-    padding: 20px 0 0;
+    padding: 20px 0 60px !important;
+    
     .swiper-wrapper{
       //padding: 0 10px;
     }
@@ -93,17 +94,14 @@ const TestimonialSwiperContainer = styled.div`
 
 const TestimonialSection = styled.section`
   margin: 48px auto 0 auto;
-  padding: 48px 0 40px 0;
+  padding: 70px 0 70px 0;
   overflow: hidden;
   width: 100%;
-  background: linear-gradient(120deg, #fbeaec 0%, #f8f3fa 100%);
-  box-shadow: 0 4px 32px 0 rgba(160,132,202,0.10), 0 1.5px 8px 0 rgba(160,132,202,0.06);
-  border: 1px solid #ede7f6;
 `;
 
 const TestimonialTitle = styled.h3`
   text-align: center;
-  margin-bottom: 38px;
+  margin-bottom: 20px;
   font-size: ${fontSizes.xl};
   font-family: ${fonts.title};
   font-weight: 800;
@@ -118,14 +116,14 @@ const TestimonialCard = styled.div`
   flex-direction: column;
   align-items: flex-start;
   text-align: left;
-  background: linear-gradient(120deg, #fff 60%, #fbeaec 100%);
+  background: linear-gradient(120deg, #fff 20%, ${colors.border} 100%);
   border-radius: 18px;
   padding: 38px 28px 28px 28px;
   min-height: 200px;
   //height: 200px;
   box-shadow: 0 6px 32px rgba(160,132,202,0.13), 0 1.5px 8px rgba(160,132,202,0.06);
-  border: 1px solid ${colors.accent};
-  border-top: 5px solid ${colors.accent};
+  //border: 1px solid ${colors.accent};
+  border-top: 5px solid transparent;
   transition: box-shadow 0.18s, border 0.18s, transform 0.18s;
   position: relative;
   margin-bottom: 8px;

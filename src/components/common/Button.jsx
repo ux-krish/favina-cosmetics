@@ -66,6 +66,27 @@ const baseStyles = css`
   width: ${(props) => (props.$fullWidth ? '100%' : 'auto')};
   text-decoration: none;
   text-align: center;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+
+  &:before {
+    content: '';
+    position: absolute;
+    left: -200%;
+    bottom: -500%;
+    width: 230px;
+    height: 150px;
+    background: ${colors.text};
+    border-radius: 50%;
+    z-index: -1;
+    transition: left 0.4s ease-in-out, bottom 0.4s ease-in-out;
+  }
+
+  &:hover:not(:disabled):before {
+    left: -18%;
+    bottom: -80%;
+  }
 
   &:disabled {
     opacity: 0.7;
@@ -76,6 +97,11 @@ const baseStyles = css`
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
 `;
 
 const StyledButton = styled.button`
@@ -85,7 +111,7 @@ const StyledButton = styled.button`
   border: ${(props) => (props.$variant === 'outline' ? `1px solid ${colors.dark}` : 'none')};
 
   &:hover:not(:disabled) {
-    background-color: ${(props) => (props.$variant === 'outline' ? colors.background : '#555')};
+    
   }
 `;
 
@@ -96,7 +122,7 @@ const StyledLink = styled(Link)`
   border: ${(props) => (props.$variant === 'outline' ? `1px solid ${colors.dark}` : 'none')};
 
   &:hover:not(:disabled) {
-    background-color: ${(props) => (props.$variant === 'outline' ? colors.background : '#555')};
+    
   }
 `;
 
