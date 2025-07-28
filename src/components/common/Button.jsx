@@ -75,15 +75,17 @@ const baseStyles = css`
     position: absolute;
     left: -200%;
     bottom: -400%;
-    width: 432px;
-    height: 200px;
+    width:1px;
+    height:1px;
     background: ${colors.text};
     border-radius: 50%;
     z-index: -1;
-    transition: left 0.4s ease-in-out, bottom 0.4s ease-in-out;
+    transition: left 0.4s ease-in-out, bottom 0.4s ease-in-out, width 0.8s ease-in-out, height 0.8s ease-in-out;
   }
 
   &:hover:not(:disabled):before {
+  width: 432px;
+    height: 200px;
     left: -18%;
     bottom: -120%;
   }

@@ -10,13 +10,7 @@ import productData from '../../data/product.json';
 import { useImageBasePath } from '../../context/ImagePathContext';
 import { colors, fontSizes } from '../../assets/styles/theme';
 
-const offerMessages = [
-  "💄 Cosmetics Offer: Up to 40% OFF on Makeup Essentials!",
-  "🎁 Exclusive Discount: Free Shipping on Orders Over $49!",
-  "🌟 New Arrivals: Discover the Latest Beauty Trends!",
-  "🛍️ Buy 2 Get 1 Free on Select Skincare Products!",
-  "✨ Members Only: Extra 10% OFF for Registered Users!",
-];
+
 
 const Header = () => {
   const dispatch = useAppDispatch();
@@ -133,19 +127,8 @@ const Header = () => {
   return (
     <HeaderContainer>
       <Banner>
-        {/* <BannerIcon>
-          <FaPencilAlt />
-        </BannerIcon> */}
         <Carousel>
-          <CarouselTrack>
-            {offerMessages.map((msg, idx) => (
-              <CarouselItem key={idx}>{msg}</CarouselItem>
-            ))}
-            {/* Duplicate for seamless loop */}
-            {offerMessages.map((msg, idx) => (
-              <CarouselItem key={`dup-${idx}`}>{msg}</CarouselItem>
-            ))}
-          </CarouselTrack>
+
         </Carousel>
       </Banner>
       <Container>
@@ -163,7 +146,11 @@ const Header = () => {
             title="Search products"
             onClick={() => setSearchOpen(true)}
           >
-            <FaSearch />
+            <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M21.3368 21L16.9968 16.66" stroke="#5A4E4D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M11.3369 19C15.7552 19 19.3369 15.4183 19.3369 11C19.3369 6.58172 15.7552 3 11.3369 3C6.91864 3 3.33691 6.58172 3.33691 11C3.33691 15.4183 6.91864 19 11.3369 19Z" stroke="#5A4E4D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
           </SearchIconBtn>
           {/* Only show user icon on desktop */}
           <UserDropdown
@@ -187,7 +174,10 @@ const Header = () => {
                 if (window.innerWidth <= 900) setUserDropdownMobileOpen(v => !v);
               }}
             >
-              <FaUser />
+              <svg width="21" height="22" viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M16.9393 19.325H4.41013C3.15763 19.325 2.19096 18.38 2.35513 17.1383L2.45013 16.4142C2.62263 15.4142 3.53763 14.785 4.53096 14.5692L10.6101 13.5H10.7301L16.8093 14.5692C17.8193 14.8025 18.7176 15.3967 18.8901 16.4142L18.9851 17.1475C19.1493 18.3892 18.1826 19.3333 16.9301 19.3333L16.9393 19.325ZM14.8368 6.83332C14.8368 7.93839 14.3978 8.9982 13.6164 9.7796C12.835 10.561 11.7752 11 10.6701 11C9.56506 11 8.50525 10.561 7.72385 9.7796C6.94245 8.9982 6.50346 7.93839 6.50346 6.83332C6.50346 5.72825 6.94245 4.66845 7.72385 3.88704C8.50525 3.10564 9.56506 2.66666 10.6701 2.66666C11.7752 2.66666 12.835 3.10564 13.6164 3.88704C14.3978 4.66845 14.8368 5.72825 14.8368 6.83332Z" stroke="#5A4E4D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
               {isAuthenticated && user?.firstName && (
                 <UserName>{user.firstName}</UserName>
               )}
@@ -217,11 +207,20 @@ const Header = () => {
             title="View Wishlist"
             className="wishlist-header-icon"
           >
-            <FaHeart />
+            {/* <FaHeart /> */}
+            <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M10.7534 3.6079L10.2134 4.1279C10.2834 4.20048 10.3673 4.25822 10.46 4.29766C10.5528 4.33709 10.6526 4.35742 10.7534 4.35742C10.8542 4.35742 10.954 4.33709 11.0468 4.29766C11.1396 4.25822 11.2235 4.20048 11.2934 4.1279L10.7534 3.6079ZM8.17942 16.4299C6.66342 15.2349 5.00642 14.0679 3.69142 12.5879C2.40342 11.1359 1.50342 9.4429 1.50342 7.2449H0.00341797C0.00341797 9.9109 1.11342 11.9449 2.57042 13.5839C4.00042 15.1939 5.82442 16.4839 7.25042 17.6079L8.17942 16.4299ZM1.50342 7.2449C1.50342 5.0949 2.71842 3.2909 4.37742 2.5319C5.98942 1.7949 8.15542 1.9899 10.2134 4.1279L11.2934 3.0889C8.85342 0.551896 6.01742 0.132896 3.75342 1.1679C1.53942 2.1809 0.00341797 4.5329 0.00341797 7.2449H1.50342ZM7.25042 17.6079C7.76342 18.0119 8.31342 18.4419 8.87042 18.7679C9.42742 19.0939 10.0634 19.3579 10.7534 19.3579V17.8579C10.4434 17.8579 10.0794 17.7379 9.62742 17.4729C9.17442 17.2089 8.70542 16.8449 8.17942 16.4299L7.25042 17.6079ZM14.2564 17.6079C15.6824 16.4829 17.5064 15.1949 18.9364 13.5839C20.3934 11.9439 21.5034 9.9109 21.5034 7.2449H20.0034C20.0034 9.4429 19.1034 11.1359 17.8154 12.5879C16.5004 14.0679 14.8434 15.2349 13.3274 16.4299L14.2564 17.6079ZM21.5034 7.2449C21.5034 4.5329 19.9684 2.1809 17.7534 1.1679C15.4894 0.132896 12.6554 0.551896 10.2134 3.0879L11.2934 4.1279C13.3514 1.9909 15.5174 1.7949 17.1294 2.5319C18.7884 3.2909 20.0034 5.0939 20.0034 7.2449H21.5034ZM13.3274 16.4299C12.8014 16.8449 12.3324 17.2089 11.8794 17.4729C11.4264 17.7369 11.0634 17.8579 10.7534 17.8579V19.3579C11.4434 19.3579 12.0794 19.0929 12.6364 18.7679C13.1944 18.4419 13.7434 18.0119 14.2564 17.6079L13.3274 16.4299Z" fill="#5A4E4D"/>
+</svg>
+
             {wishlistCount > 0 && <WishlistCount>{wishlistCount}</WishlistCount>}
           </WishlistButton>
           <CartButton onClick={() => dispatch(toggleCart())} title="View Cart">
-            <FaShoppingCart />
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M8.05232 18.75C8.99175 18.75 9.75332 17.9884 9.75332 17.049C9.75332 16.1096 8.99175 15.348 8.05232 15.348C7.11288 15.348 6.35132 16.1096 6.35132 17.049C6.35132 17.9884 7.11288 18.75 8.05232 18.75Z" stroke="#5A4E4D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M15.4635 18.75C16.4029 18.75 17.1645 17.9884 17.1645 17.049C17.1645 16.1096 16.4029 15.348 15.4635 15.348C14.524 15.348 13.7625 16.1096 13.7625 17.049C13.7625 17.9884 14.524 18.75 15.4635 18.75Z" stroke="#5A4E4D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M4.10942 3.555L6.11942 9.919C6.42842 10.897 6.58242 11.386 6.87942 11.748C7.13942 12.068 7.47842 12.315 7.86142 12.468C8.29642 12.641 8.80842 12.641 9.83442 12.641H13.6894C14.7154 12.641 15.2274 12.641 15.6614 12.468C16.0454 12.315 16.3834 12.068 16.6444 11.748C16.9404 11.386 17.0944 10.897 17.4044 9.919L17.8134 8.623L18.0534 7.857L18.3844 6.807C18.5025 6.4325 18.5308 6.03544 18.4668 5.648C18.4029 5.26055 18.2486 4.89361 18.0164 4.57691C17.7843 4.26021 17.4808 4.00266 17.1305 3.82511C16.7803 3.64757 16.3931 3.55503 16.0004 3.555H4.10942ZM4.10942 3.555L4.09842 3.518C4.05619 3.37656 4.0095 3.23649 3.95842 3.098C3.75597 2.58554 3.41265 2.14082 2.96814 1.81523C2.52364 1.48963 1.99607 1.29645 1.44642 1.258C1.34342 1.25 1.23042 1.25 1.00342 1.25" stroke="#5A4E4D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
             {cartCount > 0 && <CartCount>{cartCount}</CartCount>}
           </CartButton>
           <MobileMenuIcon
@@ -743,19 +742,9 @@ const Carousel = styled.div`
   min-width: 0;
 `;
 
-const CarouselTrack = styled.div`
-  display: flex;
-  width: max-content;
-  animation: ${scroll} 28s linear infinite;
-`;
 
-const CarouselItem = styled.div`
-  display: inline-block;
-  padding: 0 38px;
-  font-size: 15px;
-  color: #fff;
-  white-space: nowrap;
-`;
+
+
 
 const SearchBarWrapper = styled.div`
   position: fixed;

@@ -303,7 +303,6 @@ const MetaRow = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 2px;
 `;
 
 const Weight = styled.span`
@@ -328,7 +327,7 @@ const PriceRow = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
-  margin: 4px 0 0 0;
+  margin: 0;
 `;
 
 const MRP = styled.span`
@@ -374,6 +373,7 @@ const IconButton = styled.button`
   transition: color 0.18s, border 0.18s, background 0.18s;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 5px 9px -2px rgba(0,0,0,0.15);
   svg{
     position: relative;
     z-index: 1;
@@ -381,22 +381,23 @@ const IconButton = styled.button`
   &:hover {
     color: ${colors.textLight};
     border-color: ${colors.primary};
-    //background: ${colors.primary};
   }
   &:after {
     content: '';
     position: absolute;
     left: -300%;
     bottom: -200%;
-    width: 70px;
-    height: 70px;
+    width:1px;
+    height:1px;
     background: ${colors.primary};
     border-radius: 50%;
     z-index: 0;
-    transition: left 0.4s ease-in-out, bottom 0.4s ease-in-out;
+    transition: left 0.4s ease-in-out, bottom 0.4s ease-in-out, width 0.7s ease-in-out, height 0.7s ease-in-out;
     pointer-events: none;
   }
   &:hover:after {
+  width: 70px;
+    height: 70px;
     left: -30%;
     bottom: -40%;
   }
@@ -418,7 +419,8 @@ const ViewButton = styled(Link)`
   text-decoration: none;
   position: relative;
   overflow: hidden;
-  transition: background 0.18s, color 0.18s, border 0.18s;
+  transition: background 0.18s, color 0.08s, border 0.18s;
+  box-shadow: 0 5px 9px -2px rgba(0,0,0,0.15);
   span{
     position: relative;
     z-index: 1;
@@ -431,19 +433,22 @@ const ViewButton = styled(Link)`
      &:after {
     content: '';
     position: absolute;
-    left: -150%;
+    left: 0;
+    right: 0;
     bottom: -300%;
-    width: 300px;
-    height: 70px;
+   width:1px;
+   height:1px;
     background: ${colors.info};
     border-radius: 50%;
     z-index: 0;
-    transition: left 0.4s ease-in-out, bottom 0.4s ease-in-out;
+    transition: left 0.4s ease-in-out, bottom 0.4s ease-in-out, width 0.8s ease-in-out, height 0.8s ease-in-out;
     pointer-events: none;
   }
   &:hover:after {
+    width: 300px;
+    height: 100px;
     left: -10%;
-    bottom: -40%;
+    bottom: -80%;
   }
 `;
 
@@ -464,11 +469,10 @@ const WishlistBtn = styled.button`
   border: none;
   cursor: pointer;
   transition: background 0.18s, transform 0.18s, color 0.18s;
-  color: ${({ $wished }) => ($wished ? colors.accent : '#888')};
+  color: ${({ $wished }) => ($wished ? colors.warning : '#ddd')};
   &:hover {
-    background: #f0f0f0;
     transform: scale(1.05);
-    color: ${colors.accent};
+    color: ${colors.warning};
   }
 `;
 

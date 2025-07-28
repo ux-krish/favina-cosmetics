@@ -270,6 +270,9 @@ const FeaturedSection = styled.section`
     margin-bottom: 30px;
     font-size: 32px;
     width: 100%;
+    font-family: ${fonts.title};
+    font-weight: 800;
+    color:${colors.text}
   }
 `;
 

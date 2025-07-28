@@ -1,10 +1,11 @@
 // px to rem converter utility for styled-components
 export const pxToRem = (px) => `${px / 16}rem`;
+
 export const colors = {
-  primary: "#e5a6a6",
-  secondary: "#b49be0",
-  accent: "#ff6b6b",
-  background: "#f9f9f9",
+  primary: "#E5A6A6",
+  secondary: "#C8BFE7",
+  accent: "#F6C6A7",
+  background: "#070606ff",
   sidebarBg: "#f3f0f8",
   text: "#5A4E4D",
   textLight: "#fff",
