@@ -74,9 +74,9 @@ const baseStyles = css`
     content: '';
     position: absolute;
     left: -200%;
-    bottom: -500%;
-    width: 230px;
-    height: 150px;
+    bottom: -400%;
+    width: 432px;
+    height: 200px;
     background: ${colors.text};
     border-radius: 50%;
     z-index: -1;
@@ -85,7 +85,7 @@ const baseStyles = css`
 
   &:hover:not(:disabled):before {
     left: -18%;
-    bottom: -80%;
+    bottom: -120%;
   }
 
   &:disabled {
