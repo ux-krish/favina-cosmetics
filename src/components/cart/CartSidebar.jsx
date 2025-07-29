@@ -309,7 +309,7 @@ const ShopNowBtn = styled.button`
   cursor: pointer;
   transition: background 0.18s;
   &:hover {
-    background: #c0392b;
+    background: ${colors.primary};
   }
 `;
 
