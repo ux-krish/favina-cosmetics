@@ -9,10 +9,11 @@ import { useImageBasePath } from '../../context/ImagePathContext';
 import { useAuth } from '../../redux/hooks';
 import { colors, fontSizes, pxToRem } from '../../assets/styles/theme';
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, wishlistIds = [], onToggleWishlist }) => {
   const dispatch = useAppDispatch();
+  // Use wishlistIds from props if provided, else fallback to local state (for non-wishlist pages)
   const [wishlist, setWishlist] = useState([]);
-  const isWished = wishlist.includes(product.id);
+  const isWished = wishlistIds.length ? (wishlistIds.includes(product.id) || wishlistIds.includes(String(product.id))) : wishlist.includes(product.id);
   const [toast, setToast] = useState(null);
   const imageBasePath = useImageBasePath();
   const navigate = useNavigate();
@@ -51,6 +52,13 @@ const ProductCard = ({ product }) => {
       navigate('/login');
       return;
     }
+    if (onToggleWishlist) {
+      onToggleWishlist(product.id);
+      setToast(isWished ? 'Removed from wishlist' : 'Added to wishlist');
+      setTimeout(() => setToast(null), 1500);
+      return;
+    }
+    // fallback for non-wishlist pages
     let updatedList;
     let message;
     const currentWishlist = getUserWishlist();

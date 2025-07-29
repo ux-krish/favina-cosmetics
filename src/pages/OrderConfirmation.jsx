@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Button from '../components/common/Button';
 import { getOrderById } from '../redux/slices/orderSlice'; // changed import
-
+import { colors, fontSizes, pxToRem, fonts } from '../assets/styles/theme.js';
 const OrderConfirmation = () => {
   const { orderId } = useParams();
   const [order, setOrder] = useState(null);
@@ -30,7 +30,8 @@ const OrderConfirmation = () => {
         <strong>Status:</strong> {order.status === 'pending' ? 'Processing' : order.status}
       </Status>
       <OrderDetails>
-        <h3>Products</h3>
+       
+        <h3 >Products</h3>
         <ProductList>
           {order.items.map(item => (
             <ProductItem key={item.id}>
@@ -48,6 +49,26 @@ const OrderConfirmation = () => {
           <span>${order.total.toFixed(2)}</span>
         </Total>
       </OrderDetails>
+       <OrderContainer>
+          <OrderCol>
+          <h3>Shipping Information</h3>
+          <InfoGrid>
+            <InfoRow><strong>Name:</strong> {order.shipping?.firstName} {order.shipping?.lastName}</InfoRow>
+            <InfoRow><strong>Email:</strong> {order.shipping?.email}</InfoRow>
+            <InfoRow><strong>Phone:</strong> {order.shipping?.phone}</InfoRow>
+            <InfoRow><strong>Address:</strong> {order.shipping?.address}, {order.shipping?.city}, {order.shipping?.state}, {order.shipping?.country} - {order.shipping?.postalCode}</InfoRow>
+          </InfoGrid>
+        </OrderCol>
+        <OrderCol>
+          <h3 >Billing Information</h3>
+          <InfoGrid>
+            <InfoRow><strong>Name:</strong> {order.billing?.firstName} {order.billing?.lastName}</InfoRow>
+            <InfoRow><strong>Email:</strong> {order.billing?.email}</InfoRow>
+            <InfoRow><strong>Phone:</strong> {order.billing?.phone}</InfoRow>
+            <InfoRow><strong>Address:</strong> {order.billing?.address}, {order.billing?.city}, {order.billing?.state}, {order.billing?.country} - {order.billing?.postalCode}</InfoRow>
+          </InfoGrid>
+        </OrderCol>
+        </OrderContainer>    
       <Button as={Link} to="/account/orders" style={{ marginTop: 30 }}>
         View My Orders
       </Button>
@@ -55,6 +76,18 @@ const OrderConfirmation = () => {
     </OrderConfirmationWrapper>
   );
 };
+
+const InfoGrid = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 10px;
+`;
+
+const InfoRow = styled.div`
+  font-size: 15px;
+  color: #444;
+`;
 const OrderConfirmationWrapper = styled.div`
   width: 100%;  
   max-width: 1320px;
@@ -86,6 +119,28 @@ const Status = styled.div`
 const OrderDetails = styled.div`
   margin: 30px 0 20px 0;
   text-align: left;
+`;
+
+const OrderContainer = styled.div`
+  display: flex;
+  gap: 0;
+  justify-content: space-between;
+  margin-bottom: 30px;  
+  text-align: left;
+  border:${pxToRem(1)} solid #eee;
+  padding: 0;
+  border-radius: ${pxToRem(6)};
+`;
+
+const OrderCol = styled.div`
+flex:1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 40px 20px;
+  h3{
+    color: ${colors.primary};
+  }
 `;
 
 const ProductList = styled.div`

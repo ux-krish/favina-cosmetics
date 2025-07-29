@@ -1,11 +1,16 @@
 import styled from 'styled-components';
 import ProductCard from './ProductCard';
 
-const ProductGrid = ({ products }) => {
+const ProductGrid = ({ products, wishlistIds = [], onToggleWishlist }) => {
   return (
     <Grid>
       {products.map((product) => (
-        <ProductCard key={product.id} product={product} />
+        <ProductCard
+          key={product.id}
+          product={product}
+          wishlistIds={wishlistIds}
+          onToggleWishlist={onToggleWishlist}
+        />
       ))}
     </Grid>
   );

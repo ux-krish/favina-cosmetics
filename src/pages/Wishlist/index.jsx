@@ -34,13 +34,33 @@ const WishlistPage = () => {
     p => wishlistIds.includes(p.id) || wishlistIds.includes(String(p.id))
   );
 
+  // Toggle wishlist handler (remove if exists)
+  const handleToggleWishlist = (id) => {
+    if (!user?.id) return;
+    const allWishlists = JSON.parse(localStorage.getItem('wishlists') || '{}');
+    const arr = Array.isArray(allWishlists[user.id]) ? allWishlists[user.id] : [];
+    let updated;
+    if (arr.includes(id) || arr.includes(String(id))) {
+      updated = arr.filter(wid => String(wid) !== String(id));
+    } else {
+      updated = [...arr, id];
+    }
+    allWishlists[user.id] = updated;
+    localStorage.setItem('wishlists', JSON.stringify(allWishlists));
+    setWishlistIds(updated);
+  };
+
   return (
     <Container>
       <h1>My Wishlist</h1>
       {wishlistProducts.length === 0 ? (
         <EmptyMsg>Your wishlist is empty.</EmptyMsg>
       ) : (
-        <ProductGrid products={wishlistProducts} />
+        <ProductGrid
+          products={wishlistProducts}
+          wishlistIds={wishlistIds}
+          onToggleWishlist={handleToggleWishlist}
+        />
       )}
     </Container>
   );

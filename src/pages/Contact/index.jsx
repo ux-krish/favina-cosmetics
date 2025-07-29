@@ -71,10 +71,15 @@ const ContactPage = () => {
 const Container = styled.div`
 
   max-width: 1320px;
-  margin: 0 auto;
+  margin: ${pxToRem(10)} auto;
   padding: ${pxToRem(20)} ${pxToRem(20)};
-  
-  
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 80vh;
+  @media (min-height:700px){
+    align-items: center;
+  }
 `;
 
 const ContentWrapper = styled.div`
@@ -85,7 +90,6 @@ background: ${colors.background};
 max-width: 1320px;
 overflow: hidden;
   display: flex;
-  gap: ${pxToRem(40)};
   align-items: stretch;
   @media (max-width: 900px) {
     flex-direction: column;
@@ -123,6 +127,7 @@ const MapSection = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: ${pxToRem(20)};
 `;
 
 const MapCard = styled.div`
@@ -159,7 +164,7 @@ const Form = styled.form`
 
 const Input = styled.input`
   padding: ${pxToRem(14)} ${pxToRem(16)};
-  border: 1.5px solid ${colors.border};
+  border: ${pxToRem(1.5)} solid ${colors.border};
   border-radius: ${pxToRem(7)};
   font-size: ${fontSizes.base};
   font-family: ${fonts.body};
@@ -190,7 +195,7 @@ const Textarea = styled.textarea`
 `;
 
 const Button = styled.button`
-  background: linear-gradient(90deg, ${colors.primary} 0%, ${colors.accent} 100%);
+  background: ${colors.primary};
   color: #fff;
   border: none;
   border-radius: ${pxToRem(7)};
@@ -202,7 +207,7 @@ const Button = styled.button`
   box-shadow: 0 2px 8px rgba(160,132,202,0.10);
   transition: background 0.18s, box-shadow 0.18s;
   &:hover {
-    background: linear-gradient(90deg, ${colors.accent} 0%, ${colors.primary} 100%);
+    background: ${colors.text};
     box-shadow: 0 4px 16px rgba(160,132,202,0.13);
   }
 `;

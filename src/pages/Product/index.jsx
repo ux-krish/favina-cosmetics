@@ -576,7 +576,7 @@ const Main = styled.div`
   min-width: 0;
   display: flex;
   flex-direction: column;
-  padding: 30px 30px 0 30px;
+  padding: 30px 30px 30px 30px;
   background: #f6f3fa;
   border-radius: 0 14px 14px 0;
   @media (max-width: 900px) {

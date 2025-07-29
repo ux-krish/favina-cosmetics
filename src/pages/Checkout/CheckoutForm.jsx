@@ -4,38 +4,60 @@ import { useAppDispatch, useAuth, useCart } from '../../redux/hooks';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../components/common/Button';
 import FormInput from '../../components/ui/FormInput';
+import CustomCheckbox from '../../components/ui/CustomCheckbox';
 import { clearCart } from '../../redux/slices/cartSlice';
 import { updateProfile } from '../../redux/slices/authSlice';
 import { getOrdersFromStorage } from '../../redux/slices/orderSlice'; // import helper
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { colors, fontSizes, pxToRem } from '../../assets/styles/theme.js';
 
-const CheckoutForm = () => {
+// Accept discountedTotal and orderItems as props
+const CheckoutForm = ({ discountedTotal, orderItems }) => {
   const { user, isAuthenticated } = useAuth();
-  const { items } = useCart();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const orderIdRef = useRef(null);
+  const [billingSame, setBillingSame] = useState(true);
 
-  // Use user details as default values if authenticated
-  const { register, handleSubmit, formState: { errors }, reset } = useForm({
+  // Shipping form
+  const { register: registerShipping, handleSubmit: handleShippingSubmit, formState: { errors: shippingErrors }, reset: resetShipping, getValues: getShippingValues } = useForm({
     defaultValues: isAuthenticated && user ? user : {},
   });
 
-  // Ensure form is reset with user data when user changes (e.g., after login)
+  // Billing form
+  const { register: registerBilling, formState: { errors: billingErrors }, reset: resetBilling, getValues: getBillingValues } = useForm();
+
+  // Sync billing fields with shipping if checkbox is checked
+  useEffect(() => {
+    if (billingSame) {
+      resetBilling(getShippingValues());
+    }
+    // eslint-disable-next-line
+  }, [billingSame]);
+
+  // Ensure shipping form is reset with user data when user changes (e.g., after login)
   useEffect(() => {
     if (isAuthenticated && user) {
-      reset(user);
+      resetShipping(user);
+      if (billingSame) resetBilling(user);
     }
-  }, [isAuthenticated, user, reset]);
+  }, [isAuthenticated, user, resetShipping, resetBilling, billingSame]);
 
-  const onSubmit = (data) => {
+  const onSubmit = (shippingData) => {
+    let billingData = {};
+    if (billingSame) {
+      billingData = { ...shippingData };
+    } else {
+      billingData = getBillingValues();
+    }
     if (isAuthenticated) {
-      dispatch(updateProfile(data));
+      dispatch(updateProfile(shippingData));
     }
     const order = {
-      customer: data,
-      items,
-      total: items.reduce((sum, item) => sum + item.price * item.quantity, 0),
+      shipping: shippingData,
+      billing: billingData,
+      items: orderItems,
+      total: discountedTotal,
       date: new Date().toISOString(),
       status: 'pending',
     };
@@ -45,6 +67,10 @@ const CheckoutForm = () => {
     const newOrder = { ...order, id: Date.now().toString() };
     const updatedOrders = [...orders, newOrder];
     localStorage.setItem('orders', JSON.stringify(updatedOrders));
+
+    // Store shipping and billing details separately for confirmation page
+    localStorage.setItem('shippingDetails', JSON.stringify(shippingData));
+    localStorage.setItem('billingDetails', JSON.stringify(billingData));
 
     // Clear cart for logged in user in localStorage
     if (isAuthenticated && user?.id) {
@@ -59,84 +85,218 @@ const CheckoutForm = () => {
   };
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form onSubmit={handleShippingSubmit(onSubmit)}>
+      <SectionTitle>Shipping Address</SectionTitle>
       <FormGroup>
         <FormInput
           label="First Name"
-          {...register('firstName', { required: 'First name is required' })}
-          error={errors.firstName}
+          {...registerShipping('firstName', { required: 'First name is required' })}
+          error={shippingErrors.firstName}
+          readOnly={isAuthenticated}
+          disabled={isAuthenticated}
         />
         <FormInput
           label="Last Name"
-          {...register('lastName', { required: 'Last name is required' })}
-          error={errors.lastName}
+          {...registerShipping('lastName', { required: 'Last name is required' })}
+          error={shippingErrors.lastName}
+          readOnly={isAuthenticated}
+          disabled={isAuthenticated}
         />
       </FormGroup>
-      
       <FormInput
         label="Email"
         type="email"
-        {...register('email', { 
+        {...registerShipping('email', { 
           required: 'Email is required',
           pattern: {
             value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
             message: 'Invalid email address'
           }
         })}
-        error={errors.email}
+        error={shippingErrors.email}
+        readOnly={isAuthenticated}
+        disabled={isAuthenticated}
       />
-      
       <FormInput
         label="Phone"
-        {...register('phone', { 
+        {...registerShipping('phone', { 
           required: 'Phone is required',
           pattern: {
             value: /^[0-9]{10,15}$/,
             message: 'Invalid phone number'
           }
         })}
-        error={errors.phone}
+        error={shippingErrors.phone}
       />
-      
       <FormInput
         label="Address"
-        {...register('address', { required: 'Address is required' })}
-        error={errors.address}
+        {...registerShipping('address', { required: 'Address is required' })}
+        error={shippingErrors.address}
       />
-      
       <FormGroup>
         <FormInput
           label="City"
-          {...register('city', { required: 'City is required' })}
-          error={errors.city}
+          {...registerShipping('city', { required: 'City is required' })}
+          error={shippingErrors.city}
         />
         <FormInput
           label="State"
-          {...register('state', { required: 'State is required' })}
-          error={errors.state}
+          {...registerShipping('state', { required: 'State is required' })}
+          error={shippingErrors.state}
         />
       </FormGroup>
-      
       <FormGroup>
         <FormInput
           label="Country"
-          {...register('country', { required: 'Country is required' })}
-          error={errors.country}
+          {...registerShipping('country', { required: 'Country is required' })}
+          error={shippingErrors.country}
         />
         <FormInput
           label="Postal Code"
-          {...register('postalCode', { required: 'Postal code is required' })}
-          error={errors.postalCode}
+          {...registerShipping('postalCode', { required: 'Postal code is required' })}
+          error={shippingErrors.postalCode}
         />
       </FormGroup>
-      
-      <Button type="submit" fullWidth>
-        Place Order
-      </Button>
+      <BillingSection >
+        <CustomCheckbox
+          checked={billingSame}
+          onChange={e => setBillingSame(e.target.checked)}
+          style={{ marginTop: 4 }}
+        >
+          Billing address same as shipping address
+        </CustomCheckbox>
+        {!billingSame && (
+          <>
+            <SectionTitle style={{ marginTop: 24 }}>Billing Address</SectionTitle>
+            <BillingForm>
+              <FormGroup>
+                <FormInput
+                  label="Billing First Name"
+                  {...registerBilling('firstName', { required: 'First name is required' })}
+                  error={billingErrors.firstName}
+                />
+                <FormInput
+                  label="Billing Last Name"
+                  {...registerBilling('lastName', { required: 'Last name is required' })}
+                  error={billingErrors.lastName}
+                />
+              </FormGroup>
+              <FormInput
+                label="Billing Email"
+                type="email"
+                {...registerBilling('email', { 
+                  required: 'Email is required',
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: 'Invalid email address'
+                  }
+                })}
+                error={billingErrors.email}
+              />
+              <FormInput
+                label="Billing Phone"
+                {...registerBilling('phone', { 
+                  required: 'Phone is required',
+                  pattern: {
+                    value: /^[0-9]{10,15}$/,
+                    message: 'Invalid phone number'
+                  }
+                })}
+                error={billingErrors.phone}
+              />
+              <FormInput
+                label="Billing Address"
+                {...registerBilling('address', { required: 'Address is required' })}
+                error={billingErrors.address}
+              />
+              <FormGroup>
+                <FormInput
+                  label="Billing City"
+                  {...registerBilling('city', { required: 'City is required' })}
+                  error={billingErrors.city}
+                />
+                <FormInput
+                  label="Billing State"
+                  {...registerBilling('state', { required: 'State is required' })}
+                  error={billingErrors.state}
+                />
+              </FormGroup>
+              <FormGroup>
+                <FormInput
+                  label="Billing Country"
+                  {...registerBilling('country', { required: 'Country is required' })}
+                  error={billingErrors.country}
+                />
+                <FormInput
+                  label="Billing Postal Code"
+                  {...registerBilling('postalCode', { required: 'Postal code is required' })}
+                  error={billingErrors.postalCode}
+                />
+              </FormGroup>
+            </BillingForm>
+          </>
+        )}
+      </BillingSection>
+      <ButtonRow>
+        <Button type="button" onClick={() => navigate('/products')} style={{ background: '#fff', color: colors.primary, border: `${pxToRem(1)} solid #eee`, boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
+          ← Back
+        </Button>
+        <Button type="submit" fullWidth  style={{ background: colors.primary, color: colors.textLight, border: `${pxToRem(1)} solid #eee`, boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
+          Place Order
+        </Button>
+      </ButtonRow>
+
     </Form>
   );
-};
+  };
 
+const SectionTitle = styled.h3`
+  font-size: 20px;
+  color: ${colors.primary};
+`;
+
+const BillingSection = styled.div`
+  margin: 24px 0 0 0;
+  padding: 18px 0 0 0;
+  border-top: 1px solid #eee;
+`;
+
+const BillingForm = styled.div`
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+`;
+
+const ButtonRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 18px;
+`;
+
+const BackButton = styled.button`
+  background: #fff;
+  border: 1.5px solid #eee;
+  color: #333;
+  font-size: 16px;
+  cursor: pointer;
+  width: 170px;
+  padding: 7px 18px 7px 10px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: color 0.18s, border 0.18s, background 0.18s;
+  &:hover {
+    color: ${colors.primary};
+    border-color: ${colors.primary};
+    background: #fff7f5;
+  }
+  @media (max-width: 600px) {
+    font-size: 13px;
+    padding: 5px 10px 5px 7px;
+    margin-bottom: 10px;
+  }
+`;
 const Form = styled.form`
   display: flex;
   flex-direction: column;

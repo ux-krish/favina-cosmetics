@@ -5,7 +5,7 @@ export const colors = {
   primary: "#E5A6A6",
   secondary: "#C8BFE7",
   accent: "#F6C6A7",
-  background: "#070606ff",
+  background: "#fff",
   sidebarBg: "#f3f0f8",
   text: "#5A4E4D",
   textLight: "#fff",
