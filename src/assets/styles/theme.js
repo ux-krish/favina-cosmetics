@@ -1,5 +1,10 @@
-// px to rem converter utility for styled-components
+
 export const pxToRem = (px) => `${px / 16}rem`;
+export const pxToMax = (px, baseVw = 1920, fontBase = 16) => {
+  const rem = px / fontBase;
+  const vw = (px / baseVw) * 100;
+  return `max(${rem}rem, ${vw}vw)`;
+};
 
 export const colors = {
   primary: "#E5A6A6",

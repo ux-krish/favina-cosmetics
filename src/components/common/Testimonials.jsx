@@ -226,6 +226,10 @@ const TestimonialTextBox = styled.div`
   padding: 16px 18px;
   margin-bottom: 18px;
   width: 100%;
+  min-height: 120px;
+  text-align: center;
+  display: flex;
+  align-items: center;
 `;
 
 const TestimonialUserRow = styled.div`

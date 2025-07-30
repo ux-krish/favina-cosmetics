@@ -128,7 +128,7 @@ const Header = () => {
     <HeaderContainer>
       <Banner>
         <Carousel>
-
+          Get 30% off on your first order! Use code: <PromoCode>SAVE30</PromoCode>
         </Carousel>
       </Banner>
       <Container>
@@ -740,9 +740,21 @@ const Carousel = styled.div`
   white-space: nowrap;
   position: relative;
   min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
-
+const PromoCode = styled.span`
+  font-weight: 600;
+  background: ${colors.textLight};
+  color: ${colors.primary};
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-left: 10px;
+  font-size: ${fontSizes.xs};
+  letter-spacing: 0.5px;
+  `;  
 
 
 

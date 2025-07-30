@@ -378,7 +378,7 @@ const IconButton = styled.button`
   justify-content: center;
   cursor: pointer;
   overflow: visible;
-  transition: color 0.18s, border 0.18s, background 0.18s;
+  transition: color 0.5s, border 0.18s, background 0.18s;
   position: relative;
   overflow: hidden;
   box-shadow: 0 5px 9px -2px rgba(0,0,0,0.15);
@@ -400,7 +400,7 @@ const IconButton = styled.button`
     background: ${colors.primary};
     border-radius: 50%;
     z-index: 0;
-    transition: left 0.4s ease-in-out, bottom 0.4s ease-in-out, width 0.7s ease-in-out, height 0.7s ease-in-out;
+    transition: left 0.3s ease-in-out, bottom 0.3s ease-in-out, width 0.5s ease-in-out, height 0.5s ease-in-out;
     pointer-events: none;
   }
   &:hover:after {
@@ -427,7 +427,7 @@ const ViewButton = styled(Link)`
   text-decoration: none;
   position: relative;
   overflow: hidden;
-  transition: background 0.18s, color 0.08s, border 0.18s;
+  transition: background 0.18s, color 0.5s, border 0.18s;
   box-shadow: 0 5px 9px -2px rgba(0,0,0,0.15);
   span{
     position: relative;
@@ -449,7 +449,7 @@ const ViewButton = styled(Link)`
     background: ${colors.info};
     border-radius: 50%;
     z-index: 0;
-    transition: left 0.4s ease-in-out, bottom 0.4s ease-in-out, width 0.8s ease-in-out, height 0.8s ease-in-out;
+    transition: left 0.3s ease-in-out, bottom 0.3s ease-in-out, width 0.5s ease-in-out, height 0.5s ease-in-out;
     pointer-events: none;
   }
   &:hover:after {

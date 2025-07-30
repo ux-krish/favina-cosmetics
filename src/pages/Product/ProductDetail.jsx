@@ -59,6 +59,22 @@ const ProductDetail = () => {
   const [wishlist, setWishlist] = useState([]);
   const [toast, setToast] = useState(null);
 
+  // Sync quantity with cart sidebar changes
+  useEffect(() => {
+    if (!product || !user?.id) return;
+    const syncQuantity = () => {
+      const allCarts = JSON.parse(localStorage.getItem('carts') || '{}');
+      const arr = Array.isArray(allCarts[user.id]) ? allCarts[user.id] : [];
+      const cartItem = arr.find(item => item.id === product.id);
+      if (cartItem && cartItem.quantity !== quantity) {
+        setQuantity(cartItem.quantity);
+      }
+    };
+    window.addEventListener('cartChanged', syncQuantity);
+    return () => window.removeEventListener('cartChanged', syncQuantity);
+  }, [product, user?.id, quantity]);
+
+
   useEffect(() => {
     if (!id) return;
     const found = Array.isArray(productData.products)
@@ -98,19 +114,21 @@ const ProductDetail = () => {
     const userCart = getUserCart();
     const exists = userCart.find(item => item.id === product.id);
     if (exists) {
-      updatedCart = userCart.map(item =>
-        item.id === product.id
-          ? { ...item, quantity: item.quantity + quantity }
-          : item
-      );
+      // Do not increase quantity, just open sidebar and sync local quantity
+      setQuantity(exists.quantity);
+      updatedCart = userCart;
     } else {
       updatedCart = [...userCart, { ...product, quantity }];
+      if (isAuthenticated) {
+        setUserCart(updatedCart);
+      }
+      dispatch(addToCart({ ...product, quantity }));
     }
-    if (isAuthenticated) {
-      setUserCart(updatedCart);
+    dispatch(toggleCart());
+    // Optionally, sync local quantity with cart
+    if (exists) {
+      setQuantity(exists.quantity);
     }
-    dispatch(addToCart({ ...product, quantity }));
-    dispatch(toggleCart()); 
   };
 
   // --- Buy Now handler ---
