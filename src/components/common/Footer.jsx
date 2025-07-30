@@ -39,7 +39,8 @@ const FooterContent = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 30px;
-  max-width: 1200px;
+  padding:0 20px;
+  max-width: 1320px;
   margin: 0 auto;
 `;
 

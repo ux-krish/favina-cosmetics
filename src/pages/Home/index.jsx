@@ -248,7 +248,9 @@ const ShopNowBtn = styled(Button)`
   margin-top: 10px;
   font-size: 20px;
   font-weight: 700;
-  padding: 12px 38px;
+  width: 100%;
+  max-width: 180px;
+  //padding: 12px 38px;
   border-radius: 7px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   background: #fff;
@@ -256,7 +258,7 @@ const ShopNowBtn = styled(Button)`
   border: none;
   &:hover {
     background: #f7f7f7;
-    color: #e5a6a6;
+    color: ${colors.primary};
   }
 `;
 

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Radio from '../../components/ui/CustomRadio';
 import { colors ,fontSizes, pxToRem } from '../../assets/styles/theme';
 import CheckoutForm from './CheckoutForm';
 import { useNavigate } from 'react-router-dom';
@@ -110,17 +111,14 @@ const CheckoutPage = () => {
           <h2>Payment Method</h2>
           <PaymentOption>
             <RadioWrapper>
-              <CustomRadio>
-                <input
-                  type="radio"
-                  id="cod"
-                  name="payment"
-                  checked
-                  readOnly
-                />
-                <span className="custom" />
-              </CustomRadio>
-              <label htmlFor="cod">Cash on Delivery</label>
+              <Radio
+                checked={true}
+                id="cod"
+                name="payment"
+                readOnly
+              >
+                <label htmlFor="cod">Cash on Delivery</label>
+              </Radio>
             </RadioWrapper>
           </PaymentOption>
 

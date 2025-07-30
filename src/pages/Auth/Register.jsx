@@ -5,7 +5,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { registerThunk } from '../../redux/slices/authSlice';
 import FormInput from '../../components/ui/FormInput';
 import Button from '../../components/common/Button';
-
+import LogoSvg from '../../assets/images/logo.svg';
 const RegisterPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -28,7 +28,13 @@ const RegisterPage = () => {
 
   return (
     <Container>
+      
       <FormContainer>
+        <LogoWrapper>
+        <Link to="/" title="Go to Home">
+          <img src={LogoSvg} alt="ShopEase Logo" style={{height:38}} />
+        </Link>
+      </LogoWrapper>
         <h2>Create Account</h2>
         {error && <ErrorMessage>{error}</ErrorMessage>}
         <Form onSubmit={handleSubmit(handleRegister)}>
@@ -97,7 +103,12 @@ const Container = styled.div`
   min-height: calc(100vh - 150px);
   padding: 20px;
 `;
-
+const LogoWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 18px;
+`;
 const FormContainer = styled.div`
   background: white;
   padding: 30px;

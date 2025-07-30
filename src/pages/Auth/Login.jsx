@@ -1,3 +1,4 @@
+
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch, useAuth } from '../../redux/hooks';
@@ -5,6 +6,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { loginThunk } from '../../redux/slices/authSlice';
 import FormInput from '../../components/ui/FormInput';
 import Button from '../../components/common/Button';
+import LogoSvg from '../../assets/images/logo.svg';
 
 const LoginPage = () => {
   const dispatch = useAppDispatch();
@@ -27,7 +29,13 @@ const LoginPage = () => {
 
   return (
     <Container>
+      
       <FormContainer>
+        <LogoWrapper>
+        <Link to="/" title="Go to Home">
+          <img src={LogoSvg} alt="ShopEase Logo" style={{height:38}} />
+        </Link>
+      </LogoWrapper>
         <h2>Login</h2>
         {error && <ErrorMessage>{error}</ErrorMessage>}
         <Form onSubmit={handleSubmit(handleLogin)}>
@@ -88,7 +96,12 @@ const FormContainer = styled.div`
     margin-bottom: 20px;
   }
 `;
-
+const LogoWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 18px;
+`;
 const Form = styled.form`
   display: flex;
   flex-direction: column;

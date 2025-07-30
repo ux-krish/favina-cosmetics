@@ -238,12 +238,12 @@ const CheckoutForm = ({ discountedTotal, orderItems }) => {
         )}
       </BillingSection>
       <ButtonRow>
-        <Button type="button" onClick={() => navigate('/products')} style={{ background: '#fff', color: colors.primary, border: `${pxToRem(1)} solid #eee`, boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
+        <BackButtonStyled type="button" onClick={() => navigate('/products')}>
           ← Back
-        </Button>
-        <Button type="submit" fullWidth  style={{ background: colors.primary, color: colors.textLight, border: `${pxToRem(1)} solid #eee`, boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
-          Place Order
-        </Button>
+        </BackButtonStyled>
+        <PlaceOrderButtonStyled type="submit" >
+          Complete Checkout
+        </PlaceOrderButtonStyled>
       </ButtonRow>
 
     </Form>
@@ -275,14 +275,14 @@ const ButtonRow = styled.div`
   margin-top: 18px;
 `;
 
-const BackButton = styled.button`
+const BackButtonStyled = styled(Button)`
   background: #fff;
   border: 1.5px solid #eee;
   color: #333;
   font-size: 16px;
   cursor: pointer;
   width: 170px;
-  padding: 7px 18px 7px 10px;
+  //padding: 7px 18px 7px 10px;
   border-radius: 6px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   transition: color 0.18s, border 0.18s, background 0.18s;
@@ -295,6 +295,21 @@ const BackButton = styled.button`
     font-size: 13px;
     padding: 5px 10px 5px 7px;
     margin-bottom: 10px;
+  }
+`;
+
+const PlaceOrderButtonStyled = styled(Button)`
+  background: ${colors.primary};
+  color: ${colors.textLight};
+  border: ${pxToRem(1)} solid #eee;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  font-size: 16px;
+  border-radius: 6px;
+  //padding: 7px 18px;
+  font-weight: 600;
+  &:hover {
+    background: ${colors.accent};
+    color: #fff;
   }
 `;
 const Form = styled.form`

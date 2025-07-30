@@ -79,7 +79,7 @@ const TestimonialSwiperContainer = styled.div`
   width: 100%;
   max-width: 1320px;
   margin: 0 auto;
-  padding: 0 0 40px 0;
+  padding: 0 20px 40px 20px;
   overflow: hidden;
   .swiper{
     overflow:visible;

@@ -225,7 +225,7 @@ const CartSidebar = () => {
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M13 10H10V9H13V10ZM15 14H12V13H15V14ZM14 12H11V11H14V12Z" fill="currentColor"/>
 <path d="M8.50145 10C8.49768 9.57816 8.38505 9.16443 8.17447 8.79889C7.96389 8.43335 7.66248 8.12837 7.29945 7.9135L10.9999 1.5L10.1349 1L6.34645 7.563C5.8815 7.45918 5.39794 7.47357 4.93998 7.60485C4.48202 7.73613 4.06428 7.98012 3.72495 8.3145C1.85295 10.12 1.99795 14.341 2.00495 14.52C2.01012 14.6491 2.06507 14.7712 2.15828 14.8607C2.2515 14.9502 2.37573 15.0001 2.50495 15H10.0004C10.1054 15 10.2077 14.967 10.2928 14.9056C10.3779 14.8443 10.4416 14.7577 10.4748 14.6581C10.508 14.5586 10.509 14.4511 10.4777 14.3509C10.4464 14.2507 10.3844 14.163 10.3004 14.1C8.53045 12.772 8.50145 10.027 8.50145 10ZM5.96495 8.4985C6.36513 8.5029 6.74822 8.66142 7.0345 8.94108C7.32077 9.22075 7.4882 9.60003 7.50195 10C7.50195 10.019 7.50295 10.104 7.51045 10.2345L4.56045 8.9225C4.75477 8.76226 4.97901 8.64226 5.22012 8.56947C5.46124 8.49668 5.71442 8.47256 5.96495 8.4985ZM7.72495 14C7.32529 13.5931 7.07054 13.066 6.99995 12.5H5.99995C6.03576 13.0321 6.20198 13.5473 6.48395 14H5.37245C5.16674 13.3511 5.04163 12.6794 4.99995 12H3.99995C4.032 12.6774 4.1436 13.3487 4.33245 14H2.99995C3.01545 13.082 3.14495 11.054 3.90145 9.7235L7.66795 11.3985C7.84852 12.3383 8.23437 13.2266 8.79795 14H7.72495Z" fill="currentColor"/>
-</svg>
+</svg> Clear
                 </CartActionButton>
               </ButtonRow>
             </CartFooter>
@@ -325,20 +325,25 @@ const Total = styled.div`
 const ButtonRow = styled.div`
   display: flex;
   gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  & > span{
+    flex: ${props => props.$outline ? '0 1 0' : '1 1 220px'};
+    width: 100%;
+  }
 `;
 
-const CartActionButton = styled.button`
-  flex: ${props => props.$outline ? '0' : '1'};
+const CartActionButton = styled(Button)`
+  //flex: ${props => props.$outline ? '0 1 auto' : '0 0 220px'};
   width: 100%;
   gap: ${pxToRem(8)};
   display: inline-flex;
   justify-content: center;
-  aling-items: center;
+  align-items: center;
   min-width: ${pxToRem(50)};
   padding: ${pxToRem(10)} ${pxToRem(10)};
   font-size: 16px;
   font-weight: 600;
-  border: none;
   border-radius: 6px;
   background: ${({ $outline }) => ($outline ? '#fff' : `${colors.info}`)};
   color: ${({ $outline }) => ($outline ? `${colors.highlight}` : '#fff')};
@@ -346,15 +351,15 @@ const CartActionButton = styled.button`
   transition: background 0.18s, color 0.18s, border 0.18s;
   cursor: pointer;
   &:hover:enabled {
-    background: ${({ $outline }) => ($outline ? '#fff' : `${colors.highlight}`)};
-    color: ${colors.white};
-    border-color: ${colors.highlight};
+    background: ${({ $outline }) => ($outline ? `${colors.warning}` : `${colors.highlight}`)};
+    color: ${({ $outline }) => ($outline ? `${colors.textLight}` : `${colors.textLight}`)};
+    border-color: ${({ $outline }) => ($outline ? `${colors.warning}` : `${colors.highlight}`)};
   }
   &:disabled {
     opacity: 0.6;
     cursor: not-allowed;
   }
-    svg{
+  svg{
     width: ${pxToRem(20)};
     height: ${pxToRem(20)};
   }

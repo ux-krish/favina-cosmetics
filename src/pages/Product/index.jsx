@@ -1,4 +1,9 @@
+
+
 import styled from 'styled-components';
+import Button from '../../components/common/Button';
+import Checkbox from '../../components/ui/CustomCheckbox';
+import Radio from '../../components/ui/CustomRadio';
 
 import { pxToRem, colors } from '../../assets/styles/theme';
 import { useEffect, useState } from 'react';
@@ -8,7 +13,7 @@ import { FaFilter } from 'react-icons/fa';
 
 const categories = ['Makeup', 'Skincare', 'Haircare', 'Fragrance', 'Tools'];
 
-const MAX_PRICE = 500;
+const MAX_PRICE = 300;
 const MIN_PRICE = 0;
 const PRODUCTS_PER_PAGE = 9;
 
@@ -135,15 +140,15 @@ useEffect(() => {
           <FilterTitle>Category</FilterTitle>
           {categories.map(cat => (
             <FilterOption key={cat}>
-              <input
-                type="checkbox"
+              <Checkbox
+                checked={selectedCategories.includes(cat)}
+                onChange={() => handleCategoryChange(cat)}
                 id={`cat-${cat}`}
                 name="category"
                 value={cat}
-                checked={selectedCategories.includes(cat)}
-                onChange={() => handleCategoryChange(cat)}
-              />
-              <label htmlFor={`cat-${cat}`}>{cat}</label>
+              >
+                <label htmlFor={`cat-${cat}`}>{cat}</label>
+              </Checkbox>
             </FilterOption>
           ))}
         </FilterSection>
@@ -151,17 +156,31 @@ useEffect(() => {
           <FilterTitle>Price Range</FilterTitle>
           <CustomRangeSlider>
             <SliderLabels>
-              <span>Min: ${priceRange[0]}</span>
-              <span>Max: ${priceRange[1]}</span>
+              <span>Start: ${priceRange[0]}</span>
+              <span>End: ${priceRange[1]}</span>
             </SliderLabels>
             <SliderTrack>
+              {/* Default slider bar background */}
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  height: '100%',
+                  width: '100%',
+                  background: '#e0e0e0',
+                  borderRadius: '3px',
+                  zIndex: 1,
+                }}
+              />
+              {/* Selected range highlight */}
               <SliderRange
                 style={{
                   left: `${((priceRange[0] - MIN_PRICE) / (MAX_PRICE - MIN_PRICE)) * 100}%`,
                   width: `${((priceRange[1] - priceRange[0]) / (MAX_PRICE - MIN_PRICE)) * 100}%`
                 }}
               />
-              {/* Minimum price slider */}
+              {/* Start point slider */}
               <RangeInput
                 type="range"
                 min={MIN_PRICE}
@@ -170,7 +189,7 @@ useEffect(() => {
                 onChange={handleMinChange}
                 style={{ zIndex: priceRange[0] === priceRange[1] ? 5 : 3 }}
               />
-              {/* Maximum price slider */}
+              {/* End point slider */}
               <RangeInput
                 type="range"
                 min={priceRange[0] + 1}
@@ -186,48 +205,48 @@ useEffect(() => {
           <DiscountTitle>Discount</DiscountTitle>
           <DiscountOptions>
             <DiscountOption>
-              <input
-                type="radio"
+              <Radio
+                checked={selectedDiscount === ''}
+                onChange={() => setSelectedDiscount('')}
                 id="discount-any"
                 name="discount"
                 value=""
-                checked={selectedDiscount === ''}
-                onChange={() => setSelectedDiscount('')}
-              />
-              <label htmlFor="discount-any">Any</label>
+              >
+                <label htmlFor="discount-any">Any</label>
+              </Radio>
             </DiscountOption>
             <DiscountOption>
-              <input
-                type="radio"
+              <Radio
+                checked={selectedDiscount === '10'}
+                onChange={() => setSelectedDiscount('10')}
                 id="discount-10"
                 name="discount"
                 value="10"
-                checked={selectedDiscount === '10'}
-                onChange={() => setSelectedDiscount('10')}
-              />
-              <label htmlFor="discount-10">10% or more</label>
+              >
+                <label htmlFor="discount-10">10% or more</label>
+              </Radio>
             </DiscountOption>
             <DiscountOption>
-              <input
-                type="radio"
+              <Radio
+                checked={selectedDiscount === '20'}
+                onChange={() => setSelectedDiscount('20')}
                 id="discount-20"
                 name="discount"
                 value="20"
-                checked={selectedDiscount === '20'}
-                onChange={() => setSelectedDiscount('20')}
-              />
-              <label htmlFor="discount-20">20% or more</label>
+              >
+                <label htmlFor="discount-20">20% or more</label>
+              </Radio>
             </DiscountOption>
             <DiscountOption>
-              <input
-                type="radio"
+              <Radio
+                checked={selectedDiscount === '30'}
+                onChange={() => setSelectedDiscount('30')}
                 id="discount-30"
                 name="discount"
                 value="30"
-                checked={selectedDiscount === '30'}
-                onChange={() => setSelectedDiscount('30')}
-              />
-              <label htmlFor="discount-30">30% or more</label>
+              >
+                <label htmlFor="discount-30">30% or more</label>
+              </Radio>
             </DiscountOption>
           </DiscountOptions>
         </FilterSection>
@@ -453,10 +472,10 @@ const DiscountOption = styled.div`
   }
 `;
 
-const ClearButton = styled.button`
+const ClearButton = styled(Button)`
   background: ${colors.textLight};
-  color: ${colors.accent};
-  border: 1.5px solid ${colors.accent};
+  color: ${colors.warning};
+  border: 1.5px solid ${colors.warning};
   border-radius: ${pxToRem(7)};
   padding: ${pxToRem(7)} ${pxToRem(18)};
   font-size: ${pxToRem(15)};
@@ -465,9 +484,9 @@ const ClearButton = styled.button`
   margin-top: ${pxToRem(8)};
   transition: background 0.18s, color 0.18s, border 0.18s;
   &:hover {
-    background: ${colors.accent};
+    background: ${colors.warning};
     color: #fff;
-    border-color: ${colors.accent};
+    border-color: ${colors.warning};
   }
 `;
 

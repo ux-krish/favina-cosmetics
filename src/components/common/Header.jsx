@@ -20,6 +20,16 @@ const Header = () => {
   const { items } = useCart();
   const [cartCount, setCartCount] = useState(0);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [userDropdownDisplay, setUserDropdownDisplay] = useState(window.innerWidth <= 900 ? 'none' : 'flex');
+  useEffect(() => {
+    const handleResize = () => {
+      setUserDropdownDisplay(window.innerWidth <= 900 ? 'none' : 'flex');
+    };
+    window.addEventListener('resize', handleResize);
+    // Set initial value
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   const [wishlistCount, setWishlistCount] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownMobileOpen, setUserDropdownMobileOpen] = useState(false);
@@ -155,7 +165,7 @@ const Header = () => {
           {/* Only show user icon on desktop */}
           <UserDropdown
             tabIndex={0}
-            style={{ display: window.innerWidth <= 900 ? 'none' : 'flex' }}
+            style={{ display: userDropdownDisplay }}
             // Only use hover/focus handlers on desktop
             onMouseEnter={() => window.innerWidth > 900 && setDropdownOpen(true)}
             onMouseLeave={() => window.innerWidth > 900 && setDropdownOpen(false)}
@@ -721,7 +731,6 @@ const Banner = styled.div`
   color: ${colors.textLight};
   display: flex;
   align-items: center;
-  min-height: 38px;
   font-size: ${fontSizes.sm};
   font-weight: 500;
   position: relative;
@@ -736,13 +745,16 @@ const scroll = keyframes`
 
 const Carousel = styled.div`
   flex: 1;
+  padding: 10px 20px;
   overflow: hidden;
-  white-space: nowrap;
   position: relative;
+  text-align: center;
   min-width: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap:wrap;
+  gap: 5px;
 `;
 
 const PromoCode = styled.span`

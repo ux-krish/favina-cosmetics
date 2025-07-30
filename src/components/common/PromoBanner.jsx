@@ -156,7 +156,7 @@ const BannerHighlight = styled.span`
 
 const BannerButton = styled(Button)`
   margin-top: 18px;
-  min-width: 140px;
+  max-width: 180px;
   font-size: ${fontSizes.md};
   font-weight: 700;
   border-radius: 7px;
@@ -166,7 +166,7 @@ const BannerButton = styled(Button)`
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   &:hover {
     background: #f7f7f7;
-    color: ${colors.accent};
+    color: ${colors.primary};
     //border-color: ${colors.accent};
   }
 `;

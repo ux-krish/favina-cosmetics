@@ -2,55 +2,23 @@ import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { colors, fontSizes } from '../../assets/styles/theme';
 
-const Button = ({ children, to, variant, fullWidth, small, tooltip, ...props }) => {
+
+const Button = ({ children, to, variant, fullWidth, small, ...props }) => {
   if (to) {
     return (
-      <TooltipWrapper>
-        <StyledLink to={to} $variant={variant} $fullWidth={fullWidth} $small={small} {...props}>
-          {children}
-        </StyledLink>
-        {tooltip && <Tooltip>{tooltip}</Tooltip>}
-      </TooltipWrapper>
+      <StyledLink to={to} $variant={variant} $fullWidth={fullWidth} $small={small} {...props}>
+        {children}
+      </StyledLink>
     );
   }
   return (
-    <TooltipWrapper>
-      <StyledButton $variant={variant} $fullWidth={fullWidth} $small={small} {...props}>
-        {children}
-      </StyledButton>
-      {tooltip && <Tooltip>{tooltip}</Tooltip>}
-    </TooltipWrapper>
+    <StyledButton $variant={variant} $fullWidth={fullWidth} $small={small} {...props}>
+      {children}
+    </StyledButton>
   );
 };
 
-const TooltipWrapper = styled.span`
-  position: relative;
-  display: inline-block;
-  &:hover > span,
-  &:focus-within > span {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateY(-8px) scale(1);
-  }
-`;
 
-const Tooltip = styled.span`
-  opacity: 0;
-  pointer-events: none;
-  position: absolute;
-  left: 50%;
-  bottom: 110%;
-  transform: translateX(-50%) scale(0.98);
-  background: ${colors.dark};
-  color: ${colors.textLight};
-  padding: 7px 14px;
-  border-radius: 5px;
-  font-size: ${fontSizes.sm};
-  white-space: nowrap;
-  z-index: 100;
-  transition: opacity 0.18s, transform 0.18s;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.13);
-`;
 
 const baseStyles = css`
   display: inline-flex;
@@ -69,7 +37,7 @@ const baseStyles = css`
   position: relative;
   overflow: hidden;
   z-index: 1;
-
+  max-width: ${(props) => (props.$fullWidth ? '100%' : 'auto')};
   &:before {
     content: '';
     position: absolute;
