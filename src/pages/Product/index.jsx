@@ -18,6 +18,21 @@ const MIN_PRICE = 0;
 const PRODUCTS_PER_PAGE = 9;
 
 const ProductsPage = () => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  // Close sidebar when clicking outside (mobile only)
+  useEffect(() => {
+    if (!sidebarOpen) return;
+    const handleClickOutside = (e) => {
+      const sidebar = document.querySelector('[data-sidebar]');
+      if (sidebar && !sidebar.contains(e.target)) {
+        setSidebarOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [sidebarOpen]);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -26,7 +41,6 @@ const ProductsPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortOrder, setSortOrder] = useState('none');
   const [testimonials, setTestimonials] = useState([]);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedDiscount, setSelectedDiscount] = useState('');
 
   useEffect(() => {
@@ -128,6 +142,10 @@ useEffect(() => {
 
   return (
     <ProductsLayout>
+      {/* Mobile sidebar backdrop overlay */}
+      {sidebarOpen && (
+        <SidebarBackdrop onClick={() => setSidebarOpen(false)} />
+      )}
       <Sidebar $open={sidebarOpen}>
         <SidebarCloseBtn
           type="button"
@@ -319,6 +337,19 @@ useEffect(() => {
   );
 };
 
+const SidebarBackdrop = styled.div`
+  display: none;
+  @media (max-width: 900px) {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(40,30,50,0.18);
+    z-index: 9998;
+  }
+`;
 const ProductsLayout = styled.div`
   display: flex;
   align-items: stretch;

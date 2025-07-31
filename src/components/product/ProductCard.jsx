@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useImageBasePath } from '../../context/ImagePathContext';
 import { useAuth, useCart } from '../../redux/hooks';
-import { colors, fontSizes, pxToRem } from '../../assets/styles/theme';
+import { colors, fontSizes, pxToRem, clampPx, gapSizes } from '../../assets/styles/theme';
 
 const ProductCard = ({ product, wishlistIds = [], onToggleWishlist }) => {
   const dispatch = useAppDispatch();
@@ -323,7 +323,7 @@ const GroupBox = styled.div`
 const MetaRow = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: ${gapSizes.sm};
 `;
 
 const Weight = styled.span`
@@ -340,7 +340,7 @@ const DiscountBadge = styled.span`
   color: ${colors.textLight};
   background: ${colors.primary};
   border-radius: 4px;
-  padding: 2px 8px;
+  padding: ${clampPx(1, 2, 2, 2)} 5px;
   font-weight: 500;
 `;
 
@@ -352,19 +352,19 @@ const PriceRow = styled.div`
 `;
 
 const MRP = styled.span`
-  font-size: 13px;
+  font-size: clamp(9px, 2vw, 14px);
   color: #888;
 `;
 
 const Strike = styled.span`
   text-decoration: line-through;
   color: #888;
-  font-size: 13px;
+  font-size: clamp(9px, 2vw, 14px);
 `;
 
 const OfferPrice = styled.span`
   color: ${colors.text};
-  font-size: ${fontSizes.md};
+  font-size: ${clampPx(9, 3, 12, 18)};
   font-weight: 700;
 `;
 
@@ -431,7 +431,7 @@ const ViewButton = styled(Link)`
   color: ${colors.text};
   border: 1.5px solid #ddd;
   border-radius: 4px;
-  font-size: 15px;
+  font-size: ${clampPx(9, 2, 11, 16)};
   font-weight: 500;
   padding: 0 0;
   height: 38px;

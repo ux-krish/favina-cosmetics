@@ -6,6 +6,16 @@ export const pxToMax = (px, baseVw = 1920, fontBase = 16) => {
   return `max(${rem}rem, ${vw}vw)`;
 };
 
+// clampPx: returns a CSS clamp() string for responsive font sizing
+// Usage: clampPx(18, 2, 14, 32) => 'clamp(0.875rem, max(1.125rem, 2vw), 2rem)'
+// px: preferred px value, vw: preferred vw value, minPx: min px, maxPx: max px
+export const clampPx = (px, vw, minPx = 12, maxPx = 32, fontBase = 16) => {
+  const minRem = minPx / fontBase;
+  const maxRem = maxPx / fontBase;
+  const rem = px / fontBase;
+  return `clamp(${minRem}rem, max(${rem}rem, ${vw}vw), ${maxRem}rem)`;
+};
+
 export const colors = {
   primary: "#E5A6A6",
   secondary: "#C8BFE7",
@@ -31,7 +41,7 @@ export const fonts = {
 };
 
 export const fontSizes = {
-  xs: "12px",
+  xs: `${clampPx(8, 2, 9, 14)}`,
   sm: "14px",
   base: "16px",
   md: "18px",
@@ -39,3 +49,12 @@ export const fontSizes = {
   xl: "32px",
   xxl: "48px",
 };
+
+
+export const gapSizes = {
+
+  lg: `${clampPx(8, 2, 9, 14)}`,
+  md: `${clampPx(6, 2, 7, 12)}`,
+  sm: `${clampPx(2, 1, 4, 10)}`,
+
+}
