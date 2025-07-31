@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Button from './Button';
-import { colors, fontSizes, fonts, pxToRem, pxToMax } from '../../assets/styles/theme';
+import { colors, fontSizes, fonts, pxToRem, pxToMax, clampPx, gapSizes } from '../../assets/styles/theme';
 import txtBg1 from '../../assets/images/txt-bg1.png';
 const PromoBanner = ({
   image,
@@ -88,7 +88,7 @@ const BannerContent = styled.div`
 `;
 
 const BannerTitle = styled.div`
-  font-size: ${pxToMax(48, 1920, 20)};
+  font-size: ${clampPx(24, 4, 28, 48)};
   font-weight: 900;
   margin-bottom: ${pxToRem(25)};
   line-height: 1.1;
@@ -101,7 +101,7 @@ const BannerTitlePink = styled.span`
   color: ${colors.primary};
   font-weight: 400;
   font-family: ${fonts.title};
-  font-size: ${pxToMax(48, 1920, 20)};
+  font-size: ${clampPx(24, 4, 28, 48)};
 `;
 
 const BannerTitlePurple = styled.span`
@@ -111,15 +111,16 @@ const BannerTitlePurple = styled.span`
 `;
 
 const BannerDesc = styled.div`
-  font-size: ${fontSizes.lg};
+  font-size: ${clampPx(18, 4, 14, 24)};
   color: #444;
   margin-bottom: ${pxToRem(10)};
   max-width: 480px;
   font-weight: 400;
+  line-height: 1.4;
 `;
 
 const BannerOffer = styled.div`
-  font-size: ${pxToMax(42, 1920, 20)};
+  font-size: ${clampPx(24, 4, 28, 48)};
   font-weight: 900;
   color: ${colors.text};
   //margin-bottom: 10px;
@@ -140,7 +141,7 @@ const BannerOfferHighlight = styled.span`
 `;
 
 const BannerSub = styled.div`
-  font-size: ${fontSizes.md};
+  font-size: ${clampPx(18, 4, 14, 24)};
   color: #444;
   margin-bottom: 22px;
   b {

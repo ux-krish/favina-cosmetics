@@ -560,7 +560,7 @@ const RangeInput = styled.input`
     width: ${pxToRem(20)};
     border-radius: 50%;
     background: #fff;
-    border: ${pxToRem(3)} solid ${colors.accent};
+    border: ${pxToRem(3)} solid ${colors.primary};
     box-shadow: 0 ${pxToRem(2)} ${pxToRem(6)} rgba(0,0,0,0.10);
     cursor: pointer;
     margin-top: -${pxToRem(7)};
@@ -568,7 +568,7 @@ const RangeInput = styled.input`
     transition: border 0.2s;
   }
   &::-webkit-slider-thumb:hover {
-    border: ${pxToRem(3)} solid ${colors.danger};
+    border: ${pxToRem(3)} solid ${colors.primary};
   }
   &::-moz-range-thumb {
     pointer-events: auto;
@@ -576,14 +576,14 @@ const RangeInput = styled.input`
     width: ${pxToRem(20)};
     border-radius: 50%;
     background: #fff;
-    border: ${pxToRem(3)} solid ${colors.accent};
+    border: ${pxToRem(3)} solid ${colors.primary};
     box-shadow: 0 ${pxToRem(2)} ${pxToRem(6)} rgba(0,0,0,0.10);
     cursor: pointer;
     position: relative;
     transition: border 0.2s;
   }
   &::-moz-range-thumb:hover {
-    border: ${pxToRem(3)} solid ${colors.danger};
+    border: ${pxToRem(3)} solid ${colors.primary};
   }
   &::-ms-thumb {
     pointer-events: auto;
@@ -591,14 +591,14 @@ const RangeInput = styled.input`
     width: ${pxToRem(20)};
     border-radius: 50%;
     background: #fff;
-    border: ${pxToRem(3)} solid ${colors.accent};
+    border: ${pxToRem(3)} solid ${colors.primary};
     box-shadow: 0 ${pxToRem(2)} ${pxToRem(6)} rgba(0,0,0,0.10);
     cursor: pointer;
     position: relative;
     transition: border 0.2s;
   }
   &::-ms-thumb:hover {
-    border: ${pxToRem(3)} solid ${colors.danger};
+    border: ${pxToRem(3)} solid ${colors.primary};
   }
   &::-webkit-slider-runnable-track {
     height: ${pxToRem(6)};

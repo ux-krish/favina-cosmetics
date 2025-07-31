@@ -17,7 +17,7 @@ const Testimonials = ({ testimonials = [], title = "Real Words from Real Beautie
         <Swiper
           modules={[Pagination, Autoplay]}
           pagination={{ clickable: true }}
-          spaceBetween={32}
+          spaceBetween={20}
           autoHeight={true}
           slidesPerView={4}
           breakpoints={{

@@ -58,3 +58,10 @@ export const gapSizes = {
   sm: `${clampPx(2, 1, 4, 10)}`,
 
 }
+
+export const borderRadius = {
+  sm: `${pxToRem(6)}`,
+  md: `${pxToRem(10)}`,
+  lg: `${pxToRem(16)}`,
+  xl: `${pxToRem(20)}`,
+}

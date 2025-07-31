@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useImageBasePath } from '../../context/ImagePathContext';
 import { useAuth, useCart } from '../../redux/hooks';
-import { colors, fontSizes, pxToRem, clampPx, gapSizes } from '../../assets/styles/theme';
+import { colors, fontSizes, pxToRem, clampPx, gapSizes, borderRadius } from '../../assets/styles/theme';
 
 const ProductCard = ({ product, wishlistIds = [], onToggleWishlist }) => {
   const dispatch = useAppDispatch();
@@ -221,6 +221,9 @@ const ProductCard = ({ product, wishlistIds = [], onToggleWishlist }) => {
           to={`/products/${product.id}`}
           onClick={e => e.stopPropagation()}
         >
+          <svg width="21" height="20" viewBox="0 0 21 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5.36171 18.2383C5.49641 18.3088 5.64783 18.3411 5.79956 18.3317C5.9513 18.3223 6.09757 18.2715 6.22254 18.185L17.0559 10.685C17.1666 10.6083 17.257 10.5059 17.3195 10.3866C17.382 10.2673 17.4146 10.1347 17.4146 9.99998C17.4146 9.86531 17.382 9.73265 17.3195 9.61335C17.257 9.49405 17.1666 9.39167 17.0559 9.31498L6.22254 1.81498C6.09766 1.72786 5.95126 1.6767 5.79929 1.66707C5.64733 1.65744 5.49563 1.68972 5.36075 1.76038C5.22587 1.83105 5.11298 1.93738 5.03439 2.0678C4.95579 2.19822 4.91451 2.34771 4.91504 2.49998V17.5C4.91502 17.6521 4.95663 17.8013 5.03537 17.9315C5.1141 18.0616 5.22696 18.1677 5.36171 18.2383ZM6.58171 4.09082L15.1175 9.99998L6.58171 15.9091V4.09082Z" fill="currentColor"/>
+            </svg>
           <span>View Product</span>
         </ViewButton>
       </Actions>
@@ -230,7 +233,7 @@ const ProductCard = ({ product, wishlistIds = [], onToggleWishlist }) => {
 
 const Card = styled.div`
   background: ${colors.card};
-  border-radius: 8px;
+  border-radius: ${borderRadius.sm};
   box-shadow: 0 4px 18px rgba(0,0,0,0.10);
   overflow: visible;
   display: flex;
@@ -447,7 +450,7 @@ const ViewButton = styled(Link)`
     position: relative;
     z-index: 1;
   }
-  &:hover {
+  &:hover, svg:hover {
     
     color: ${colors.textLight};
     border-color: ${colors.info};

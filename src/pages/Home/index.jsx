@@ -10,7 +10,7 @@ import TextSliderWrapper from '../../components/common/TextSliderWrapper';
 import PromoBanner, { BannerHighlight } from '../../components/common/PromoBanner';
 import promoImg from '../../assets/images/main-bg1.png';
 import { Link } from 'react-router-dom';
-import { colors, fontSizes, fonts } from '../../assets/styles/theme';
+import { colors, fontSizes, fonts, pxToRem } from '../../assets/styles/theme';
 
 const sliderMessages = [
   { text: "Limited Time Only", highlight: true },
@@ -87,27 +87,23 @@ const HomePage = () => {
     <>
       <HeroSection $banner={`${bannerImg}`}>
          <Container>
-        <HeroInner>
-          <HeroHeading>
-            Unleash Your <Highlight>Natural Glow</Highlight>
-          </HeroHeading>
-          <HeroSubtitle>
-            Discover skincare and makeup that loves you back.
-          </HeroSubtitle>
-          <HeroOfferRow>
-            <DiscountBadge>Get 25% OFF</DiscountBadge>
-            <OfferText>on your first purchase!</OfferText>
-          </HeroOfferRow>
-          <ShopNowBtn to="/products">Shop Now</ShopNowBtn>
-        </HeroInner>
-        </Container>
+          <HeroInner>
+            <HeroHeading>
+              Unleash Your <Highlight>Natural Glow</Highlight>
+            </HeroHeading>
+            <HeroSubtitle>
+              Discover skincare and makeup that loves you back.
+            </HeroSubtitle>
+            <HeroOfferRow>
+              <DiscountBadge>Get 25% OFF</DiscountBadge>
+              <OfferText>on your first purchase!</OfferText>
+            </HeroOfferRow>
+            <ShopNowBtn to="/products">Shop Now</ShopNowBtn>
+          </HeroInner>
+          </Container>
       </HeroSection>
 
       <TextSliderWrapper messages={sliderMessages} />
-
-      
-     
-   
 
       <PromoBanner
         image={promoImg}
@@ -125,8 +121,6 @@ const HomePage = () => {
         buttonText="Shop Now"
         buttonTo="/products"
       />
-
-      {/* Beauty Picks for Every Mood section removed as requested */}
 
       <FeaturedSection>
         <Container>
