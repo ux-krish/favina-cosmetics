@@ -83,7 +83,6 @@ const BannerContent = styled.div`
   background-size:cover;
   @media (max-width: 900px) {
     padding: 28px 18px;
-    background-size: 180px auto;
   }
 `;
 
@@ -170,6 +169,9 @@ const BannerButton = styled(Button)`
     color: ${colors.primary};
     //border-color: ${colors.accent};
   }
+    @media (max-width:700px){
+      margin-top:0;
+    }
 `;
 
 export { BannerHighlight };

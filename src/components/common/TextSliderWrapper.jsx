@@ -46,11 +46,17 @@ const Container = styled.div`
     background: #fff;
     filter:blur(8px);
     z-index: 2;
+    @media (max-width: 700px) {
+      left:-100px;
+    }
   }
   &::after{
     top: 0;
     left:inherit;
     right:-80px;
+    @media (max-width: 700px) {
+      right:-100px;
+    }
   }
 `;
 
@@ -85,7 +91,6 @@ const TextSliderItem = styled.div`
   white-space: nowrap;
   letter-spacing: -1px;
   @media (max-width: 700px) {
-    font-size: 1.1rem;
     margin: 0 24px;
   }
 `;

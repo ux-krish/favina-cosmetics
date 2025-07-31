@@ -20,7 +20,7 @@ import promoImg from '../../assets/images/main-bg2.png';
 import bgTestimonial from '../../assets/images/pawel-czerwinski-fcZU7mRWImY-unsplash1.png';
 import { useAuth } from '../../redux/hooks';
 import { FaHeart } from 'react-icons/fa';
-import { colors, fontSizes, pxToRem, fonts } from '../../assets/styles/theme.js';
+import { colors, fontSizes, pxToRem, fonts, gapSizes } from '../../assets/styles/theme.js';
 
 const SwiperNavStyles = createGlobalStyle`
   .product-detail-swiper .swiper-button-next,
@@ -411,22 +411,17 @@ const ProductDetail = () => {
               onClick={isInCart ? () => dispatch(toggleCart()) : handleAddToCart}
               fullWidth={false}
             >
-              <span>
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M8.4673 18.7499C9.40673 18.7499 10.1683 17.9883 10.1683 17.0489C10.1683 16.1095 9.40673 15.3479 8.4673 15.3479C7.52786 15.3479 6.7663 16.1095 6.7663 17.0489C6.7663 17.9883 7.52786 18.7499 8.4673 18.7499Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                   <path d="M15.8782 18.7499C16.8177 18.7499 17.5792 17.9883 17.5792 17.0489C17.5792 16.1095 16.8177 15.3479 15.8782 15.3479C14.9388 15.3479 14.1772 16.1095 14.1772 17.0489C14.1772 17.9883 14.9388 18.7499 15.8782 18.7499Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                   <path d="M4.52427 3.555L6.53427 9.919C6.84327 10.897 6.99727 11.386 7.29427 11.748C7.55427 12.068 7.89327 12.315 8.27627 12.468C8.71127 12.641 9.22327 12.641 10.2493 12.641H14.1043C15.1303 12.641 15.6423 12.641 16.0763 12.468C16.4603 12.315 16.7983 12.068 17.0593 11.748C17.3553 11.386 17.5093 10.897 17.8193 9.919L18.2283 8.623L18.4683 7.857L18.7993 6.807C18.9174 6.4325 18.9456 6.03544 18.8817 5.648C18.8178 5.26055 18.6635 4.89361 18.4313 4.57691C18.1991 4.26021 17.8956 4.00266 17.5454 3.82511C17.1951 3.64757 16.808 3.55503 16.4153 3.555H4.52427ZM4.52427 3.555L4.51327 3.518C4.47105 3.37656 4.42436 3.23649 4.37327 3.098C4.17082 2.58554 3.82751 2.14082 3.383 1.81523C2.93849 1.48963 2.41093 1.29645 1.86127 1.258C1.75827 1.25 1.64527 1.25 1.41827 1.25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
-              </span>
               {isInCart ? 'View Cart' : 'Add to cart'}
             </AddToCartBtn>
             <BuyNowBtn onClick={handleBuyNow}>
-              <span><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M8.4673 18.7499C9.40673 18.7499 10.1683 17.9883 10.1683 17.0489C10.1683 16.1095 9.40673 15.3479 8.4673 15.3479C7.52786 15.3479 6.7663 16.1095 6.7663 17.0489C6.7663 17.9883 7.52786 18.7499 8.4673 18.7499Z" stroke="#FFF9F4" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-<path d="M15.8782 18.7499C16.8177 18.7499 17.5792 17.9883 17.5792 17.0489C17.5792 16.1095 16.8177 15.3479 15.8782 15.3479C14.9388 15.3479 14.1772 16.1095 14.1772 17.0489C14.1772 17.9883 14.9388 18.7499 15.8782 18.7499Z" stroke="#FFF9F4" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-<path d="M4.52427 3.555L6.53427 9.919C6.84327 10.897 6.99727 11.386 7.29427 11.748C7.55427 12.068 7.89327 12.315 8.27627 12.468C8.71127 12.641 9.22327 12.641 10.2493 12.641H14.1043C15.1303 12.641 15.6423 12.641 16.0763 12.468C16.4603 12.315 16.7983 12.068 17.0593 11.748C17.3553 11.386 17.5093 10.897 17.8193 9.919L18.2283 8.623L18.4683 7.857L18.7993 6.807C18.9174 6.4325 18.9456 6.03544 18.8817 5.648C18.8178 5.26055 18.6635 4.89361 18.4313 4.57691C18.1991 4.26021 17.8956 4.00266 17.5454 3.82511C17.1951 3.64757 16.808 3.55503 16.4153 3.555H4.52427ZM4.52427 3.555L4.51327 3.518C4.47105 3.37656 4.42436 3.23649 4.37327 3.098C4.17082 2.58554 3.82751 2.14082 3.383 1.81523C2.93849 1.48963 2.41093 1.29645 1.86127 1.258C1.75827 1.25 1.64527 1.25 1.41827 1.25" stroke="#FFF9F4" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-</svg>
-</span>Buy Now
+              <svg width="17" height="20" viewBox="0 0 17 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M4.173 19.0195L8.212 11.9995L0.5 11.0955L11.75 0.980469H12.866L8.731 8.01847L16.5 8.90347L5.25 19.0185L4.173 19.0195ZM7.012 16.0165L14.191 9.64747L7.119 8.85547L10.021 3.94947L2.809 10.3385L9.856 11.1825L7.012 16.0165Z" fill="white"/>
+</svg>Buy Now
             </BuyNowBtn>
             <WishlistBtn
               type="button"
@@ -450,30 +445,18 @@ const ProductDetail = () => {
 
 
           </CheckoutCardInfo>
-          <Button
+          <ShareButton
             onClick={handleShare}
             small
-            style={{
-              width: 120,
-              minWidth: 120,
-              padding: '8px 0',
-              borderRadius: 24,
-              gap: 6,
-              marginTop: 12,
-              background: colors.primary,
-              color: colors.textLight,
-              fontWeight: 500,
-              fontSize: fontSizes.base,
-              boxShadow: '0 2px 8px rgba(0,0,0,0.07)',
-            }}
             title="Share this product"
+            
           >
-            <svg width="18" height="18" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginRight: 6 }}>
-              <path d="M17.5 13.5V17.5C17.5 18.0523 17.0523 18.5 16.5 18.5H5.5C4.94772 18.5 4.5 18.0523 4.5 17.5V13.5" stroke="#a084ca" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M11 14V4.5M11 4.5L7.5 8M11 4.5L14.5 8" stroke="#a084ca" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
+           <svg width="22" height="24" viewBox="0 0 22 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M17.7399 15.3884C17.1083 15.3915 16.4856 15.5365 15.9175 15.8125C15.3494 16.0885 14.8506 16.4885 14.4577 16.983L8.28992 13.1271C8.5147 12.4016 8.5147 11.6251 8.28992 10.8996L14.4577 7.04367C15.0837 7.81884 15.9639 8.34741 16.9423 8.53576C17.9208 8.72411 18.9343 8.56008 19.8033 8.07273C20.6724 7.58537 21.3409 6.80615 21.6905 5.87309C22.04 4.94003 22.048 3.91337 21.7131 2.97497C21.3782 2.03656 20.7219 1.24699 19.8606 0.746113C18.9992 0.245238 17.9884 0.0653918 17.0072 0.238433C16.0259 0.411475 15.1376 0.926234 14.4995 1.69153C13.8615 2.45682 13.5149 3.42324 13.5212 4.41961C13.5253 4.7969 13.5821 5.17178 13.6899 5.53336L7.5221 9.38929C6.97759 8.70382 6.23331 8.20471 5.39244 7.96116C4.55157 7.71761 3.65576 7.74167 2.82918 8.03002C2.0026 8.31837 1.28619 8.85672 0.779265 9.57045C0.272338 10.2842 0 11.1379 0 12.0134C0 12.8888 0.272338 13.7425 0.779265 14.4563C1.28619 15.17 2.0026 15.7083 2.82918 15.9967C3.65576 16.285 4.55157 16.3091 5.39244 16.0656C6.23331 15.822 6.97759 15.3229 7.5221 14.6374L13.6899 18.4934C13.5821 18.8549 13.5253 19.2298 13.5212 19.6071C13.5212 20.4415 13.7686 21.2572 14.2322 21.9509C14.6957 22.6447 15.3546 23.1854 16.1255 23.5047C16.8963 23.824 17.7446 23.9076 18.563 23.7448C19.3813 23.582 20.133 23.1802 20.723 22.5902C21.313 22.0002 21.7148 21.2485 21.8776 20.4301C22.0404 19.6118 21.9568 18.7635 21.6375 17.9927C21.3182 17.2218 20.7775 16.5629 20.0837 16.0993C19.39 15.6358 18.5743 15.3884 17.7399 15.3884ZM17.7399 1.88836C18.2405 1.88836 18.7299 2.03681 19.1462 2.31495C19.5625 2.59309 19.8869 2.98841 20.0785 3.45094C20.2701 3.91346 20.3202 4.42241 20.2225 4.91343C20.1249 5.40444 19.8838 5.85547 19.5298 6.20947C19.1758 6.56347 18.7248 6.80455 18.2337 6.90222C17.7427 6.99989 17.2338 6.94976 16.7712 6.75818C16.3087 6.56659 15.9134 6.24216 15.6353 5.82589C15.3571 5.40963 15.2087 4.92024 15.2087 4.41961C15.2087 3.74828 15.4753 3.10444 15.9501 2.62974C16.4248 2.15504 17.0686 1.88836 17.7399 1.88836ZM4.23992 14.5446C3.73928 14.5446 3.24989 14.3962 2.83363 14.118C2.41737 13.8399 2.09293 13.4446 1.90135 12.982C1.70976 12.5195 1.65963 12.0105 1.7573 11.5195C1.85497 11.0285 2.09605 10.5775 2.45005 10.2235C2.80405 9.86949 3.25508 9.62841 3.74609 9.53074C4.23711 9.43308 4.74606 9.4832 5.20858 9.67479C5.67111 9.86637 6.06644 10.1908 6.34457 10.6071C6.62271 11.0233 6.77117 11.5127 6.77117 12.0134C6.77117 12.6847 6.50448 13.3285 6.02978 13.8032C5.55508 14.2779 4.91125 14.5446 4.23992 14.5446ZM17.7399 22.1384C17.2393 22.1384 16.7499 21.9899 16.3336 21.7118C15.9174 21.4336 15.5929 21.0383 15.4013 20.5758C15.2098 20.1133 15.1596 19.6043 15.2573 19.1133C15.355 18.6223 15.596 18.1712 15.9501 17.8172C16.3041 17.4632 16.7551 17.2222 17.2461 17.1245C17.7371 17.0268 18.2461 17.077 18.7086 17.2685C19.1711 17.4601 19.5664 17.7846 19.8446 18.2008C20.1227 18.6171 20.2712 19.1065 20.2712 19.6071C20.2712 20.2784 20.0045 20.9223 19.5298 21.397C19.0551 21.8717 18.4112 22.1384 17.7399 22.1384Z" fill="#C8BFE7"/>
+</svg>
+
             Share
-          </Button>
+          </ShareButton>
         </ProductInfoSection>
       </ProductDetailContainer>
       <PromoBanner
@@ -492,6 +475,7 @@ const ProductDetail = () => {
         buttonTo="/products"
       />
       <CustomTestimonialSection>
+        <TestimonialTitle>Customer Reviews</TestimonialTitle>
         <TestimonialContainer>
           <TestimonialLeft>
           <Swiper
@@ -589,6 +573,14 @@ const ProductDetail = () => {
     </>
   );
 };
+
+const ShareButton = styled.button`
+  display:flex;
+  align-items:center;
+  gap:${gapSizes.sm};
+  font-size: ${fontSizes.sm};
+  color:${colors.highlight};
+`;
 
 const ProductDetailContainer = styled.div`
   display: flex;
@@ -862,6 +854,7 @@ const ActionRow = styled.div`
   gap: ${pxToRem(14)};
   margin: ${pxToRem(18)} 0 0 0;
   justify-content: flex-start;
+  max-width:400px;
 `;
 
 const AddToCartBtn = styled(Button)`
@@ -928,7 +921,7 @@ border: ${pxToRem(1)} solid ${({ $wished }) => ($wished ? colors.warning : '#d3d
 
 const CustomTestimonialSection = styled.section`
   overflow: hidden;
-  margin: ${pxToRem(40)} auto 0 auto;
+  margin: ${pxToRem(70)} auto 0 auto;
   overflow: hidden;
   min-height: ${pxToRem(340)};
   width: 100%;
@@ -950,6 +943,18 @@ const TestimonialContainer = styled.div`
   margin: auto;
   @media (max-width: 1099px) {
     flex-direction: column;
+  }
+`;
+
+const TestimonialTitle = styled.h2`
+  font-size: ${fontSizes.xl};
+  color: ${colors.text};
+  font-weight: 800;
+  margin-bottom: ${pxToRem(24)};
+  text-align: center;
+  @media (max-width: 1099px) {
+    font-size: ${fontSizes.lg}; 
+    margin-bottom: ${pxToRem(16)};
   }
 `;
 
@@ -1167,25 +1172,3 @@ if (typeof document !== 'undefined' && !document.getElementById('global-toast-st
 
 export default ProductDetail;
 
-
-
-const ShareButton = styled.button`
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: ${colors.primary};
-  color: ${colors.textLight};
-  border: none;
-  border-radius: 6px;
-  padding: 10px 18px;
-  font-size: ${fontSizes.base};
-  font-weight: 500;
-  cursor: pointer;
-  transition: background 0.18s;
-  margin-top: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-  &:hover {
-    background: ${colors.accent};
-    color: #fff;
-  }
-`;

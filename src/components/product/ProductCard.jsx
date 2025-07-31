@@ -383,7 +383,7 @@ const Actions = styled.div`
 `;
 
 const IconButton = styled.button`
-  border: 1.5px solid #ddd;
+  border: 1px solid ${colors.gray};
   border-radius: 4px;
   color: ${({ $wished }) => ($wished ? colors.accent : `${colors.text}`)};
   font-size: 18px;
@@ -432,7 +432,7 @@ const ViewButton = styled(Link)`
   flex: 1;
   background: #fff;
   color: ${colors.text};
-  border: 1.5px solid #ddd;
+  border: 1px solid ${colors.gray};
   border-radius: 4px;
   font-size: ${clampPx(9, 2, 11, 16)};
   font-weight: 500;
@@ -450,10 +450,24 @@ const ViewButton = styled(Link)`
     position: relative;
     z-index: 1;
   }
-  &:hover, svg:hover {
+    svg, svg path{
+      fill: ${colors.text};
+      width: 18px;
+      height: auto;
+      transition: fill 0.8s;
+      margin-right: 3px;
+      position: relative;
+      z-index: 1;
+      top:1px;
+    }
+  &:hover {
     
     color: ${colors.textLight};
     border-color: ${colors.info};
+    svg, svg path{
+    
+      fill: ${colors.textLight};
+    }
   }
      &:after {
     content: '';

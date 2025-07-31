@@ -9,7 +9,7 @@ import { clearCart } from '../../redux/slices/cartSlice';
 import { updateProfile } from '../../redux/slices/authSlice';
 import { getOrdersFromStorage } from '../../redux/slices/orderSlice'; // import helper
 import { useEffect, useRef, useState } from 'react';
-import { colors, fontSizes, pxToRem } from '../../assets/styles/theme.js';
+import { borderRadius, colors, fontSizes, pxToRem } from '../../assets/styles/theme.js';
 
 // Accept discountedTotal and orderItems as props
 const CheckoutForm = ({ discountedTotal, orderItems }) => {
@@ -90,6 +90,7 @@ const CheckoutForm = ({ discountedTotal, orderItems }) => {
       <FormGroup>
         <FormInput
           label="First Name"
+          placeholder="Enter your first name"
           {...registerShipping('firstName', { required: 'First name is required' })}
           error={shippingErrors.firstName}
           readOnly={isAuthenticated}
@@ -97,6 +98,7 @@ const CheckoutForm = ({ discountedTotal, orderItems }) => {
         />
         <FormInput
           label="Last Name"
+          placeholder="Enter your last name"
           {...registerShipping('lastName', { required: 'Last name is required' })}
           error={shippingErrors.lastName}
           readOnly={isAuthenticated}
@@ -106,6 +108,7 @@ const CheckoutForm = ({ discountedTotal, orderItems }) => {
       <FormInput
         label="Email"
         type="email"
+        placeholder="Enter your email address"
         {...registerShipping('email', { 
           required: 'Email is required',
           pattern: {
@@ -119,6 +122,7 @@ const CheckoutForm = ({ discountedTotal, orderItems }) => {
       />
       <FormInput
         label="Phone"
+        placeholder="Enter your phone number"
         {...registerShipping('phone', { 
           required: 'Phone is required',
           pattern: {
@@ -130,17 +134,20 @@ const CheckoutForm = ({ discountedTotal, orderItems }) => {
       />
       <FormInput
         label="Address"
+        placeholder="Enter your address"
         {...registerShipping('address', { required: 'Address is required' })}
         error={shippingErrors.address}
       />
       <FormGroup>
         <FormInput
           label="City"
+          placeholder="Enter your city"
           {...registerShipping('city', { required: 'City is required' })}
           error={shippingErrors.city}
         />
         <FormInput
           label="State"
+          placeholder="Enter your state"
           {...registerShipping('state', { required: 'State is required' })}
           error={shippingErrors.state}
         />
@@ -148,11 +155,13 @@ const CheckoutForm = ({ discountedTotal, orderItems }) => {
       <FormGroup>
         <FormInput
           label="Country"
+          placeholder="Enter your country"
           {...registerShipping('country', { required: 'Country is required' })}
           error={shippingErrors.country}
         />
         <FormInput
           label="Postal Code"
+          placeholder="Enter your postal code"
           {...registerShipping('postalCode', { required: 'Postal code is required' })}
           error={shippingErrors.postalCode}
         />
@@ -172,11 +181,13 @@ const CheckoutForm = ({ discountedTotal, orderItems }) => {
               <FormGroup>
                 <FormInput
                   label="Billing First Name"
+                  placeholder="Enter billing first name"
                   {...registerBilling('firstName', { required: 'First name is required' })}
                   error={billingErrors.firstName}
                 />
                 <FormInput
                   label="Billing Last Name"
+                  placeholder="Enter billing last name"
                   {...registerBilling('lastName', { required: 'Last name is required' })}
                   error={billingErrors.lastName}
                 />
@@ -184,6 +195,7 @@ const CheckoutForm = ({ discountedTotal, orderItems }) => {
               <FormInput
                 label="Billing Email"
                 type="email"
+                placeholder="Enter billing email address"
                 {...registerBilling('email', { 
                   required: 'Email is required',
                   pattern: {
@@ -195,6 +207,7 @@ const CheckoutForm = ({ discountedTotal, orderItems }) => {
               />
               <FormInput
                 label="Billing Phone"
+                placeholder="Enter billing phone number"
                 {...registerBilling('phone', { 
                   required: 'Phone is required',
                   pattern: {
@@ -206,17 +219,20 @@ const CheckoutForm = ({ discountedTotal, orderItems }) => {
               />
               <FormInput
                 label="Billing Address"
+                placeholder="Enter billing address"
                 {...registerBilling('address', { required: 'Address is required' })}
                 error={billingErrors.address}
               />
               <FormGroup>
                 <FormInput
                   label="Billing City"
+                  placeholder="Enter billing city"
                   {...registerBilling('city', { required: 'City is required' })}
                   error={billingErrors.city}
                 />
                 <FormInput
                   label="Billing State"
+                  placeholder="Enter billing state"
                   {...registerBilling('state', { required: 'State is required' })}
                   error={billingErrors.state}
                 />
@@ -224,11 +240,13 @@ const CheckoutForm = ({ discountedTotal, orderItems }) => {
               <FormGroup>
                 <FormInput
                   label="Billing Country"
+                  placeholder="Enter billing country"
                   {...registerBilling('country', { required: 'Country is required' })}
                   error={billingErrors.country}
                 />
                 <FormInput
                   label="Billing Postal Code"
+                  placeholder="Enter billing postal code"
                   {...registerBilling('postalCode', { required: 'Postal code is required' })}
                   error={billingErrors.postalCode}
                 />
@@ -242,7 +260,7 @@ const CheckoutForm = ({ discountedTotal, orderItems }) => {
           ← Back
         </BackButtonStyled>
         <PlaceOrderButtonStyled type="submit" >
-          Complete Checkout
+          Place Order
         </PlaceOrderButtonStyled>
       </ButtonRow>
 
@@ -277,13 +295,13 @@ const ButtonRow = styled.div`
 
 const BackButtonStyled = styled(Button)`
   background: #fff;
-  border: 1.5px solid #eee;
+  border: 1px solid #eee;
   color: #333;
   font-size: 16px;
   cursor: pointer;
-  width: 170px;
+  width: 100px;
   //padding: 7px 18px 7px 10px;
-  border-radius: 6px;
+  border-radius: ${borderRadius.sm};
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   transition: color 0.18s, border 0.18s, background 0.18s;
   &:hover {
@@ -304,7 +322,7 @@ const PlaceOrderButtonStyled = styled(Button)`
   border: ${pxToRem(1)} solid #eee;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   font-size: 16px;
-  border-radius: 6px;
+  border-radius: ${borderRadius.sm};
   //padding: 7px 18px;
   font-weight: 600;
   &:hover {

@@ -380,6 +380,7 @@ const Sidebar = styled.aside`
     max-width: ${pxToRem(270)};
     width: 82vw;
     min-width: 0;
+    overflow-y:auto;
     background: ${colors.sidebarBg};
     box-shadow: 2px 0 ${pxToRem(16)} rgba(0,0,0,0.13);
     border-radius: 0 ${pxToRem(14)} ${pxToRem(14)} 0;
@@ -418,17 +419,18 @@ const FilterIconBtn = styled.button`
     align-items: center;
     justify-content: center;
     margin-left: ${pxToRem(6)};
-    background: #f5f1fa;
-    border: 1.5px solid #ede7f6;
+    background: #fff;
+    border: 1px solid #ede7f6;
     border-radius: ${pxToRem(7)};
     color: #a084ca;
     font-size: ${pxToRem(21)};
-    padding: ${pxToRem(7)} ${pxToRem(12)};
+    width:40px;
+    height:40px;
     cursor: pointer;
     transition: color 0.18s, border 0.18s, background 0.18s;
     &:hover {
-      color: ${colors.accent};
-      border-color: ${colors.accent};
+      color: ${colors.primary};
+      border-color: ${colors.primary};
       background: ${colors.background};
     }
   }
@@ -475,7 +477,7 @@ const DiscountTitle = styled.div`
   font-weight: 700;
   margin-bottom: 14px;
   font-size: 15px;
-  color: ${colors.accent};
+  color: ${colors.highlight};
   letter-spacing: -0.5px;
 `;
 
@@ -524,7 +526,7 @@ const ClearButton = styled(Button)`
 const CustomRangeSlider = styled.div`
   margin-top: ${pxToRem(10)};
   width: 100%;
-  padding: ${pxToRem(16)} 0 ${pxToRem(8)} 0;
+  padding: ${pxToRem(0)} 0 ${pxToRem(8)} 0;
 `;
 
 const SliderTrack = styled.div`
@@ -537,7 +539,7 @@ const SliderTrack = styled.div`
 const SliderRange = styled.div`
   position: absolute;
   height: 100%;
-  background: ${colors.accent};
+  background: ${colors.primary};
   border-radius: ${pxToRem(3)};
   z-index: 2;
 `;
@@ -617,6 +619,7 @@ const SliderLabels = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 8px;
+  margin-bottom: 6px;
   font-size: 14px;
   color: #5b4a44;
 `;

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Radio from '../../components/ui/CustomRadio';
-import { colors ,fontSizes, pxToRem } from '../../assets/styles/theme';
+import { borderRadius, colors ,fontSizes, gapSizes, pxToRem } from '../../assets/styles/theme.js';
 import CheckoutForm from './CheckoutForm';
 import { useNavigate } from 'react-router-dom';
 import { useCart, useAuth } from '../../redux/hooks';
@@ -92,7 +92,6 @@ const CheckoutPage = () => {
     "SAVE30": 0.30,
   };
 
-  // Calculate subtotal, discount, platform charge, and total
   const subtotal = orderItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const discountRate = couponApplied && couponCodes[coupon.toUpperCase()] ? couponCodes[coupon.toUpperCase()] : 0.10;
   const discount = subtotal > 0 ? Math.round(subtotal * discountRate * 100) / 100 : 0;
@@ -101,7 +100,7 @@ const CheckoutPage = () => {
 
   return (
     <>
-      <CheckoutHeader>
+    <CheckoutHeader>
        <h1>Checkout</h1>
     </CheckoutHeader>
     <CheckoutLayout>
@@ -298,7 +297,6 @@ const CustomRadio = styled.label`
   }
 `;
 const CheckoutHeader = styled.div` 
-  
   max-width: 1320px;
   margin: ${pxToRem(30)} auto;
   padding: 0 ${pxToRem(20)};
@@ -318,7 +316,7 @@ const CheckoutHeader = styled.div`
 
 const CheckoutLayout = styled.div`
   display: flex;
-  gap: 40px;
+  gap: 24px;
   max-width: 1320px;
   width: 100%;
   margin: 40px auto;
@@ -412,8 +410,7 @@ const OrderItem = styled.div`
   gap: 12px;
   align-items: center;
   background: #fff;
-  border-radius: 7px;
-  padding: 10px 10px;
+  border-radius: ${borderRadius.sm};
   box-shadow: 0 1px 4px rgba(0,0,0,0.04);
   @media (max-width: 600px) {
     gap: 6px;
@@ -422,14 +419,15 @@ const OrderItem = styled.div`
 `;
 
 const OrderItemImg = styled.img`
-  width: 54px;
-  height: 54px;
+  width: 90px;
+  height: 90px;
   object-fit: contain;
-  border-radius: 6px;
+  border-radius: ${borderRadius.sm};
   background: #fafafa;
+  border: 1px solid #eee;
   @media (max-width: 600px) {
-    width: 38px;
-    height: 38px;
+    width: 90px;
+    height: 90px;
   }
 `;
 
@@ -437,15 +435,15 @@ const OrderItemInfo = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: ${gapSizes.xs};
   @media (max-width: 600px) {
     gap: 1px;
   }
 `;
 
 const OrderItemTitle = styled.div`
-  font-size: 15px;
-  color: #222;
+  font-size: ${fontSizes.sm};
+  color: ${colors.text};
   font-weight: 500;
   @media (max-width: 600px) {
     font-size: 13px;
@@ -493,7 +491,7 @@ const QtyBtn = styled.button`
 const QtyInput = styled.input`
   width: 38px;
   height: 28px;
-  border-radius: 8px;
+  border-radius: ${borderRadius.sm};
   border: 1px solid #ede7f6;
   background: #fff;
   text-align: center;
@@ -518,9 +516,9 @@ const CouponForm = styled.form`
   align-items: flex-start;
   gap: 0;
   margin: 18px 0 10px 0;
-  padding: 16px 18px 12px 18px;
+  padding: 12px 18px 12px 18px;
   background: #fff7f7;
-  border-radius: 8px;
+  border-radius: ${borderRadius.sm};
   box-shadow: 0 2px 8px rgba(229,166,166,0.07);
   border: 1px solid #f3e2e2;
 `;
@@ -541,7 +539,7 @@ const CouponLabel = styled.label`
 const CouponInput = styled.input`
   font-size: 15px;
   padding: 10px 14px;
-  border-radius: 6px;
+  border-radius: ${borderRadius.sm};
   border: 1.5px solid ${colors.primary};
   background: #fff;
   color: #222;
@@ -555,7 +553,7 @@ const CouponButton = styled.button`
   width: 100px;
   font-size: 15px;
   padding: 10px 24px;
-  border-radius: 6px;
+  border-radius: ${borderRadius.sm};
   background: ${colors.primary};
   color: #fff;
   border: none;
@@ -649,95 +647,25 @@ const EmptyMsg = styled.div`
   }
 `;
 
-const UpsellSection = styled.div`
-  margin-bottom: 32px;
-  background: #faf9fa;
-  border-radius: 8px;
-  padding: 18px 14px 10px 14px;
-  box-shadow: 0 2px 8px rgba(231,76,60,0.06);
-`;
 
-const UpsellTitle = styled.div`
-  font-size: 18px;
-  font-weight: 700;
-  color: ${colors.danger};
-  margin-bottom: 12px;
-`;
 
-const UpsellCard = styled.div`
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  padding: 12px 10px 10px 10px;
-  width: 140px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: box-shadow 0.18s, transform 0.18s;
-  cursor: pointer;
-  &:hover, &:focus {
-    box-shadow: 0 4px 16px rgba(231,76,60,0.13);
-    transform: translateY(-2px) scale(1.03);
-    outline: none;
-  }
-`;
-
-const UpsellImg = styled.img`
-  width: 60px;
-  height: 60px;
-  object-fit: contain;
-  border-radius: 6px;
-  background: #fafafa;
-  margin-bottom: 7px;
-`;
-
-const UpsellInfo = styled.div`
-  text-align: center;
-  margin-bottom: 7px;
-`;
-
-const UpsellName = styled.div`
-  font-size: 13px;
-  color: #333;
-  font-weight: 500;
-  margin-bottom: 2px;
-`;
-
-const UpsellPrice = styled.div`
-  font-size: 14px;
-  color: ${colors.danger};
-  font-weight: 600;
-`;
-
-const UpsellAddBtn = styled.button`
-  background: ${colors.danger};
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  padding: 5px 0;
-  font-size: 13px;
-  font-weight: 500;
-  width: 100%;
-  margin-top: 2px;
-  cursor: pointer;
-  transition: background 0.18s;
-  &:hover {
-    background: ${colors.dangerDark};
-  }
-`;
 
 const RemoveBtn = styled.button`
   background: none;
   border: none;
-  color: ${colors.danger};
+  color: ${colors.primary};
   font-size: 22px;
   font-weight: bold;
   cursor: pointer;
   margin-left: 8px;
-  padding: 0 6px;
-  line-height: 1;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 100%;
   &:hover {
-    color: ${colors.dangerDark};
+    color: ${colors.text};
     background: #fff0f0;
     border-radius: 50%;
   }

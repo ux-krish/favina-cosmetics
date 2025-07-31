@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState, useMemo } from 'react';
 import productData from '../../data/product.json';
 
-import { colors, fontSizes, pxToRem, fonts } from '../../assets/styles/theme.js';
+import { colors, fontSizes, pxToRem, fonts, borderRadius, gapSizes } from '../../assets/styles/theme.js';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css';
@@ -335,7 +335,7 @@ const ButtonRow = styled.div`
 
 const CartActionButton = styled(Button)`
   //flex: ${props => props.$outline ? '0 1 auto' : '0 0 220px'};
-  width: 100%;
+  width: ${props => props.$outline ? '120px' : '100%'};
   gap: ${pxToRem(8)};
   display: inline-flex;
   justify-content: center;
@@ -344,12 +344,17 @@ const CartActionButton = styled(Button)`
   padding: ${pxToRem(10)} ${pxToRem(10)};
   font-size: 16px;
   font-weight: 600;
-  border-radius: 6px;
+  border-radius: ${borderRadius.sm};
   background: ${({ $outline }) => ($outline ? '#fff' : `${colors.info}`)};
   color: ${({ $outline }) => ($outline ? `${colors.highlight}` : '#fff')};
-  border: ${({ $outline }) => ($outline ? `2px solid ${colors.highlight}` : 'none')};
+  border: ${({ $outline }) => ($outline ? `2px solid ${colors.highlight}` : `2px solid ${colors.info}`)};
   transition: background 0.18s, color 0.18s, border 0.18s;
   cursor: pointer;
+
+  &::before{
+    background: ${({ $outline }) => ($outline ? `${colors.warning}` : `${colors.highlight}`)};
+  }
+
   &:hover:enabled {
     background: ${({ $outline }) => ($outline ? `${colors.warning}` : `${colors.highlight}`)};
     color: ${({ $outline }) => ($outline ? `${colors.textLight}` : `${colors.textLight}`)};
@@ -365,7 +370,6 @@ const CartActionButton = styled(Button)`
   }
 `;
 
-// Add custom styles for Swiper navigation buttons
 
 
 const SwiperNavStyles = createGlobalStyle`

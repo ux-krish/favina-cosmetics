@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Button from '../components/common/Button';
 import { getOrderById } from '../redux/slices/orderSlice'; // changed import
-import { colors, fontSizes, pxToRem, fonts } from '../assets/styles/theme.js';
+import { colors, fontSizes, pxToRem, fonts, borderRadius } from '../assets/styles/theme.js';
 const OrderConfirmation = () => {
   const { orderId } = useParams();
   const [order, setOrder] = useState(null);
@@ -69,7 +69,7 @@ const OrderConfirmation = () => {
           </InfoGrid>
         </OrderCol>
         </OrderContainer>    
-      <Button as={Link} to="/account/orders" style={{ marginTop: 30 }}>
+      <Button as={Link} to="/account/orders">
         View My Orders
       </Button>
     </Container>
@@ -119,6 +119,10 @@ const Status = styled.div`
 const OrderDetails = styled.div`
   margin: 30px 0 20px 0;
   text-align: left;
+  h3{
+  margin-bottom: 10px;
+  color: ${colors.primary};
+  }
 `;
 
 const OrderContainer = styled.div`
@@ -156,9 +160,10 @@ const ProductItem = styled.div`
 `;
 
 const ProductImage = styled.img`
-  width: 56px;
-  height: 56px;
-  border-radius: 6px;
+  width: 90px;
+  height: 90px;
+  border-radius: ${borderRadius.sm};
+  border: 1px solid #ddd;
   object-fit: cover;
   background: #f5f5f5;
 `;
