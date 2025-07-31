@@ -124,11 +124,12 @@ const CheckoutForm = ({ discountedTotal, orderItems }) => {
       <FormInput
         label="Phone"
         placeholder="Enter your phone number"
+        maxLength={10}
         {...registerShipping('phone', { 
           required: 'Phone is required',
           pattern: {
-            value: /^[0-9]{10,15}$/,
-            message: 'Invalid phone number'
+            value: /^[0-9]{10}$/,
+            message: 'Phone number must be exactly 10 digits'
           }
         })}
         error={shippingErrors.phone}
@@ -209,11 +210,12 @@ const CheckoutForm = ({ discountedTotal, orderItems }) => {
               <FormInput
                 label="Billing Phone"
                 placeholder="Enter billing phone number"
+                maxLength={10}
                 {...registerBilling('phone', { 
                   required: 'Phone is required',
                   pattern: {
-                    value: /^[0-9]{10,15}$/,
-                    message: 'Invalid phone number'
+                    value: /^[0-9]{10}$/,
+                    message: 'Phone number must be exactly 10 digits'
                   }
                 })}
                 error={billingErrors.phone}
