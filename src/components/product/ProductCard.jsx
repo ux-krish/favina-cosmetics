@@ -212,8 +212,9 @@ const ProductCard = ({ product, wishlistIds = [], onToggleWishlist }) => {
             if (!isInCart) handleAddToCart();
           }}
           type="button"
+          $tick={isInCart}
         >
-          {isInCart ? <FaCheck /> : <FaShoppingCart />}
+          {isInCart ? <FaCheck style={{ color: '#fff' }} /> : <FaShoppingCart />}
         </IconButton>
         <ViewButton
           as={Link}
@@ -398,6 +399,7 @@ const IconButton = styled.button`
     position: relative;
     z-index: 1;
   }
+  background: ${({ $tick }) => $tick ? '#5ceb6d' : '#fff'};
   &:hover {
     color: ${colors.textLight};
     border-color: ${colors.primary};
@@ -416,7 +418,7 @@ const IconButton = styled.button`
     pointer-events: none;
   }
   &:hover:after {
-  width: 70px;
+    width: 70px;
     height: 70px;
     left: -30%;
     bottom: -40%;
