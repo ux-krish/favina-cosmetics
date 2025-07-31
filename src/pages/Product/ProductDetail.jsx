@@ -60,6 +60,7 @@ const ProductDetail = () => {
   // Wishlist state and toast
   const [wishlist, setWishlist] = useState([]);
   const [toast, setToast] = useState(null);
+  const [isInCart, setIsInCart] = useState(false);
 
   // Sync quantity with cart sidebar changes
   useEffect(() => {
@@ -116,20 +117,21 @@ const ProductDetail = () => {
     const userCart = getUserCart();
     const exists = userCart.find(item => item.id === product.id);
     if (exists) {
-      // Do not increase quantity, just open sidebar and sync local quantity
       setQuantity(exists.quantity);
       updatedCart = userCart;
+      dispatch(toggleCart()); // Open cart sidebar
+      // No need to add again, just open sidebar
+      return;
     } else {
       updatedCart = [...userCart, { ...product, quantity }];
       if (isAuthenticated) {
         setUserCart(updatedCart);
       }
       dispatch(addToCart({ ...product, quantity }));
-    }
-    dispatch(toggleCart());
-    // Optionally, sync local quantity with cart
-    if (exists) {
-      setQuantity(exists.quantity);
+      dispatch(toggleCart()); // Open cart sidebar
+      setIsInCart(true);
+      // Fire cartChanged event for listeners
+      window.dispatchEvent(new Event('cartChanged'));
     }
   };
 
@@ -220,6 +222,19 @@ const ProductDetail = () => {
       if (toastDiv.parentNode) document.body.removeChild(toastDiv);
     };
   }, [toast]);
+
+  useEffect(() => {
+    if (!product || !user?.id) return;
+    const userCart = getUserCart();
+    setIsInCart(userCart.some(item => String(item.id) === String(product.id)));
+    // Listen for cart changes
+    const syncCartStatus = () => {
+      const updatedCart = getUserCart();
+      setIsInCart(updatedCart.some(item => String(item.id) === String(product.id)));
+    };
+    window.addEventListener('cartChanged', syncCartStatus);
+    return () => window.removeEventListener('cartChanged', syncCartStatus);
+  }, [product, user?.id]);
 
   if (loading) return <div>Loading...</div>;
   if (!product) return <div>Product not found</div>;
@@ -392,13 +407,18 @@ const ProductDetail = () => {
             </QtyControl>
           </QtyRow>
           <ActionRow>
-            <AddToCartBtn onClick={handleAddToCart} fullWidth={false}>
-              <span><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M8.4673 18.7499C9.40673 18.7499 10.1683 17.9883 10.1683 17.0489C10.1683 16.1095 9.40673 15.3479 8.4673 15.3479C7.52786 15.3479 6.7663 16.1095 6.7663 17.0489C6.7663 17.9883 7.52786 18.7499 8.4673 18.7499Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-<path d="M15.8782 18.7499C16.8177 18.7499 17.5792 17.9883 17.5792 17.0489C17.5792 16.1095 16.8177 15.3479 15.8782 15.3479C14.9388 15.3479 14.1772 16.1095 14.1772 17.0489C14.1772 17.9883 14.9388 18.7499 15.8782 18.7499Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-<path d="M4.52427 3.555L6.53427 9.919C6.84327 10.897 6.99727 11.386 7.29427 11.748C7.55427 12.068 7.89327 12.315 8.27627 12.468C8.71127 12.641 9.22327 12.641 10.2493 12.641H14.1043C15.1303 12.641 15.6423 12.641 16.0763 12.468C16.4603 12.315 16.7983 12.068 17.0593 11.748C17.3553 11.386 17.5093 10.897 17.8193 9.919L18.2283 8.623L18.4683 7.857L18.7993 6.807C18.9174 6.4325 18.9456 6.03544 18.8817 5.648C18.8178 5.26055 18.6635 4.89361 18.4313 4.57691C18.1991 4.26021 17.8956 4.00266 17.5454 3.82511C17.1951 3.64757 16.808 3.55503 16.4153 3.555H4.52427ZM4.52427 3.555L4.51327 3.518C4.47105 3.37656 4.42436 3.23649 4.37327 3.098C4.17082 2.58554 3.82751 2.14082 3.383 1.81523C2.93849 1.48963 2.41093 1.29645 1.86127 1.258C1.75827 1.25 1.64527 1.25 1.41827 1.25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-</svg>
-</span>Add to cart
+            <AddToCartBtn
+              onClick={isInCart ? () => dispatch(toggleCart()) : handleAddToCart}
+              fullWidth={false}
+            >
+              <span>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8.4673 18.7499C9.40673 18.7499 10.1683 17.9883 10.1683 17.0489C10.1683 16.1095 9.40673 15.3479 8.4673 15.3479C7.52786 15.3479 6.7663 16.1095 6.7663 17.0489C6.7663 17.9883 7.52786 18.7499 8.4673 18.7499Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M15.8782 18.7499C16.8177 18.7499 17.5792 17.9883 17.5792 17.0489C17.5792 16.1095 16.8177 15.3479 15.8782 15.3479C14.9388 15.3479 14.1772 16.1095 14.1772 17.0489C14.1772 17.9883 14.9388 18.7499 15.8782 18.7499Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M4.52427 3.555L6.53427 9.919C6.84327 10.897 6.99727 11.386 7.29427 11.748C7.55427 12.068 7.89327 12.315 8.27627 12.468C8.71127 12.641 9.22327 12.641 10.2493 12.641H14.1043C15.1303 12.641 15.6423 12.641 16.0763 12.468C16.4603 12.315 16.7983 12.068 17.0593 11.748C17.3553 11.386 17.5093 10.897 17.8193 9.919L18.2283 8.623L18.4683 7.857L18.7993 6.807C18.9174 6.4325 18.9456 6.03544 18.8817 5.648C18.8178 5.26055 18.6635 4.89361 18.4313 4.57691C18.1991 4.26021 17.8956 4.00266 17.5454 3.82511C17.1951 3.64757 16.808 3.55503 16.4153 3.555H4.52427ZM4.52427 3.555L4.51327 3.518C4.47105 3.37656 4.42436 3.23649 4.37327 3.098C4.17082 2.58554 3.82751 2.14082 3.383 1.81523C2.93849 1.48963 2.41093 1.29645 1.86127 1.258C1.75827 1.25 1.64527 1.25 1.41827 1.25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </span>
+              {isInCart ? 'View Cart' : 'Add to cart'}
             </AddToCartBtn>
             <BuyNowBtn onClick={handleBuyNow}>
               <span><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -778,7 +798,6 @@ const DiscountBadge = styled.span`
 `;
 
 
-
 const QtyRow = styled.div`
   display: flex;
   align-items: center;
@@ -1060,7 +1079,6 @@ const FeatureText = styled.div`
   font-weight: 600;
   text-align: center;
 `;
-
 
 
 const TestimonialSlide = styled.div`
