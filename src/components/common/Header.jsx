@@ -51,9 +51,11 @@ const Header = () => {
     if (isAuthenticated && user?.id) {
       const allCarts = JSON.parse(localStorage.getItem('carts') || '{}');
       const arr = Array.isArray(allCarts[user.id]) ? allCarts[user.id] : [];
-      return arr.length;
+      // Sum all quantities
+      return arr.reduce((sum, item) => sum + (item.quantity || 1), 0);
     }
-    return items.length;
+    // Fallback to redux items (for guest)
+    return items.reduce((sum, item) => sum + (item.quantity || 1), 0);
   };
 
   useEffect(() => {
@@ -336,7 +338,7 @@ const Header = () => {
                 Wishlist {wishlistCount > 0 && <MobileBadge>{wishlistCount}</MobileBadge>}
               </MobileNavLink>
               <MobileNavLink as="button" onClick={() => { setMobileMenuOpen(false); dispatch(toggleCart()); }}>
-                Cart {items.length > 0 && <MobileBadge>{items.length}</MobileBadge>}
+                Cart {cartCount > 0 && <MobileBadge>{cartCount}</MobileBadge>}
               </MobileNavLink>
             </MobileNav>
           </MobileMenu>
