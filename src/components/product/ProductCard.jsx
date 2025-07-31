@@ -2,11 +2,11 @@ import styled from 'styled-components';
 import { useAppDispatch } from '../../redux/hooks';
 import { addToCart } from '../../redux/slices/cartSlice';
 import Button from '../common/Button';
-import { FaHeart, FaShoppingCart } from 'react-icons/fa';
+import { FaHeart, FaShoppingCart, FaCheck } from 'react-icons/fa';
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useImageBasePath } from '../../context/ImagePathContext';
-import { useAuth } from '../../redux/hooks';
+import { useAuth, useCart } from '../../redux/hooks';
 import { colors, fontSizes, pxToRem } from '../../assets/styles/theme';
 
 const ProductCard = ({ product, wishlistIds = [], onToggleWishlist }) => {
@@ -18,6 +18,7 @@ const ProductCard = ({ product, wishlistIds = [], onToggleWishlist }) => {
   const imageBasePath = useImageBasePath();
   const navigate = useNavigate();
   const { isAuthenticated, user } = useAuth();
+  const { items } = useCart();
 
   // Helper to get/set wishlist as array of product IDs in localStorage per user
   const getUserWishlist = () => {
@@ -153,6 +154,17 @@ const ProductCard = ({ product, wishlistIds = [], onToggleWishlist }) => {
     navigate(`/products/${product.id}`);
   };
 
+  // Helper to check if product is in cart
+  const isInCart = (() => {
+    if (isAuthenticated && user?.id) {
+      const allCarts = JSON.parse(localStorage.getItem('carts') || '{}');
+      const arr = Array.isArray(allCarts[user.id]) ? allCarts[user.id] : [];
+      return arr.some(item => item.id === product.id);
+    }
+    // Fallback to redux items (for guest)
+    return items.some(item => item.id === product.id);
+  })();
+
   return (
     <Card onClick={handleCardClick} style={{ cursor: 'pointer' }}>
       <ImageContainer>
@@ -194,14 +206,14 @@ const ProductCard = ({ product, wishlistIds = [], onToggleWishlist }) => {
       </Details>
       <Actions>
         <IconButton
-          aria-label="Add to cart"
+          aria-label={isInCart ? 'Added to cart' : 'Add to cart'}
           onClick={(e) => {
             e.stopPropagation();
-            handleAddToCart();
+            if (!isInCart) handleAddToCart();
           }}
           type="button"
         >
-          <FaShoppingCart />
+          {isInCart ? <FaCheck /> : <FaShoppingCart />}
         </IconButton>
         <ViewButton
           as={Link}
