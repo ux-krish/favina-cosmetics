@@ -60,6 +60,7 @@ const CheckoutForm = ({ discountedTotal, orderItems }) => {
       total: discountedTotal,
       date: new Date().toISOString(),
       status: 'pending',
+      customer: user ? { email: user.email, id: user.id } : null,
     };
 
     // Add order to localStorage directly
