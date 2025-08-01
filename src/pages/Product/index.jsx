@@ -507,8 +507,8 @@ const DiscountOption = styled.div`
 
 const ClearButton = styled(Button)`
   background: ${colors.textLight};
-  color: ${colors.warning};
-  border: 1.5px solid ${colors.warning};
+  color: ${colors.primary};
+  border: 1.5px solid ${colors.primary};
   border-radius: ${pxToRem(7)};
   padding: ${pxToRem(7)} ${pxToRem(18)};
   font-size: ${pxToRem(15)};
@@ -516,10 +516,17 @@ const ClearButton = styled(Button)`
   cursor: pointer;
   margin-top: ${pxToRem(8)};
   transition: background 0.18s, color 0.18s, border 0.18s;
+  &::before{display: none;}
   &:hover {
-    background: ${colors.warning};
+    background: ${colors.highlight};
     color: #fff;
-    border-color: ${colors.warning};
+    border-color: ${colors.highlight};
+    &::before{
+      width: 200px;
+      height: 100px;
+      background: ${colors.highlight};
+      transition: none;
+    }
   }
 `;
 
@@ -718,11 +725,15 @@ const Pagination = styled.div`
 `;
 
 const PageButton = styled.button`
-  padding: 6px 14px;
-  border-radius: 4px;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
   border: none;
-  background: ${({ $active }) => ($active ? '#a084ca' : '#f0f0f0')};
-  color: ${({ $active }) => ($active ? '#fff' : '#5b4a44')};
+  background: ${({ $active }) => ($active ? `${colors.highlight}` : '#f0f0f0')};
+  color: ${({ $active }) => ($active ? '#fff' : `${colors.text}`)};
   font-weight: 500;
   cursor: pointer;
   font-size: 15px;
