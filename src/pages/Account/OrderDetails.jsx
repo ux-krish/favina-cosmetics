@@ -24,6 +24,27 @@ const OrderDetails = () => {
     setPage(1); // Reset to first page on reload
   }, [user.email]);
 
+  useEffect(() => {
+    // Auto-update order status to 'delivered' after 2 days
+    const allOrders = getOrdersFromStorage();
+    let updated = false;
+    const now = new Date();
+    const updatedOrders = allOrders.map(order => {
+      if (
+        order.status !== 'delivered' &&
+        order.date &&
+        new Date(order.date).getTime() <= now.getTime() - 2 * 24 * 60 * 60 * 1000 // 2 days in ms
+      ) {
+        updated = true;
+        return { ...order, status: 'delivered' };
+      }
+      return order;
+    });
+    if (updated) {
+      localStorage.setItem('orders', JSON.stringify(updatedOrders));
+    }
+  }, []);
+
   // Sort orders by date
   const sortedOrders = [...orders].sort((a, b) => {
     const aDate = new Date(a.date).getTime();
@@ -43,11 +64,18 @@ const OrderDetails = () => {
     const allOrders = getOrdersFromStorage();
     let filteredOrders = [];
     if (user && user.email) {
-      filteredOrders = allOrders.filter(order => order.customer && order.customer.email !== user.email);
+      // Only remove orders for current user that are delivered
+      filteredOrders = allOrders.filter(order => {
+        if (order.customer && order.customer.email === user.email) {
+          return order.status !== 'delivered';
+        }
+        return true; // keep orders of other users
+      });
     }
     localStorage.setItem('orders', JSON.stringify(filteredOrders));
     // Re-fetch orders from storage to update UI
-    setOrders([]);
+    const userOrders = filteredOrders.filter(order => order.customer && order.customer.email === user.email);
+    setOrders(userOrders);
     setPage(1);
   };
 
@@ -141,6 +169,11 @@ const OrdersHeader = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-bottom: 20px;
+  @media (max-width:800px){
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
 `;
 
 const SortActions = styled.div`
