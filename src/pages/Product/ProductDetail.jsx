@@ -282,12 +282,7 @@ const ProductDetail = () => {
     },
   ];
 
-  // const allTestimonials = [
-  //   ...Object.values(userReviews || {}),
-  //   ...(product.testimonials || []),
-  // ];
 
-  // Calculate discount percent
 
   // --- Share Button handler ---
   const handleShare = () => {
@@ -309,6 +304,7 @@ const ProductDetail = () => {
   const discountPercent = product.offerPrice && product.offerPrice < product.price
     ? Math.round(((product.price - product.offerPrice) / product.price) * 100)
     : 0;
+
 
   return (
     <>
@@ -378,12 +374,12 @@ const ProductDetail = () => {
           <ProductPriceRow>
             {product.offerPrice && product.offerPrice < product.price ? (
               <>
-                <OfferPrice>₹{product.offerPrice}</OfferPrice>
-                <RegularPrice>₹{product.price}</RegularPrice>
+                <OfferPrice>${product.offerPrice}</OfferPrice>
+                <RegularPrice>${product.price}</RegularPrice>
                 <DiscountBadge>{discountPercent}% OFF</DiscountBadge>
               </>
             ) : (
-              <OfferPrice>₹{product.price}</OfferPrice>
+              <OfferPrice>${product.price}</OfferPrice>
             )}
           </ProductPriceRow>
           
@@ -782,6 +778,11 @@ const RegularPrice = styled.span`
   font-size: ${fontSizes.md};
   font-weight: 500;
 `;
+
+// In your render, use formatPrice for all price displays
+// Example:
+// <OfferPrice>{formatPrice(product.offerPrice || product.price)}</OfferPrice>
+// <RegularPrice>{formatPrice(product.price)}</RegularPrice>
 
 const DiscountBadge = styled.span`
   background: #f7d7d7;
