@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { colors, fontSizes, gapSizes } from '../../assets/styles/theme';
 
 const BeautyPicksSection = styled.section`
-  padding: 40px 20px;
+  padding: 40px 0;
   text-align: center;
 `;
 
@@ -37,6 +37,10 @@ const CardsWrapper = styled.div`
   justify-content: center;
   @media (min-width: 768px) and (max-width: 1200px) {
     grid-template-columns: repeat(2, minmax(200px, 1fr));
+  }
+  @media (max-width: 767px) {
+    gap: ${gapSizes.md};
+    grid-template-columns: repeat(2, minmax(120px, 1fr));
   }
 `;
 

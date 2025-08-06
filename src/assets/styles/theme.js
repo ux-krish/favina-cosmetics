@@ -41,8 +41,8 @@ export const fontSizes = {
   xs: `${clampPx(8, 2, 9, 14)}`,
   sm: `${clampPx(8, 3, 9, 16)}`,
   base: "16px",
-  md: "18px",
-  lg: "22px",
+  md: `${clampPx(12, 5, 16, 18)}`,
+  lg: `${clampPx(14, 6, 18, 24)}`,
   xl: "32px",
   xxl: "48px",
 };
@@ -50,9 +50,9 @@ export const fontSizes = {
 
 export const gapSizes = {
 
-  lg: `${clampPx(8, 2, 9, 14)}`,
-  md: `${clampPx(6, 2, 7, 12)}`,
-  sm: `${clampPx(2, 1, 4, 10)}`,
+  lg: `${clampPx(8, 2, 9, 24)}`,
+  md: `${clampPx(6, 2, 7, 24)}`,
+  sm: `${clampPx(2, 1, 4, 12)}`,
   xs: `${clampPx(2, 1, 2, 4)}`,
 }
 

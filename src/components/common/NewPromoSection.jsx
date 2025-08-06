@@ -1,31 +1,44 @@
 import React from "react";
 import styled from "styled-components";
 import Button from './Button';
+
 import { useNavigate } from 'react-router-dom';
+import { colors, fontSizes, gapSizes } from '../../assets/styles/theme';
 
 const PromoWrapperNew = styled.section`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #fef9f7;
-  background-image: url("/lady-promo.png"); /* replace with your image */
+  background: ${colors.background};
+  background-image: url("/lady-promo.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: left center;
-  padding: 60px 30px;
-  border-radius: 10px;
-  margin: 50px auto 0;
+  padding: ${gapSizes.xl} ${gapSizes.md};
+  margin: 70px auto 0;
   overflow: hidden;
-
+  min-height: 39vw;
   @media (max-width: 768px) {
     flex-direction: column;
     background-position: top center;
-    padding: 40px 20px;
+    padding: ${gapSizes.lg} ${gapSizes.sm};
+  }
+`;
+
+const PromoButton = styled(Button)`
+  margin-top: 18px;
+  max-width: 200px;
+  font-size: ${fontSizes.md};
+  font-weight: 700;
+  color: ${colors.textLight};
+  padding: 12px 30px;
+  @media (max-width:700px){
+    margin-top:0;
   }
 `;
 
 const Content = styled.div`
-  padding: 40px;
+  padding: ${gapSizes.xl};
   border-radius: 12px;
   max-width: 600px;
   flex:1;
@@ -33,28 +46,28 @@ const Content = styled.div`
   z-index: 2;
 
   h4 {
-    font-size: 1.5rem;
+    font-size: ${fontSizes.xxl};
     font-weight: 700;
-    color: #b19cd9;
-    margin-bottom: 15px;
+    color: ${colors.primary};
+    margin-bottom: ${gapSizes.sm};
     font-style: italic;
   }
 
   p {
-    color: #4c3a36;
-    font-size: 1rem;
-    margin-bottom: 12px;
+    color: ${colors.textDark};
+    font-size: ${fontSizes.md};
+    margin-bottom: ${gapSizes.xs};
   }
 
   .big-text {
-    font-size: 1.8rem;
+    font-size: ${fontSizes.xxl};
     font-weight: 800;
-    color: #4c3a36;
-    margin-top: 20px;
+    color: ${colors.textDark};
+    margin-top: ${gapSizes.md};
   }
 
   .highlight {
-    color: #f5968c;
+    color: ${colors.highlight};
   }
 
   .bold {
@@ -74,7 +87,7 @@ const NewPromoSection = () => {
           Get Your <span className="highlight">50% Off</span>
         </p>
         <p>on your first purchase<br />for the next <span className="bold">24 hours only!</span></p>
-        <Button onClick={() => navigate('/products')}>Get Now</Button>
+        <PromoButton onClick={() => navigate('/products')}>Shop Now</PromoButton>
       </Content>
     </PromoWrapperNew>
   );

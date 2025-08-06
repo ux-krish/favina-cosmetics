@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { pxToRem, fontSizes, colors, fonts } from '../../assets/styles/theme';
+import { pxToRem, fontSizes, colors, fonts, gapSizes  } from '../../assets/styles/theme';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay } from 'swiper/modules';
 import RatingBox from '../../components/common/RatingBox';
@@ -51,8 +51,14 @@ const TestimonialLeft = styled.div`
     width: 100%;
     padding: 28px 18px 18px 18px;
   }
+  .swiper-pagination-bullet{
+    background-color: ${colors.primary} !important;
+  }
 `;
 const TestimonialRating = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: ${gapSizes.md};
   margin-bottom: 18px;
 `;
 const TestimonialSlide = styled.div`
@@ -63,35 +69,38 @@ const TestimonialSlide = styled.div`
   padding: 0 10px;
 `;
 const TestimonialQuote = styled.div`
-  font-size: 2rem;
+  font-size: ${fontSizes.xl};
   font-family: ${fonts.title};
+  line-height: 1;
   font-weight: 700;
   color: ${colors.text};
-  margin-bottom: ${pxToRem(18)};
+  margin-bottom: ${gapSizes.md};
+  text-align: center;
 `;
 const TestimonialText = styled.div`
-  font-size: ${pxToRem(17)};
+  font-size: ${fontSizes.md};
   font-family: ${fonts.body};
   color: ${colors.text};
-  margin-bottom: 22px;
+  margin-bottom: ${gapSizes.md};
   max-width: 600px;
+  text-align: center;
 `;
 const TestimonialUser = styled.div`
-  font-size: 16px;
+  font-size: ${fontSizes.base};
   color: ${colors.text};
-  margin-bottom: 18px;
+  margin-bottom: ${gapSizes.md};
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: ${gapSizes.sm};
 `;
 const VerifiedBadge = styled.span`
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  color: #e7b86a;
-  font-size: 14px;
-  margin-left: 8px;
+  gap: ${gapSizes.xs};
+  color: ${colors.text};
+  font-size: ${fontSizes.sm};
+  margin-left: ${gapSizes.sm};
 `;
 const VerifiedIcon = styled.span`
   display: inline-block;
@@ -121,14 +130,14 @@ const ProductImg = styled.img`
 `;
 const FeatureList = styled.div`
   display: flex;
-  gap: 24px;
+  gap: ${gapSizes.lg};
   justify-content: center;
 `;
 const Feature = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: ${gapSizes.sm};
 `;
 const FeatureIcon = styled.img`
   width: 54px;
@@ -137,8 +146,8 @@ const FeatureIcon = styled.img`
   margin-bottom: 4px;
 `;
 const FeatureText = styled.div`
-  font-size: 15px;
-  color: #b49be0;
+  font-size: ${fontSizes.base};
+  color: ${colors.highlight};
   font-weight: 600;
   text-align: center;
 `;
@@ -180,9 +189,9 @@ const CustomTestimonialSection = ({
                     <VerifiedBadge>
                       <VerifiedIcon>
                         <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <circle cx="7.5" cy="7.5" r="7.5" fill="#F6C6A7"/>
-                          <path d="M5.0285 8.03565L7.0635 9.98465L9.9985 5.01465" fill="#F6C6A7"/>
-                          <path d="M5.0285 8.03565L7.0635 9.98465L9.9985 5.01465" stroke="#5A4E4D" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M9.56252 1.03957C9.76494 0.993048 9.97682 1.01071 10.1687 1.09009C10.3607 1.16948 10.5231 1.30665 10.6335 1.48257L11.6275 3.06957C11.7077 3.19739 11.8157 3.30542 11.9435 3.38557L13.5305 4.37957C13.7068 4.4899 13.8443 4.65245 13.9239 4.84459C14.0035 5.03673 14.0212 5.2489 13.9745 5.45157L13.5545 7.27557C13.5206 7.42298 13.5206 7.57616 13.5545 7.72357L13.9745 9.54857C14.0207 9.75095 14.0028 9.96268 13.9232 10.1544C13.8437 10.3461 13.7064 10.5084 13.5305 10.6186L11.9435 11.6136C11.8157 11.6937 11.7077 11.8017 11.6275 11.9296L10.6335 13.5166C10.5233 13.6927 10.3609 13.8301 10.1689 13.9096C9.977 13.9892 9.76504 14.007 9.56252 13.9606L7.73752 13.5406C7.59043 13.5068 7.43761 13.5068 7.29052 13.5406L5.46552 13.9606C5.263 14.007 5.05104 13.9892 4.85911 13.9096C4.66717 13.8301 4.50479 13.6927 4.39452 13.5166L3.40052 11.9296C3.32009 11.8016 3.21171 11.6936 3.08352 11.6136L1.49752 10.6196C1.32142 10.5093 1.18404 10.3469 1.10447 10.155C1.0249 9.96305 1.00709 9.75109 1.05352 9.54857L1.47252 7.72357C1.5064 7.57616 1.5064 7.42298 1.47252 7.27557L1.05252 5.45157C1.00596 5.2488 1.02381 5.03655 1.10358 4.8444C1.18334 4.65225 1.32105 4.48976 1.49752 4.37957L3.08352 3.38557C3.21171 3.30554 3.32009 3.1975 3.40052 3.06957L4.39452 1.48257C4.50487 1.30684 4.66715 1.16979 4.85887 1.09042C5.05059 1.01104 5.26225 0.993272 5.46452 1.03957L7.29052 1.45857C7.43761 1.4923 7.59043 1.4923 7.73752 1.45857L9.56252 1.03957Z" fill="#F6C6A7" stroke="#5A4E4D"/>
+                        <path d="M5.0285 8.03565L7.0635 9.98465L9.9985 5.01465" fill="#F6C6A7"/>
+                        <path d="M5.0285 8.03565L7.0635 9.98465L9.9985 5.01465" stroke="#5A4E4D" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                       </VerifiedIcon>
                       Verified Buyers
