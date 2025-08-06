@@ -93,7 +93,7 @@ const StyledLink = styled(Link)`
   border: none;
 
   &:hover:not(:disabled) {
-    background: #f5968c;
+    //background: #f5968c;
     color: #fff;
   }
 `;

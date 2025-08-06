@@ -4,7 +4,7 @@ import RatingBox from '../../components/common/RatingBox';
 import QuantitySelector from '../../components/common/QuantitySelector';
 import Button from '../../components/common/Button';
 import { FaHeart } from 'react-icons/fa';
-import { pxToRem, fontSizes, colors, fonts } from '../../assets/styles/theme';
+import { pxToRem, fontSizes, colors, fonts, borderRadius } from '../../assets/styles/theme';
 
 const ProductInfoSection = styled.div`
   width: 50%;
@@ -198,7 +198,7 @@ const AccordionHeader = styled.button`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-radius: 8px 8px 0 0;
+  border-radius: ${borderRadius.sm} ${borderRadius.sm} 0 0;
   transition: background 0.18s;
   &:hover, &:focus {
     background: #f7f7fa;
@@ -210,7 +210,7 @@ const AccordionContent = styled.div`
   font-size: ${fontSizes.xs};
   color: ${colors.text};
   background: ${colors.light};
-  border-radius: 0 0 8px 8px;
+  border-radius: 0 0 ${borderRadius.sm} ${borderRadius.sm};
   border-top: 1px solid #ececec;
 `;
 
