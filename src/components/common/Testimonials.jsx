@@ -117,7 +117,7 @@ const TestimonialSection = styled.section`
 const TestimonialTitle = styled.h3`
   text-align: center;
   margin-bottom: 20px;
-  font-size: 2.6rem;
+  font-size: ${fontSizes.xl};
   font-family: ${fonts.title};
   font-weight: 800;
   color: #5a4e4d;
