@@ -134,8 +134,12 @@ const OrderContainer = styled.div`
   border:${pxToRem(1)} solid #eee;
   padding: 0;
   border-radius: ${pxToRem(6)};
+  @media (max-width: 700px) {
+    flex-direction: column;
+    gap: 18px;
+    padding: 0;
+  }
 `;
-
 const OrderCol = styled.div`
 flex:1;
   display: flex;
@@ -144,6 +148,11 @@ flex:1;
   padding: 40px 20px;
   h3{
     color: ${colors.primary};
+  }
+  @media (max-width: 700px) {
+    padding: 24px 12px;
+    border-bottom: 1px solid #eee;
+    &:last-child { border-bottom: none; }
   }
 `;
 
