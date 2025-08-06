@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import LogoSvg from '../../assets/images/logo.svg';
 import productData from '../../data/product.json';
 import { useImageBasePath } from '../../context/ImagePathContext';
-import { colors, fontSizes } from '../../assets/styles/theme';
+import { colors, fontSizes, borderRadius } from '../../assets/styles/theme';
 
 
 
@@ -400,11 +400,44 @@ const NavLink = styled(Link)`
   display: flex;
   align-items: center;
   gap: 5px;
-  padding: 23px 0; 
+  padding: 4px 10px; 
   font-size: ${fontSizes.base};
+  position: relative;
+  overflow: hidden;
+  border-radius: ${borderRadius.sm};
+  z-index: 1;
+  transition: color 0.6s ease, transform 0.3s ease;
+  &:before {
+    content: '';
+    position: absolute;
+    left: -150%;
+    bottom: -150%;
+    width: 0;
+    height: 0;
+    background: ${colors.highlight};
+    border-radius: 8px;
+    z-index: -1;
+    transform: translate(-50%, 50%);
+    transition: width 0.35s cubic-bezier(0.4,0,0.2,1), height 0.35s cubic-bezier(0.4,0,0.2,1), left 0.35s, bottom 0.35s;
+  }
+
+  &:hover:before {
+    width: calc(100% + 6px);
+    height: calc(100% + 4px);
+    left: 50%;
+    bottom: 50%;
+    transform: translate(-50%, 50%);
+  }
 
   &:hover {
-    color: ${colors.muted};
+    color: ${colors.textLight};
+    //transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
   }
 `;
 
