@@ -162,13 +162,8 @@ const BannerButton = styled(Button)`
   border-radius: 7px;
   background: ${colors.card};
   color: ${colors.text};
-  //border: 1.5px solid ${colors.accent};
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  &:hover {
-    background: #f7f7f7;
-    color: ${colors.primary};
-    //border-color: ${colors.accent};
-  }
+
     @media (max-width:700px){
       margin-top:0;
     }

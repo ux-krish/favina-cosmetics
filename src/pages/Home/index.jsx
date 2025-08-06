@@ -250,10 +250,7 @@ const ShopNowBtn = styled(Button)`
   background: #fff;
   color: #5b4a44;
   border: none;
-  &:hover {
-    background: #f7f7f7;
-    color: ${colors.primary};
-  }
+  
 `;
 
 const FeaturedSection = styled.section`

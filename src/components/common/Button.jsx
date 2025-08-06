@@ -29,7 +29,7 @@ const baseStyles = css`
   font-weight: 500;
   font-size: ${(props) => (props.$small ? fontSizes.sm : fontSizes.base)};
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.7s ease;
   border: none;
   width: ${(props) => (props.$fullWidth ? '100%' : 'auto')};
   text-decoration: none;
@@ -45,7 +45,7 @@ const baseStyles = css`
     bottom: -400%;
     width:1px;
     height:1px;
-    background: ${colors.text};
+    background: ${colors.highlight};
     border-radius: 50%;
     z-index: -1;
     transition: left 0.4s ease-in-out, bottom 0.4s ease-in-out, width 0.8s ease-in-out, height 0.8s ease-in-out;
@@ -81,7 +81,7 @@ const StyledButton = styled.button`
   border: ${(props) => (props.$variant === 'outline' ? `1px solid ${colors.dark}` : 'none')};
 
   &:hover:not(:disabled) {
-    
+    color: ${(props) => (props.$variant === 'outline' ? colors.dark : colors.textLight)};
   }
 `;
 
@@ -92,7 +92,7 @@ const StyledLink = styled(Link)`
   border: ${(props) => (props.$variant === 'outline' ? `1px solid ${colors.dark}` : 'none')};
 
   &:hover:not(:disabled) {
-    
+    color: ${(props) => (props.$variant === 'outline' ? colors.dark : colors.textLight)};
   }
 `;
 
