@@ -8,6 +8,13 @@ const BeautyPicksSection = styled.section`
   text-align: center;
 `;
 
+const Container = styled.div`
+    max-width: 1320px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
+`;
+
 const Title = styled.h2`
   font-size: ${fontSizes.xl};
   font-weight: 700;
@@ -94,7 +101,8 @@ const cardData = [
 const BeautyPicks = () => {
   return (
     <BeautyPicksSection>
-      <Title>
+      <Container>
+        <Title>
         <span>Beauty Picks</span> for Every Mood
       </Title>
       <CardsWrapper>
@@ -110,6 +118,7 @@ const BeautyPicks = () => {
           </Link>
         ))}
       </CardsWrapper>
+      </Container>
     </BeautyPicksSection>
   );
 };

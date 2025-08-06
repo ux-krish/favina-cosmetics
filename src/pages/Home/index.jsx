@@ -12,6 +12,7 @@ import promoImg from '../../assets/images/main-bg1.png';
 import { Link } from 'react-router-dom';
 import { colors, fontSizes, fonts, pxToRem } from '../../assets/styles/theme';
 import BeautyPicks from './BeautyPicks';
+import SkinSpotlight from './SkinSpotlight';
 
 const sliderMessages = [
   { text: "Limited Time Only", highlight: true },
@@ -124,6 +125,8 @@ const HomePage = () => {
       />
 
       <BeautyPicks />   
+
+      <SkinSpotlight />
 
       <FeaturedSection>
         <Container>
