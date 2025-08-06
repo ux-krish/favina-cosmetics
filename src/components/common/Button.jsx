@@ -76,23 +76,25 @@ const baseStyles = css`
 
 const StyledButton = styled.button`
   ${baseStyles}
-  background-color: ${(props) => (props.$variant === 'outline' ? 'transparent' : colors.dark)};
-  color: ${(props) => (props.$variant === 'outline' ? colors.dark : colors.textLight)};
-  border: ${(props) => (props.$variant === 'outline' ? `1px solid ${colors.dark}` : 'none')};
+  background-color: ${colors.primary};
+  color: #fff;
+  border: none;
 
   &:hover:not(:disabled) {
-    color: ${(props) => (props.$variant === 'outline' ? colors.dark : colors.textLight)};
+    background: #f5968c;
+    color: #fff;
   }
 `;
 
 const StyledLink = styled(Link)`
   ${baseStyles}
-  background-color: ${(props) => (props.$variant === 'outline' ? 'transparent' : colors.dark)};
-  color: ${(props) => (props.$variant === 'outline' ? colors.dark : colors.textLight)};
-  border: ${(props) => (props.$variant === 'outline' ? `1px solid ${colors.dark}` : 'none')};
+  background-color: ${colors.primary};
+  color: #fff;
+  border: none;
 
   &:hover:not(:disabled) {
-    color: ${(props) => (props.$variant === 'outline' ? colors.dark : colors.textLight)};
+    background: #f5968c;
+    color: #fff;
   }
 `;
 

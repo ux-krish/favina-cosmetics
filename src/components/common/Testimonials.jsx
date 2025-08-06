@@ -111,7 +111,7 @@ const TestimonialSection = styled.section`
   padding: 60px 0 0 0;
   overflow: hidden;
   width: 100%;
-  background: #fdf6f2;
+  //background: #fdf6f2;
 `;
 
 const TestimonialTitle = styled.h3`

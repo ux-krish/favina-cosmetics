@@ -13,6 +13,7 @@ import { Link } from 'react-router-dom';
 import { colors, fontSizes, fonts, pxToRem } from '../../assets/styles/theme';
 import BeautyPicks from './BeautyPicks';
 import SkinSpotlight from './SkinSpotlight';
+import NewPromoSection from '../../components/common/NewPromoSection';
 
 const sliderMessages = [
   { text: "Limited Time Only", highlight: true },
@@ -134,6 +135,9 @@ const HomePage = () => {
         <ProductGrid products={products.slice(0, 8)} />
         </Container>
       </FeaturedSection>
+
+      <NewPromoSection />
+
       <Testimonials testimonials={testimonials} />
     </>
   );
