@@ -7,7 +7,7 @@ const RatingBoxWrapper = styled.div`
   background: #fff;
   color: #333;
   font-weight: 700;
-  font-size: ${fontSizes.sm};
+  font-size: ${fontSizes.xs};
   border-radius: 8px;
   padding: 2px 7px;
   box-shadow: 0 2px 8px rgba(231,76,60,0.08);
@@ -15,8 +15,12 @@ const RatingBoxWrapper = styled.div`
 
 const StarIcon = styled.span`
   color: #ffc107;
-  font-size: 20px;
+  font-size:  ${fontSizes.sm};;
   margin-left: 6px;
+  svg{
+    width: 16px;
+    height: auto;
+  }
 `;
 
 const RatingBox = ({ rating, count }) => (
@@ -27,8 +31,8 @@ const RatingBox = ({ rating, count }) => (
 </svg>
 </StarIcon>
     {count !== undefined && (
-      <span style={{ marginLeft: 8, fontWeight: 400, fontSize: fontSizes.sm }}>
-        ({count})
+      <span style={{ marginLeft: 8, fontWeight: 400, fontSize: fontSizes.xs }}>
+        {count} Reviews
       </span>
     )}
   </RatingBoxWrapper>
