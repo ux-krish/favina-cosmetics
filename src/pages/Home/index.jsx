@@ -11,6 +11,7 @@ import PromoBanner, { BannerHighlight } from '../../components/common/PromoBanne
 import promoImg from '../../assets/images/main-bg1.png';
 import { Link } from 'react-router-dom';
 import { colors, fontSizes, fonts, pxToRem } from '../../assets/styles/theme';
+import BeautyPicks from './BeautyPicks';
 
 const sliderMessages = [
   { text: "Limited Time Only", highlight: true },
@@ -122,6 +123,8 @@ const HomePage = () => {
         buttonTo="/products"
       />
 
+      <BeautyPicks />   
+
       <FeaturedSection>
         <Container>
         <h2>Featured Products</h2>
@@ -136,7 +139,7 @@ const HomePage = () => {
 const Container = styled.div`
   max-width: 1320px;
   width: 100%;
-  margin: 0 auto;
+  margin: 40px auto 0;
   padding: 0 20px;
   display: flex;
   flex-wrap: wrap;
@@ -261,7 +264,7 @@ const FeaturedSection = styled.section`
   h2 {
     text-align: center;
     margin-bottom: 30px;
-    font-size: 32px;
+    font-size: ${fontSizes.xl};
     width: 100%;
     font-family: ${fonts.title};
     font-weight: 800;
