@@ -39,7 +39,7 @@ export const fonts = {
 
 export const fontSizes = {
   xs: `${clampPx(8, 2, 9, 14)}`,
-  sm: `${clampPx(8, 2, 9, 16)}`,
+  sm: `${clampPx(8, 3, 10, 18)}`,
   base: "16px",
   md: "18px",
   lg: "22px",

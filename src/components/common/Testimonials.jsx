@@ -123,6 +123,7 @@ const TestimonialTitle = styled.h3`
   color: #5a4e4d;
   letter-spacing: -1px;
   width: 100%;
+  padding: 0 20px;
   span {
     color: #e5a6a6;
     font-family: ${fonts.title};

@@ -310,7 +310,7 @@ const RatingRow = styled.div`
   display: flex;
   align-items: center;
   gap: 4px;
-  font-size: 14px;
+ font-size: ${fontSizes.xs};
   margin-bottom: 2px;
   border:${pxToRem(1)} solid ${colors.gray};
   padding: 1px 6px;
@@ -365,19 +365,19 @@ const PriceRow = styled.div`
 `;
 
 const MRP = styled.span`
-  font-size: clamp(9px, 2vw, 14px);
+  font-size: ${fontSizes.xs};
   color: #888;
 `;
 
 const Strike = styled.span`
   text-decoration: line-through;
   color: #888;
-  font-size: clamp(9px, 2vw, 14px);
+  font-size: ${fontSizes.xs};
 `;
 
 const OfferPrice = styled.span`
   color: ${colors.text};
-  font-size: ${clampPx(9, 3, 12, 18)};
+  font-size: ${fontSizes.sm};
   font-weight: 700;
 `;
 
@@ -396,7 +396,7 @@ const IconButton = styled.button`
   border: 1px solid ${colors.gray};
   border-radius: 4px;
   color: ${({ $wished }) => ($wished ? colors.accent : `${colors.text}`)};
-  font-size: 18px;
+  font-size: ${fontSizes.sm};
   width: 38px;
   height: 38px;
   display: flex;
@@ -448,7 +448,7 @@ const ViewButton = styled(Link)`
   color: ${colors.text};
   border: 1px solid ${colors.gray};
   border-radius: 4px;
-  font-size: ${clampPx(9, 2, 11, 16)};
+  font-size: ${fontSizes.sm};
   font-weight: 500;
   padding: 0 0;
   height: 38px;
