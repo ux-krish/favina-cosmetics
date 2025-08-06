@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-// --- Cart localStorage logic in this file ---
 function getCartKey(user) {
   if (user && user.email) {
     return `cart_${user.email}`;
@@ -28,7 +27,7 @@ function clearCartStorage(user) {
     localStorage.removeItem(key);
   } catch {}
 }
-// --- End cart localStorage logic ---
+
 
 const initialState = {
   items: [],

@@ -337,5 +337,4 @@ const ProductInfo = ({
 );
 
 export default ProductInfo;
-// Export these for use in ProductDetail if needed
 export { CheckoutCardInfo, CheckoutCardInfoTitle };

@@ -3,7 +3,8 @@ import { pxToRem, fontSizes, colors, fonts } from '../../assets/styles/theme';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay } from 'swiper/modules';
 import RatingBox from '../../components/common/RatingBox';
-import React from 'react';
+import bgTestimonial from '../../assets/images/pawel-czerwinski-fcZU7mRWImY-unsplash1.png';
+
 
 const CustomTestimonialSectionWrapper = styled.section`
   overflow: hidden;
@@ -39,7 +40,8 @@ const TestimonialTitle = styled.h2`
 `;
 const TestimonialLeft = styled.div`
   width: 50%;
-  background: #fbeaec;
+  background: #fbeaec url(${bgTestimonial}) no-repeat center center;
+  background-size: cover;
   padding: 48px 38px 38px 48px;
   display: flex;
   flex-direction: column;

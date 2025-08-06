@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from 'react-router-dom';
 import styled from "styled-components";
 import { colors, fontSizes, gapSizes } from '../../assets/styles/theme';
 
@@ -31,8 +32,20 @@ const LeftCard = styled(Card)`
   text-align: center;
   padding: 40px 20px;
 
-  &:hover::before {
-    transform: scale(5);
+  &:hover{
+    h3{
+      color: ${colors.primary};
+    }
+    p{
+      color: ${colors.highlight};
+    }
+    h4,.icon{ color: ${colors.textLight};}
+    .icon svg{
+      color: ${colors.text};
+    }
+    &::before {
+      transform: scale(15);
+    }
   }
 
   &::before {
@@ -42,11 +55,11 @@ const LeftCard = styled(Card)`
     left: -50px;
     width: 100px;
     height: 100px;
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: ${colors.text};
     border-radius: 50%;
-    transform: scale(0);
+    transform: scale(4);
     transition: transform 0.5s ease;
-    z-index: 1;
+    z-index: 0;
   }
 
   h3 {
@@ -54,6 +67,8 @@ const LeftCard = styled(Card)`
     font-weight: 700;
     margin-bottom: 10px;
     color: ${colors.text};
+    transition: color 0.5s ease;
+     z-index: 1;
   }
 
   h4 {
@@ -61,12 +76,16 @@ const LeftCard = styled(Card)`
     font-weight: 600;
     color: ${colors.text};
     margin-bottom: 20px;
+    transition: color 0.5s ease;
+    z-index: 1;
   }
 
   p {
     color: ${colors.text};
     font-size: ${fontSizes.sm};
     margin-bottom: 20px;
+    transition: color 0.5s ease;
+    z-index: 1;
   }
 
   .icon {
@@ -132,15 +151,19 @@ const ImageCard = styled(Card)`
   }
 `;
 
+
 const SkinSpotlight = () => {
+  const navigate = useNavigate();
+  const handleLeftCardClick = () => {
+    navigate('/products', { state: { selectedCategories: ['Skincare'] } });
+  };
   return (
     <Section>
-      <LeftCard>
+      <LeftCard onClick={handleLeftCardClick} tabIndex={0} style={{cursor:'pointer'}}>
         <h3>Skin in the Spotlight</h3>
         <h4>Highly-loved, deeply nourishing</h4>
         <p>find your new obsession</p>
         <div className="icon">
-          {/* Replace with actual icon */}
           <svg
             width="14"
             height="14"

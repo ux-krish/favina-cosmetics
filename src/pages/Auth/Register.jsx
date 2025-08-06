@@ -9,7 +9,7 @@ import LogoSvg from '../../assets/images/logo.svg';
 const RegisterPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { error } = useAuth();
+  // const { error } = useAuth();
   const {
     register: formRegister,
     handleSubmit,
@@ -28,15 +28,13 @@ const RegisterPage = () => {
 
   return (
     <Container>
-      
       <FormContainer>
         <LogoWrapper>
-        <Link to="/" title="Go to Home">
-          <img src={LogoSvg} alt="ShopEase Logo" style={{height:38}} />
-        </Link>
-      </LogoWrapper>
+          <Link to="/" title="Go to Home">
+            <img src={LogoSvg} alt="ShopEase Logo" style={{height:38}} />
+          </Link>
+        </LogoWrapper>
         <h2>Create Account</h2>
-        {error && <ErrorMessage>{error}</ErrorMessage>}
         <Form onSubmit={handleSubmit(handleRegister)}>
           <FormGroup>
             <FormInput

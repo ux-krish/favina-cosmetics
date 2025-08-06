@@ -17,12 +17,9 @@ import ProductGrid from '../../components/product/ProductGrid';
 import { useImageBasePath } from '../../context/ImagePathContext';
 import PromoBanner, { BannerHighlight } from '../../components/common/PromoBanner';
 import promoImg from '../../assets/images/main-bg2.png';
-import bgTestimonial from '../../assets/images/pawel-czerwinski-fcZU7mRWImY-unsplash1.png';
+
 import { useAuth } from '../../redux/hooks';
-import { FaHeart } from 'react-icons/fa';
 import { colors, fontSizes, pxToRem, fonts, gapSizes } from '../../assets/styles/theme.js';
-import RatingBox from '../../components/common/RatingBox';
-import QuantitySelector from '../../components/common/QuantitySelector';
 import CustomTestimonialSection from './CustomTestimonialSection';
 import ProductSlider from './ProductSlider';
 import ProductInfo, { CheckoutCardInfo, CheckoutCardInfoTitle } from './ProductInfo';

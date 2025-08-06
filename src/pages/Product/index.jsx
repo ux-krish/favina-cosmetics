@@ -7,6 +7,7 @@ import Radio from '../../components/ui/CustomRadio';
 
 import { pxToRem, colors } from '../../assets/styles/theme';
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import ProductGrid from '../../components/product/ProductGrid';
 import productData from '../../data/product.json';
 import { FaFilter } from 'react-icons/fa';
@@ -18,6 +19,7 @@ const MIN_PRICE = 0;
 const PRODUCTS_PER_PAGE = 9;
 
 const ProductsPage = () => {
+  const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   // Close sidebar when clicking outside (mobile only)
   useEffect(() => {
@@ -43,11 +45,15 @@ const ProductsPage = () => {
   const [testimonials, setTestimonials] = useState([]);
   const [selectedDiscount, setSelectedDiscount] = useState('');
 
+
+  // On mount, check if navigation state has selectedCategories (e.g. from SkinSpotlight)
   useEffect(() => {
-    // Fetch products and testimonials from src/product.json
     setProducts(productData.products || []);
     setTestimonials(productData.testimonials || []);
     setLoading(false);
+    if (location.state && Array.isArray(location.state.selectedCategories) && location.state.selectedCategories.length > 0) {
+      setSelectedCategories(location.state.selectedCategories);
+    }
   }, []);
 
   useEffect(() => {
