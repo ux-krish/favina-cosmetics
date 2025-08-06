@@ -160,9 +160,8 @@ const CheckoutCardInfo = styled.div`
   justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
-  padding: ${pxToRem(12)} ${pxToRem(0)};
+  padding: ${pxToRem(12)} ${pxToRem(0)} ${pxToRem(0)};
   gap: ${pxToRem(8)};
-  margin-top: ${pxToRem(8)};
 `;
 const CheckoutCardInfoTitle = styled.div`
   font-size: ${fontSizes.xs};   
@@ -178,7 +177,11 @@ const AccordionItem = styled.div`
   border-radius: 8px;
   margin-bottom: 12px;
   box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-  border: 1px solid #ececec;
+  border: 1px solid ${colors.highlight};
+  overflow: hidden;
+  &:last-child {
+    margin-bottom: 0;
+  }
 `;
 
 const AccordionHeader = styled.button`
@@ -186,11 +189,11 @@ const AccordionHeader = styled.button`
   background: none;
   border: none;
   outline: none;
-  font-size: ${fontSizes.base};
-  font-weight: 600;
+  font-size: ${fontSizes.sm};
+  font-weight: 500;
   color: ${colors.text};
   text-align: left;
-  padding: 10px 20px;
+  padding: 12px 20px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -204,15 +207,15 @@ const AccordionHeader = styled.button`
 
 const AccordionContent = styled.div`
   padding: 16px 18px;
-  font-size: ${fontSizes.sm};
+  font-size: ${fontSizes.xs};
   color: ${colors.text};
-  background: #faf9fa;
+  background: ${colors.light};
   border-radius: 0 0 8px 8px;
   border-top: 1px solid #ececec;
 `;
 
 function Accordion() {
-  const [openIndex, setOpenIndex] = useState(0);
+  const [openIndex, setOpenIndex] = useState(-1); // Start with all closed
   const items = [
     {
       title: 'Description',
@@ -237,9 +240,11 @@ function Accordion() {
           >
             {item.title}
             <span style={{transform: openIndex === idx ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s', marginLeft: 8}}>
-             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M7 10L12 15L17 10" stroke="#5A4E4D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+              <svg width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M1 1L6 6L11 1" stroke="#5A4E4D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+
             </span>
           </AccordionHeader>
           {openIndex === idx && (

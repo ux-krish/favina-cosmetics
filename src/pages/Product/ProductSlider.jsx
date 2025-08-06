@@ -23,6 +23,7 @@ const ProductImageSection = styled.div`
   .swiper{
     width: 100%;
     max-width: 100% !important;
+    
     &:not(.swiper + .swiper){
       margin-bottom: ${pxToRem(10)} !important;
     }

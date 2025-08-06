@@ -253,6 +253,7 @@ const Card = styled.div`
   position: relative;
   min-width: 0;
   transition: box-shadow 0.18s, transform 0.18s;
+  border: 1px solid ${colors.border};
   &:hover {
     box-shadow: 0 8px 32px rgba(0,0,0,0.13);
     transform: translateY(-2px) scale(1.01);

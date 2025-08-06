@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import { colors } from './theme';
 
 export const GlobalStyles = createGlobalStyle`
   * {
@@ -11,7 +12,7 @@ export const GlobalStyles = createGlobalStyle`
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     color: #333;
-    background-color: #f9f9f9;
+    background-color: ${colors.textLight};
     overflow-x: hidden;
   }
 
