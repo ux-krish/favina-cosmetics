@@ -37,7 +37,7 @@ const PromoButton = styled(Button)`
   color: ${colors.textLight};
   padding: 12px 30px;
   @media (max-width:700px){
-    margin-top:0;
+    margin-top:${gapSizes.xl};
   }
 `;
 
@@ -45,7 +45,7 @@ const Content = styled.div`
   padding: ${gapSizes.xl};
   border-radius: 12px;
   max-width: 600px;
-  
+  padding: 0 20px;
   flex:1;
   text-align: center;
   z-index: 2;
@@ -66,6 +66,9 @@ const Content = styled.div`
     color: ${colors.textDark};
     font-size: ${fontSizes.md};
     margin-bottom: ${gapSizes.xs};
+    &:last-of-type{
+      ${gapSizes.lg};
+    }
   }
 
   .big-text {

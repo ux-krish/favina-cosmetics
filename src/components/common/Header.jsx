@@ -137,12 +137,13 @@ const Header = () => {
   };
 
   return (
-    <HeaderContainer>
+    <>
       <Banner>
         <Carousel>
           Get 30% off on your first order! Use code: <PromoCode>SAVE30</PromoCode>
         </Carousel>
       </Banner>
+      <HeaderContainer>
       <Container>
         <Logo to="/" title="Go to Home">
           <LogoImg src={LogoSvg} alt="ShopEase Logo" />
@@ -345,6 +346,8 @@ const Header = () => {
         </>
       )}
     </HeaderContainer>
+    </>
+    
   );
 };
 
