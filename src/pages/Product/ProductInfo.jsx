@@ -215,7 +215,7 @@ const AccordionContent = styled.div`
 `;
 
 function Accordion() {
-  const [openIndex, setOpenIndex] = useState(-1); // Start with all closed
+  const [openIndex, setOpenIndex] = useState(-1);
   const items = [
     {
       title: 'Description',

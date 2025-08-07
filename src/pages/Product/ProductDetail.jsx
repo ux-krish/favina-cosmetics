@@ -1,14 +1,10 @@
-// Custom styled wrapper for Share button using Button.jsx
-import styled, { createGlobalStyle } from 'styled-components';
 
+import styled, { createGlobalStyle } from 'styled-components';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useAppDispatch } from '../../redux/hooks';
 import { addToCart, toggleCart } from '../../redux/slices/cartSlice';
-import Button from '../../components/common/Button';
 import productData from '../../data/product.json';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Autoplay, Thumbs, Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/thumbs';
 import 'swiper/css/navigation';
@@ -17,7 +13,6 @@ import ProductGrid from '../../components/product/ProductGrid';
 import { useImageBasePath } from '../../context/ImagePathContext';
 import PromoBanner, { BannerHighlight } from '../../components/common/PromoBanner';
 import promoImg from '../../assets/images/main-bg2.png';
-
 import { useAuth } from '../../redux/hooks';
 import { colors, fontSizes, pxToRem, fonts, gapSizes } from '../../assets/styles/theme.js';
 import CustomTestimonialSection from './CustomTestimonialSection';
@@ -59,12 +54,10 @@ const ProductDetail = () => {
   const { register: formRegister, handleSubmit, reset, formState: { errors } } = useForm();
   const imageBasePath = useImageBasePath();
   const { isAuthenticated, user } = useAuth();
-  // Wishlist state and toast
   const [wishlist, setWishlist] = useState([]);
   const [toast, setToast] = useState(null);
   const [isInCart, setIsInCart] = useState(false);
 
-  // Sync quantity with cart sidebar changes
   useEffect(() => {
     if (!product || !user?.id) return;
     const syncQuantity = () => {
@@ -89,16 +82,15 @@ const ProductDetail = () => {
     setLoading(false);
   }, [id]);
 
-  // Load user reviews from localStorage for this product
+
   useEffect(() => {
     if (product) {
-      // Store reviews as an object keyed by userId for this product
+   
       const saved = JSON.parse(localStorage.getItem(`reviews_${product.id}`) || '{}');
       setUserReviews(saved);
     }
   }, [product]);
 
-  // Helper to get/set cart for current user in localStorage
   const getUserCart = () => {
     if (!user?.id) return [];
     const allCarts = JSON.parse(localStorage.getItem('carts') || '{}');
@@ -122,7 +114,7 @@ const ProductDetail = () => {
       setQuantity(exists.quantity);
       updatedCart = userCart;
       dispatch(toggleCart()); // Open cart sidebar
-      // No need to add again, just open sidebar
+      
       return;
     } else {
       updatedCart = [...userCart, { ...product, quantity }];
