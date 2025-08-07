@@ -169,12 +169,15 @@ const HeroSection = styled.section`
   align-items: center;
   justify-content: flex-start;
   @media (max-width: 900px) {
-    padding-top:50px;
+    padding-top:0;
     padding-left: 0;
     padding-right: 0;
-    padding-bottom: 20px;
+    padding-bottom: 55vw;
     min-height: 420px;
     justify-content: center;
+    background-position: right bottom;
+    background-size: 167vw;
+    background-color: #fcf8f3;
   }
 `;
 

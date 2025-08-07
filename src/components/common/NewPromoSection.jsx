@@ -18,10 +18,14 @@ const PromoWrapperNew = styled.section`
   margin: 70px auto 0;
   overflow: hidden;
   min-height: 39vw;
+  padding: 30px 0;
   @media (max-width: 768px) {
     flex-direction: column;
-    background-position: top center;
+    background-position:top left;
     padding: ${gapSizes.lg} ${gapSizes.sm};
+    display: grid;
+    grid-template-columns: 1fr;
+    background-size: 189vw;
   }
 `;
 
@@ -41,10 +45,15 @@ const Content = styled.div`
   padding: ${gapSizes.xl};
   border-radius: 12px;
   max-width: 600px;
+  
   flex:1;
   text-align: center;
   z-index: 2;
-
+  @media (max-width: 768px) {
+    &:first-child {
+      min-height:100vw;
+  }
+  }
   h4 {
     font-size: ${fontSizes.xxl};
     font-weight: 700;
