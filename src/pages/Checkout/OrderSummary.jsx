@@ -177,11 +177,11 @@ const OrderItems = styled.div`
   gap: 18px;
   margin-bottom: 18px;
   overflow-y: auto;
-  max-height: calc(100vh - 180px);
+ // max-height: calc(100vh - 180px);
   @media (max-width: 600px) {
     gap: 10px;
     margin-bottom: 10px;
-    max-height: 220px;
+   // max-height: 220px;
   }
 `;
 const OrderItem = styled.div`

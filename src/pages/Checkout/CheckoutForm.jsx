@@ -303,19 +303,17 @@ const BackButtonStyled = styled(Button)`
   font-size: 16px;
   cursor: pointer;
   width: 100px;
-  //padding: 7px 18px 7px 10px;
   border-radius: ${borderRadius.sm};
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   transition: color 0.18s, border 0.18s, background 0.18s;
   &:hover {
-    color: ${colors.primary};
-    border-color: ${colors.primary};
-    background: #fff7f5;
+    //color: ${colors.primary};
+    //border-color: ${colors.primary};
+    //background: #fff7f5;
   }
   @media (max-width: 600px) {
     font-size: 13px;
     padding: 5px 10px 5px 7px;
-    margin-bottom: 10px;
   }
 `;
 
