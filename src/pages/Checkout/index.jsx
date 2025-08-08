@@ -18,7 +18,6 @@ const CheckoutPage = () => {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
 
-  // Use user cart if logged in, fallback to redux cart for guest
   const getUserCart = () => {
     if (!user?.id) return [];
     const allCarts = JSON.parse(localStorage.getItem('carts') || '{}');
@@ -28,20 +27,16 @@ const CheckoutPage = () => {
   const { items: reduxItems } = useCart();
   const items = isAuthenticated ? getUserCart() : reduxItems;
 
-  // Use items as initial value for orderItems
   const [orderItems, setOrderItems] = useState(items);
 
-  // Redirect to home if orderItems is empty
   useEffect(() => {
     if (orderItems.length === 0) {
       navigate('/');
     }
   }, [orderItems, navigate]);
 
-  // Track which upsell products have been shown (by id)
   const [shownUpsellIds, setShownUpsellIds] = useState([]);
 
-  // Pick 4 random upsell products not already in cart and not already shown
   const upsellProducts = (productData.products || [])
     .filter(
       p =>
@@ -51,7 +46,6 @@ const CheckoutPage = () => {
     .sort(() => 0.5 - Math.random())
     .slice(0, 4);
 
-  // Add to order summary (cart) from upsell
   const handleAddUpsell = (product) => {
     let updated;
     const exists = orderItems.find(item => item.id === product.id);
@@ -66,10 +60,8 @@ const CheckoutPage = () => {
     }
     setOrderItems(updated);
 
-    // Mark this upsell as shown so a new one appears
     setShownUpsellIds(prev => [...prev, product.id]);
 
-    // Also update user cart in localStorage if logged in
     if (isAuthenticated && user?.id) {
       const allCarts = JSON.parse(localStorage.getItem('carts') || '{}');
       allCarts[user.id] = updated;
@@ -77,17 +69,14 @@ const CheckoutPage = () => {
     }
   };
 
-  // Remove product from order summary (does not affect cart)
   const handleRemoveOrderItem = (id) => {
     setOrderItems(orderItems.filter(item => item.id !== id));
   };
 
-  // Coupon logic
   const [coupon, setCoupon] = useState("");
   const [couponApplied, setCouponApplied] = useState(false);
   const [couponError, setCouponError] = useState("");
 
-  // Coupon codes and their discounts
   const couponCodes = {
     "SAVE10": 0.10,
     "SAVE20": 0.20,
@@ -130,57 +119,7 @@ const CheckoutPage = () => {
     </>
   );
 };
-const RadioWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-`;
 
-const CustomRadio = styled.label`
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  cursor: pointer;
-  input[type="radio"] {
-    opacity: 0;
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    left: 0;
-    top: 0;
-    margin: 0;
-    z-index: 2;
-    cursor: pointer;
-  }
-  .custom {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: ${colors.textLight};
-    border: 2px solid ${colors.primary};
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    transition: border 0.18s, box-shadow 0.18s;
-  }
-  input[type="radio"]:checked + .custom {
-    background: ${colors.primary};
-    border-color: ${colors.primary};
-  }
-  input[type="radio"]:checked + .custom:after {
-    content: '';
-    display: block;
-    position: static;
-    top: 4px;
-    left: 4px;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: ${colors.textLight};
-  }
-`;
 const CheckoutHeader = styled.div` 
   max-width: 1320px;
   margin: ${pxToRem(30)} auto;

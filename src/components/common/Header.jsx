@@ -9,27 +9,19 @@ import LogoSvg from '../../assets/images/logo.svg';
 import productData from '../../data/product.json';
 import { useImageBasePath } from '../../context/ImagePathContext';
 import { colors, fontSizes, borderRadius } from '../../assets/styles/theme';
+import OptimizedImage from '../common/OptimizedImage';
 
 
 
 const Header = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const location = useLocation(); // <-- add this
+  const location = useLocation(); 
   const { isAuthenticated, user } = useAuth();
   const { items } = useCart();
   const [cartCount, setCartCount] = useState(0);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [userDropdownDisplay, setUserDropdownDisplay] = useState(window.innerWidth <= 900 ? 'none' : 'flex');
-  useEffect(() => {
-    const handleResize = () => {
-      setUserDropdownDisplay(window.innerWidth <= 900 ? 'none' : 'flex');
-    };
-    window.addEventListener('resize', handleResize);
-    // Set initial value
-    handleResize();
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
   const [wishlistCount, setWishlistCount] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownMobileOpen, setUserDropdownMobileOpen] = useState(false);
@@ -38,7 +30,15 @@ const Header = () => {
   const [searchResults, setSearchResults] = useState([]);
   const imageBasePath = useImageBasePath();
 
-  // Helper to get wishlist count for current user
+  useEffect(() => {
+    const handleResize = () => {
+      setUserDropdownDisplay(window.innerWidth <= 900 ? 'none' : 'flex');
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const getWishlistCount = () => {
     if (!user?.id) return 0;
     const allWishlists = JSON.parse(localStorage.getItem('wishlists') || '{}');
@@ -46,15 +46,12 @@ const Header = () => {
     return arr.filter(id => !!id).length;
   };
 
-  // Helper to get cart count for current user
   const getCartCount = () => {
     if (isAuthenticated && user?.id) {
       const allCarts = JSON.parse(localStorage.getItem('carts') || '{}');
       const arr = Array.isArray(allCarts[user.id]) ? allCarts[user.id] : [];
-      // Sum all quantities
       return arr.reduce((sum, item) => sum + (item.quantity || 1), 0);
     }
-    // Fallback to redux items (for guest)
     return items.reduce((sum, item) => sum + (item.quantity || 1), 0);
   };
 
@@ -65,7 +62,6 @@ const Header = () => {
     updateWishlistCount();
     window.addEventListener('storage', updateWishlistCount);
 
-    // Listen for custom wishlist change event for instant update
     const handleWishlistChanged = () => setWishlistCount(getWishlistCount());
     window.addEventListener('wishlistChanged', handleWishlistChanged);
 
@@ -75,7 +71,6 @@ const Header = () => {
     };
   }, [user?.id]);
 
-  // Update wishlist count when location changes (e.g., after login or wishlist change)
   useEffect(() => {
     setWishlistCount(getWishlistCount());
   }, [location, user?.id]);
@@ -146,7 +141,7 @@ const Header = () => {
       <HeaderContainer>
       <Container>
         <Logo to="/" title="Go to Home">
-          <LogoImg src={LogoSvg} alt="ShopEase Logo" />
+          <OptimizedImage src={LogoSvg} alt="ShopEase Logo" width={38} height={38} />
         </Logo>
         <Nav>
           <NavLink to="/" title="Home">Home</NavLink>
@@ -165,11 +160,9 @@ const Header = () => {
 </svg>
 
           </SearchIconBtn>
-          {/* Only show user icon on desktop */}
           <UserDropdown
             tabIndex={0}
             style={{ display: userDropdownDisplay }}
-            // Only use hover/focus handlers on desktop
             onMouseEnter={() => window.innerWidth > 900 && setDropdownOpen(true)}
             onMouseLeave={() => window.innerWidth > 900 && setDropdownOpen(false)}
             onFocus={() => window.innerWidth > 900 && setDropdownOpen(true)}
@@ -182,7 +175,6 @@ const Header = () => {
               aria-expanded={dropdownOpen || userDropdownMobileOpen}
               tabIndex={-1}
               title={isAuthenticated ? "Account" : "Login/Register"}
-              // On mobile, toggle dropdown on click
               onClick={() => {
                 if (window.innerWidth <= 900) setUserDropdownMobileOpen(v => !v);
               }}
@@ -197,7 +189,6 @@ const Header = () => {
             </UserIconBtn>
             <DropdownMenu
               $open={window.innerWidth > 900 ? dropdownOpen : userDropdownMobileOpen}
-              // On mobile, clicking outside closes the menu
               style={window.innerWidth <= 900 ? { right: 0, left: 'auto' } : {}}
             >
               {!isAuthenticated ? (
@@ -220,7 +211,6 @@ const Header = () => {
             title="View Wishlist"
             className="wishlist-header-icon"
           >
-            {/* <FaHeart /> */}
             <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M10.7534 3.6079L10.2134 4.1279C10.2834 4.20048 10.3673 4.25822 10.46 4.29766C10.5528 4.33709 10.6526 4.35742 10.7534 4.35742C10.8542 4.35742 10.954 4.33709 11.0468 4.29766C11.1396 4.25822 11.2235 4.20048 11.2934 4.1279L10.7534 3.6079ZM8.17942 16.4299C6.66342 15.2349 5.00642 14.0679 3.69142 12.5879C2.40342 11.1359 1.50342 9.4429 1.50342 7.2449H0.00341797C0.00341797 9.9109 1.11342 11.9449 2.57042 13.5839C4.00042 15.1939 5.82442 16.4839 7.25042 17.6079L8.17942 16.4299ZM1.50342 7.2449C1.50342 5.0949 2.71842 3.2909 4.37742 2.5319C5.98942 1.7949 8.15542 1.9899 10.2134 4.1279L11.2934 3.0889C8.85342 0.551896 6.01742 0.132896 3.75342 1.1679C1.53942 2.1809 0.00341797 4.5329 0.00341797 7.2449H1.50342ZM7.25042 17.6079C7.76342 18.0119 8.31342 18.4419 8.87042 18.7679C9.42742 19.0939 10.0634 19.3579 10.7534 19.3579V17.8579C10.4434 17.8579 10.0794 17.7379 9.62742 17.4729C9.17442 17.2089 8.70542 16.8449 8.17942 16.4299L7.25042 17.6079ZM14.2564 17.6079C15.6824 16.4829 17.5064 15.1949 18.9364 13.5839C20.3934 11.9439 21.5034 9.9109 21.5034 7.2449H20.0034C20.0034 9.4429 19.1034 11.1359 17.8154 12.5879C16.5004 14.0679 14.8434 15.2349 13.3274 16.4299L14.2564 17.6079ZM21.5034 7.2449C21.5034 4.5329 19.9684 2.1809 17.7534 1.1679C15.4894 0.132896 12.6554 0.551896 10.2134 3.0879L11.2934 4.1279C13.3514 1.9909 15.5174 1.7949 17.1294 2.5319C18.7884 3.2909 20.0034 5.0939 20.0034 7.2449H21.5034ZM13.3274 16.4299C12.8014 16.8449 12.3324 17.2089 11.8794 17.4729C11.4264 17.7369 11.0634 17.8579 10.7534 17.8579V19.3579C11.4434 19.3579 12.0794 19.0929 12.6364 18.7679C13.1944 18.4419 13.7434 18.0119 14.2564 17.6079L13.3274 16.4299Z" fill="#5A4E4D"/>
 </svg>
@@ -245,7 +235,6 @@ const Header = () => {
           </MobileMenuIcon>
         </Icons>
       </Container>
-      {/* Search Overlay */}
       {searchOpen && (
         <SearchBarWrapper>
           <SearchBarInner className="search-overlay-content">
@@ -273,11 +262,11 @@ const Header = () => {
                         navigate(`/products/${product.id}`);
                       }}
                     >
-                      <ResultImg src={
+                      <OptimizedImage src={
                         product.image && !product.image.includes('/') && product.image
                           ? `${imageBasePath}/${product.image}`
                           : product.image
-                      } alt={product.title} />
+                      } alt={product.title} width={48} height={48} />
                       <ResultInfo>
                         <ResultTitle>{product.title}</ResultTitle>
                         <ResultPrice>${product.price.toFixed(2)}</ResultPrice>
@@ -290,14 +279,13 @@ const Header = () => {
           </SearchBarInner>
         </SearchBarWrapper>
       )}
-      {/* Mobile Menu Overlay */}
       {mobileMenuOpen && (
         <>
           <MobileMenuOverlay onClick={() => setMobileMenuOpen(false)} />
           <MobileMenu>
             <MobileMenuHeader>
               <Logo to="/" onClick={() => setMobileMenuOpen(false)}>
-                <LogoImg src={LogoSvg} alt="ShopEase Logo" />
+                <OptimizedImage src={LogoSvg} alt="ShopEase Logo" width={38} height={38} />
               </Logo>
               <MobileMenuClose
                 aria-label="Close menu"
@@ -307,7 +295,6 @@ const Header = () => {
               </MobileMenuClose>
             </MobileMenuHeader>
             <MobileNav>
-              {/* Add user/account section at the top of the menu */}
               {isAuthenticated ? (
                 <MobileAccountSection>
                   <MobileAccountLabel>
@@ -381,13 +368,6 @@ const Logo = styled(Link)`
   padding: 10px 0;
 `;
 
-const LogoImg = styled.img`
-  height: 38px;
-  width: auto;
-  display: block;
-
-`;
-
 const Nav = styled.nav`
   display: flex;
   gap: 20px;
@@ -434,7 +414,6 @@ const NavLink = styled(Link)`
 
   &:hover {
     color: ${colors.textLight};
-    //transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
 
@@ -533,10 +512,6 @@ const DropdownMenu = styled.div`
   margin-top: 0;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
-
-  /* Attach to header bottom */
-  /* Ensure the menu is attached to the bottom of the header, not just the icon */
-  /* Override right: 0 if present elsewhere */
   right: auto;
 
   @keyframes fadeInMenu {
@@ -636,7 +611,6 @@ const CartCount = styled.span`
   font-size: ${fontSizes.xs};
 `;
 
-// --- Mobile Menu Styles ---
 
 const MobileMenuOverlay = styled.div`
   position: fixed;
@@ -662,7 +636,6 @@ const MobileMenu = styled.nav`
     from { transform: translateX(-100%);}
     to { transform: translateX(0);}
   }
-  /* Allow scrolling for overflowing content */
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 `;
@@ -671,7 +644,7 @@ const MobileMenuHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 22px 20px 17px 20px;
+  padding: 10px 20px 7px 20px;
   border-bottom: 1px solid #eee;
   background: #fff;
   position: sticky;
@@ -691,7 +664,7 @@ const MobileNav = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2px;
-  padding: 20px 0 0 0;
+  padding: 0 0 0 0;
 `;
 
 const MobileNavLink = styled(Link)`
@@ -704,6 +677,7 @@ const MobileNavLink = styled(Link)`
   background: none;
   text-align: left;
   cursor: pointer;
+  display:flex;
   &:hover {
     background: #f5f5f5;
     color: ${colors.primary};
@@ -732,15 +706,17 @@ const MobileDivider = styled.div`
 `;
 
 const MobileBadge = styled.span`
-  display: inline-block;
+  display: inline-flex;
   margin-left: 8px;
   background: ${colors.primary};
   color: #fff;
-  border-radius: 10px;
-  font-size: 13px;
-  padding: 2px 8px;
-  min-width: 20px;
+  border-radius: 50px;
+  font-size: 12px;
+  width: 25px;
+  height: 25px;
   text-align: center;
+  align-items: center;
+  justify-content: center;
 `;
 
 const MobileAccountSection = styled.div`
@@ -776,10 +752,6 @@ const Banner = styled.div`
   z-index: 110;
 `;
 
-const scroll = keyframes`
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-`;
 
 const Carousel = styled.div`
   flex: 1;
@@ -833,16 +805,6 @@ const SearchBarInner = styled.div`
   margin-top: 0;
 `;
 
-const SearchOverlay = styled.div`
-  position: fixed;
-  inset: 0;
-  background: rgba(40, 30, 50, 0.18);
-  z-index: 2000;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding-top: 90px;
-`;
 
 const SearchInput = styled.input`
   width: 100%;

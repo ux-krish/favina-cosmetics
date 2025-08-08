@@ -2,12 +2,13 @@ import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Thumbs, Navigation } from 'swiper/modules';
 import styled from 'styled-components';
-import { pxToRem } from '../../assets/styles/theme';
+import { pxToRem, borderRadius } from '../../assets/styles/theme';
+import OptimizedImage from '../../components/common/OptimizedImage';
 
 const ProductImageSection = styled.div`
   width: 50%;
   background: #f9f9f9;
-  border-radius: 10px;
+  border-radius: ${borderRadius.sm};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -15,6 +16,10 @@ const ProductImageSection = styled.div`
   max-width: 100%;
   border: ${pxToRem(1.5)} solid #ede7f6;
   padding:${pxToRem(24)} ${pxToRem(20)} ${pxToRem(20)} ${pxToRem(16)};
+  @media (min-width: 1100px) {
+    position: sticky;
+    top: 90px;
+  }
   .swiper-slide{
       background: #fff;
       overflow: hidden;
@@ -75,13 +80,15 @@ const ProductSlider = ({ product, imageBasePath, thumbsSwiper, setThumbsSwiper, 
     >
       {(product.images || [product.image]).map((img, idx) => (
         <SwiperSlide key={idx}>
-          <ProductImage
+          <OptimizedImage
             src={
               img.startsWith('/') || img.startsWith('http')
                 ? img
                 : `${imageBasePath}/${img}`
             }
             alt={product.title}
+            width={440}
+            height={440}
           />
         </SwiperSlide>
       ))}
@@ -96,13 +103,15 @@ const ProductSlider = ({ product, imageBasePath, thumbsSwiper, setThumbsSwiper, 
     >
       {(product.images || [product.image]).map((img, idx) => (
         <SwiperSlide key={idx}>
-          <ThumbImage
+          <OptimizedImage
             src={
               img.startsWith('/') || img.startsWith('http')
                 ? img
                 : `${imageBasePath}/${img}`
             }
             alt={`thumb-${idx}`}
+            width={80}
+            height={80}
             style={{
               borderColor: idx === activeImgIdx ? '#a084ca' : '#eee',
               boxShadow: idx === activeImgIdx ? '0 2px 8px #a084ca22' : 'none'

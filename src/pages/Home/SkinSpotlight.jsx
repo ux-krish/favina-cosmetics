@@ -3,6 +3,7 @@ import React from "react";
 import { useNavigate } from 'react-router-dom';
 import styled from "styled-components";
 import { colors, fontSizes, gapSizes } from '../../assets/styles/theme';
+import OptimizedImage from '../../components/common/OptimizedImage';
 
 const Section = styled.section`
   display: flex;
@@ -15,6 +16,8 @@ const Section = styled.section`
   @media (max-width: 768px) {
     flex-direction: column;
     align-items: center;
+    padding-bottom: 0;
+    padding-top: 0;
   }
 `;
 
@@ -213,7 +216,7 @@ const SkinSpotlight = () => {
 
       <ImageCardsWrapper>
         <ImageCard>
-          <img src="/viral-beauty.png" alt="Viral Beauty Essentials" />
+          <OptimizedImage src="/viral-beauty.png" alt="Viral Beauty Essentials" width={400} height={260} />
           <div className="caption">
             Viral Beauty Essentials
             <div className="icon">
@@ -234,7 +237,7 @@ const SkinSpotlight = () => {
           </div>
         </ImageCard>
         <ImageCard>
-          <img src="/no-makeup.png" alt="No Makeup, Makeup Edit" />
+          <OptimizedImage src="/no-makeup.png" alt="No Makeup, Makeup Edit" width={400} height={260} />
           <div className="caption">
             No Makeup, Makeup Edit
             <div className="icon">

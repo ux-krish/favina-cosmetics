@@ -83,7 +83,10 @@ const TestimonialSwiperContainer = styled.div`
   overflow: hidden;
   .swiper{
     overflow:visible;
-    padding: 20px 0 60px !important;
+    padding: 20px 0 60px ;
+    @media (max-width: 768px) {
+      padding-top:0 ;
+    }
   }
   .swiper-pagination {
     bottom: 0 !important;
@@ -111,7 +114,11 @@ const TestimonialSection = styled.section`
   padding: 60px 0 0 0;
   overflow: hidden;
   width: 100%;
-  //background: #fdf6f2;
+  background: ${colors.background};
+  @media (max-width: 768px) {
+    margin-top:20px;
+    padding-top:40px;
+  }
 `;
 
 const TestimonialTitle = styled.h3`
@@ -124,6 +131,7 @@ const TestimonialTitle = styled.h3`
   letter-spacing: -1px;
   width: 100%;
   padding: 0 20px;
+
   span {
     color: #e5a6a6;
     font-family: ${fonts.title};
@@ -162,28 +170,7 @@ const TestimonialText = styled.div`
   min-height: 60px;
 `;
 
-const VerifiedBadge = styled.span`
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  background: none;
-  color: #27ae60;
-  font-size: 15px;
-  font-weight: 600;
-  border-radius: 6px;
-  padding: 0 0 0 2px;
-  margin-left: 8px;
-`;
 
-const VerifiedIcon = styled.span`
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  background: url('https://cdn-icons-png.flaticon.com/512/190/190411.png') center/cover no-repeat;
-`;
-
-
-// --- New Styled Components for Modern Card Layout ---
 const TestimonialHeader = styled.div`
   display: flex;
   align-items: flex-start;

@@ -9,7 +9,6 @@ const WishlistPage = () => {
   const imageBasePath = useImageBasePath();
   const { user, isAuthenticated } = useAuth();
 
-  // Get wishlist for current user from localStorage (array of product IDs)
   const getWishlist = () => {
     if (!user?.id) return [];
     const allWishlists = JSON.parse(localStorage.getItem('wishlists') || '{}');
@@ -27,14 +26,11 @@ const WishlistPage = () => {
     // eslint-disable-next-line
   }, [user?.id]);
 
-  // Get all products
   const allProducts = productData.products || [];
-  // Filter products by wishlist ids (support both string and number id)
   const wishlistProducts = allProducts.filter(
     p => wishlistIds.includes(p.id) || wishlistIds.includes(String(p.id))
   );
 
-  // Toggle wishlist handler (remove if exists)
   const handleToggleWishlist = (id) => {
     if (!user?.id) return;
     const allWishlists = JSON.parse(localStorage.getItem('wishlists') || '{}');

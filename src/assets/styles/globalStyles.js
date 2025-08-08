@@ -15,7 +15,11 @@ export const GlobalStyles = createGlobalStyle`
     background-color: ${colors.textLight};
     overflow-x: hidden;
   }
-
+  img{
+    width:100%;
+    height: auto;
+    display: block;
+  }
   a {
     text-decoration: none;
     color: inherit;
@@ -109,7 +113,6 @@ export const GlobalStyles = createGlobalStyle`
   }
 `;
 
-// px to rem utility for styled-components
 export const pxToRem = (px, base = 16) => `${px / base}rem`;
 
 const sizes = {

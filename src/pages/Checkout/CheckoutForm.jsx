@@ -7,11 +7,10 @@ import FormInput from '../../components/ui/FormInput';
 import CustomCheckbox from '../../components/ui/CustomCheckbox';
 import { clearCart } from '../../redux/slices/cartSlice';
 import { updateProfile } from '../../redux/slices/authSlice';
-import { getOrdersFromStorage } from '../../redux/slices/orderSlice'; // import helper
+import { getOrdersFromStorage } from '../../redux/slices/orderSlice'; 
 import { useEffect, useRef, useState } from 'react';
 import { borderRadius, colors, fontSizes, pxToRem } from '../../assets/styles/theme.js';
 
-// Accept discountedTotal and orderItems as props
 const CheckoutForm = ({ discountedTotal, orderItems }) => {
   const { user, isAuthenticated } = useAuth();
   const dispatch = useAppDispatch();
@@ -19,15 +18,12 @@ const CheckoutForm = ({ discountedTotal, orderItems }) => {
   const orderIdRef = useRef(null);
   const [billingSame, setBillingSame] = useState(true);
 
-  // Shipping form
   const { register: registerShipping, handleSubmit: handleShippingSubmit, formState: { errors: shippingErrors }, reset: resetShipping, getValues: getShippingValues } = useForm({
     defaultValues: isAuthenticated && user ? user : {},
   });
 
-  // Billing form
   const { register: registerBilling, formState: { errors: billingErrors }, reset: resetBilling, getValues: getBillingValues } = useForm();
 
-  // Sync billing fields with shipping if checkbox is checked
   useEffect(() => {
     if (billingSame) {
       resetBilling(getShippingValues());
@@ -35,7 +31,6 @@ const CheckoutForm = ({ discountedTotal, orderItems }) => {
     // eslint-disable-next-line
   }, [billingSame]);
 
-  // Ensure shipping form is reset with user data when user changes (e.g., after login)
   useEffect(() => {
     if (isAuthenticated && user) {
       resetShipping(user);
@@ -63,17 +58,14 @@ const CheckoutForm = ({ discountedTotal, orderItems }) => {
       customer: user ? { email: user.email, id: user.id } : null,
     };
 
-    // Add order to localStorage directly
     const orders = getOrdersFromStorage();
     const newOrder = { ...order, id: Date.now().toString() };
     const updatedOrders = [...orders, newOrder];
     localStorage.setItem('orders', JSON.stringify(updatedOrders));
 
-    // Store shipping and billing details separately for confirmation page
     localStorage.setItem('shippingDetails', JSON.stringify(shippingData));
     localStorage.setItem('billingDetails', JSON.stringify(billingData));
 
-    // Clear cart for logged in user in localStorage
     if (isAuthenticated && user?.id) {
       const allCarts = JSON.parse(localStorage.getItem('carts') || '{}');
       allCarts[user.id] = [];
@@ -306,11 +298,6 @@ const BackButtonStyled = styled(Button)`
   border-radius: ${borderRadius.sm};
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   transition: color 0.18s, border 0.18s, background 0.18s;
-  &:hover {
-    //color: ${colors.primary};
-    //border-color: ${colors.primary};
-    //background: #fff7f5;
-  }
   @media (max-width: 600px) {
     font-size: 13px;
     padding: 5px 10px 5px 7px;
@@ -324,7 +311,6 @@ const PlaceOrderButtonStyled = styled(Button)`
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   font-size: 16px;
   border-radius: ${borderRadius.sm};
-  //padding: 7px 18px;
   font-weight: 600;
   &:hover {
     background: ${colors.accent};

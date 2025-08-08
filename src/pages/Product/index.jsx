@@ -21,7 +21,6 @@ const PRODUCTS_PER_PAGE = 9;
 const ProductsPage = () => {
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  // Close sidebar when clicking outside (mobile only)
   useEffect(() => {
     if (!sidebarOpen) return;
     const handleClickOutside = (e) => {
@@ -46,7 +45,6 @@ const ProductsPage = () => {
   const [selectedDiscount, setSelectedDiscount] = useState('');
 
 
-  // On mount, check if navigation state has selectedCategories (e.g. from SkinSpotlight)
   useEffect(() => {
     setProducts(productData.products || []);
     setTestimonials(productData.testimonials || []);
@@ -70,7 +68,6 @@ const ProductsPage = () => {
   }, [priceRange[0], priceRange[1]]);
 
 useEffect(() => {
-  // Add discount property to each product
   const productsWithDiscount = products.map(p => {
     let discount = 0;
     if (p.offerPrice && p.offerPrice < p.price) {
@@ -82,11 +79,9 @@ useEffect(() => {
   if (selectedCategories.length > 0) {
     filtered = filtered.filter(p => selectedCategories.includes(p.category));
   }
-  // Only show products within the selected price range (min and max)
   filtered = filtered.filter(
     p => p.price >= Math.min(priceRange[0], priceRange[1]) && p.price <= Math.max(priceRange[0], priceRange[1])
   );
-  // Discount filter
   if (selectedDiscount) {
     const minDiscount = Number(selectedDiscount);
     filtered = filtered.filter(p => p.discount >= minDiscount);
@@ -94,7 +89,6 @@ useEffect(() => {
   setFilteredProducts(filtered);
 }, [products, selectedCategories, priceRange, selectedDiscount]);
 
-  // Sorting logic
   const sortedProducts = [...filteredProducts];
   if (sortOrder === 'lowToHigh') {
     sortedProducts.sort((a, b) => a.price - b.price);
@@ -113,14 +107,12 @@ useEffect(() => {
     currentPage * PRODUCTS_PER_PAGE
   );
 
-  // Reset to page 1 when filters change
   useEffect(() => {
     setCurrentPage(1);
   }, [selectedCategories, priceRange]);
 
   if (loading) return <div>Loading...</div>;
 
-  // Ensure min slider cannot go above max-1 and max slider cannot go below min+1
   const handleMinChange = (e) => {
     const val = Math.min(Number(e.target.value), priceRange[1] - 1);
     setPriceRange([val, priceRange[1]]);
@@ -130,7 +122,6 @@ useEffect(() => {
     setPriceRange([priceRange[0], val]);
   };
 
-  // Handle category checkbox change
   const handleCategoryChange = (cat) => {
     setSelectedCategories(prev =>
       prev.includes(cat)
@@ -139,7 +130,6 @@ useEffect(() => {
     );
   };
 
-  // Clear all filters
   const handleClearFilters = () => {
     setSelectedCategories([]);
     setPriceRange([MIN_PRICE, MAX_PRICE]);
@@ -148,7 +138,6 @@ useEffect(() => {
 
   return (
     <ProductsLayout>
-      {/* Mobile sidebar backdrop overlay */}
       {sidebarOpen && (
         <SidebarBackdrop onClick={() => setSidebarOpen(false)} />
       )}
@@ -184,7 +173,6 @@ useEffect(() => {
               <span>End: ${priceRange[1]}</span>
             </SliderLabels>
             <SliderTrack>
-              {/* Default slider bar background */}
               <div
                 style={{
                   position: 'absolute',
@@ -197,14 +185,12 @@ useEffect(() => {
                   zIndex: 1,
                 }}
               />
-              {/* Selected range highlight */}
               <SliderRange
                 style={{
                   left: `${((priceRange[0] - MIN_PRICE) / (MAX_PRICE - MIN_PRICE)) * 100}%`,
                   width: `${((priceRange[1] - priceRange[0]) / (MAX_PRICE - MIN_PRICE)) * 100}%`
                 }}
               />
-              {/* Start point slider */}
               <RangeInput
                 type="range"
                 min={MIN_PRICE}
@@ -213,7 +199,6 @@ useEffect(() => {
                 onChange={handleMinChange}
                 style={{ zIndex: priceRange[0] === priceRange[1] ? 5 : 3 }}
               />
-              {/* End point slider */}
               <RangeInput
                 type="range"
                 min={priceRange[0] + 1}
@@ -363,9 +348,11 @@ const ProductsLayout = styled.div`
   margin: 0 auto;
   padding: ${pxToRem(24)} 0 ${pxToRem(24)} 0;
   gap: 0;
-  /* background: #f6f3fa; */
   border-radius: ${pxToRem(14)};
-  /* box-shadow: 0 2px 16px rgba(168,132,202,0.06); */
+  @media (max-width: 900px) {
+    padding-top:0;
+    padding-bottom:0;
+  }
 `;
 
 const Sidebar = styled.aside`
@@ -647,6 +634,7 @@ const Main = styled.div`
   border-radius: 0 14px 14px 0;
   @media (max-width: 900px) {
     padding: 18px 20px 0 20px;
+    border-radius:0;
   }
 `;
 
@@ -727,7 +715,7 @@ const Pagination = styled.div`
   display: flex;
   justify-content: center;
   gap: 8px;
-  margin: 30px 0 0 0;
+  margin: 30px 0 30px;
 `;
 
 const PageButton = styled.button`

@@ -13,7 +13,6 @@ export const store = configureStore({
     getDefaultMiddleware().concat(persistCartMiddleware),
 });
 
-// Load cart for user on startup and on user change
 let currentUser = null;
 store.subscribe(() => {
   const state = store.getState();

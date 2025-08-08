@@ -28,9 +28,7 @@ const registerUser = async (userData) => {
   const { password, ...userWithoutPassword } = newUser;
   return userWithoutPassword;
 };
-// --- End move ---
 
-// Async thunks (not using createAsyncThunk)
 export const loginThunk = (credentials) => async (dispatch) => {
   dispatch(authSlice.actions.loginPending());
   try {
@@ -79,7 +77,7 @@ const authSlice = createSlice({
         }
       }
     },
-    // Async login
+
     loginPending: (state) => {
       state.status = 'loading';
       state.error = null;
@@ -94,7 +92,6 @@ const authSlice = createSlice({
       state.status = 'failed';
       state.error = action.payload || 'Login failed';
     },
-    // Async register
     registerPending: (state) => {
       state.status = 'loading';
       state.error = null;

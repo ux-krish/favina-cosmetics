@@ -23,7 +23,6 @@ const CartSidebar = () => {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
 
-  // Close cart when clicking outside the sidebar
   useEffect(() => {
     if (!isCartOpen) return;
     const handleClick = (e) => {
@@ -35,7 +34,6 @@ const CartSidebar = () => {
     return () => document.removeEventListener('mousedown', handleClick);
   }, [isCartOpen, dispatch]);
 
-  // Helper to get/set cart for current user in localStorage
   const getUserCart = () => {
     if (!user?.id) return items;
     const allCarts = JSON.parse(localStorage.getItem('carts') || '{}');
@@ -47,27 +45,20 @@ const CartSidebar = () => {
     const allCarts = JSON.parse(localStorage.getItem('carts') || '{}');
     allCarts[user.id] = cartItems;
     localStorage.setItem('carts', JSON.stringify(allCarts));
-    // Dispatch a custom event for instant cart count update
     window.dispatchEvent(new Event('cartChanged'));
   };
 
-  // Use user cart if logged in, fallback to redux cart for guest
   const cartItems = isAuthenticated ? getUserCart() : items;
 
-  // --- Quick Buy: Exclude products already in cart ---
-  // Memoize quickBuyProducts so Swiper doesn't reset on cart quantity update
   const quickBuyProducts = useMemo(() => {
     return productData.products
       .filter(p => !cartItems.some(item => item.id === p.id))
       .sort(() => 0.5 - Math.random())
       .slice(0, 3);
-  // Only change when cartItems' ids change (not quantity)
   }, [JSON.stringify(cartItems.map(i => i.id).sort())]);
 
-  // Keep Swiper instance stable
   const quickBuySwiperRef = useRef(null);
 
-  // Update cart count from localStorage (always accurate)
   useEffect(() => {
     const updateCartCount = () => {
       if (isAuthenticated && user?.id) {
@@ -90,12 +81,10 @@ const CartSidebar = () => {
 
   const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-  // Handler for add to cart (quick buy, upsell, or product card)
   const handleAddToCart = (product) => {
     let updatedCart;
     const exists = cartItems.find(item => item.id === product.id);
     if (exists) {
-      // Do not increase quantity, just open sidebar
       updatedCart = cartItems;
     } else {
       updatedCart = [...cartItems, { ...product, quantity: 1 }];
@@ -107,7 +96,6 @@ const CartSidebar = () => {
     window.dispatchEvent(new Event('cartChanged'));
   };
 
-  // Handler to update quantity or remove if 0
   const handleQuantityChange = (id, quantity) => {
     let updatedCart;
     if (quantity <= 0) {
@@ -120,7 +108,6 @@ const CartSidebar = () => {
     if (isAuthenticated) {
       setUserCart(updatedCart);
     }
-    // Always update redux for UI sync
     if (quantity <= 0) {
       dispatch(removeFromCart(id));
     } else {
@@ -129,7 +116,6 @@ const CartSidebar = () => {
     window.dispatchEvent(new Event('cartChanged'));
   };
 
-  // Handler for clearing cart
   const handleClearCart = () => {
     if (isAuthenticated) {
       setUserCart([]);
@@ -138,9 +124,7 @@ const CartSidebar = () => {
     window.dispatchEvent(new Event('cartChanged'));
   };
 
-  // Handler for navigating to product details from upsell or quick buy
   const navigateToProduct = (id, e) => {
-    // Prevent navigation if clicking on add button
     if (
       e.target.closest('button') ||
       e.target.closest('[role="button"]')
@@ -187,7 +171,6 @@ const CartSidebar = () => {
                   >
                     Shop Now
                   </ShopNowBtn>
-                  {/* Removed Recommended for you section */}
                 </>
               ) : (
                 cartItems.map((item) => (
@@ -210,7 +193,6 @@ const CartSidebar = () => {
                 <CartActionButton
                   onClick={() => {
                     dispatch(toggleCart());
-                    // No need to sync here, already synced on add/remove
                     navigate('/checkout');
                   }}
                   disabled={cartItems.length === 0}

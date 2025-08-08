@@ -62,9 +62,7 @@ const HomePage = () => {
   const imageBasePath = useImageBasePath();
 
   useEffect(() => {
-    // Fetch products and testimonials from src/product.json
     setProducts(productData.products || []);
-    // Gather all testimonials from all products
     const allTestimonials = [];
     (productData.products || []).forEach(product => {
       if (product.testimonials && product.testimonials.length > 0) {
@@ -98,7 +96,7 @@ const HomePage = () => {
               Discover skincare and makeup that loves you back.
             </HeroSubtitle>
             <HeroOfferRow>
-              <DiscountBadge>Get 25% OFF</DiscountBadge>
+              <DiscountBadge>Get 30% OFF</DiscountBadge>
               <OfferText>on your first purchase!</OfferText>
             </HeroOfferRow>
             <ShopNowBtn to="/products">Shop Now</ShopNowBtn>
@@ -164,7 +162,7 @@ const HeroSection = styled.section`
   padding: 100px 30px 100px;
   background: url(${props => props.$banner}) no-repeat;
   background-size: cover;
-  background-position: left center;
+  background-position:center;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -257,7 +255,6 @@ const ShopNowBtn = styled(Button)`
   font-weight: 700;
   width: 100%;
   max-width: 180px;
-  //padding: 12px 38px;
   border-radius: 7px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   background: #fff;

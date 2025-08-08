@@ -7,7 +7,7 @@ const ORDERS_PER_PAGE = 5;
 
 const OrderDetails = () => {
   const [orders, setOrders] = useState([]);
-  const [sortOrder, setSortOrder] = useState('desc'); // 'desc' for newest first, 'asc' for oldest first
+  const [sortOrder, setSortOrder] = useState('desc'); 
   const [page, setPage] = useState(1);
   const { user } = useAuth();
 
@@ -21,11 +21,10 @@ const OrderDetails = () => {
       order.customer && order.customer.email === user.email
     );
     setOrders(userSpecificOrders);
-    setPage(1); // Reset to first page on reload
+    setPage(1); 
   }, [user.email]);
 
   useEffect(() => {
-    // Auto-update order status to 'delivered' after 2 days
     const allOrders = getOrdersFromStorage();
     let updated = false;
     const now = new Date();
@@ -45,35 +44,30 @@ const OrderDetails = () => {
     }
   }, []);
 
-  // Sort orders by date
   const sortedOrders = [...orders].sort((a, b) => {
     const aDate = new Date(a.date).getTime();
     const bDate = new Date(b.date).getTime();
     return sortOrder === 'desc' ? bDate - aDate : aDate - bDate;
   });
 
-  // Pagination
   const totalPages = Math.ceil(sortedOrders.length / ORDERS_PER_PAGE);
   const paginatedOrders = sortedOrders.slice(
     (page - 1) * ORDERS_PER_PAGE,
     page * ORDERS_PER_PAGE
   );
 
-  // Clear order list for current user
   const handleClearOrders = () => {
     const allOrders = getOrdersFromStorage();
     let filteredOrders = [];
     if (user && user.email) {
-      // Only remove orders for current user that are delivered
       filteredOrders = allOrders.filter(order => {
         if (order.customer && order.customer.email === user.email) {
           return order.status !== 'delivered';
         }
-        return true; // keep orders of other users
+        return true;
       });
     }
     localStorage.setItem('orders', JSON.stringify(filteredOrders));
-    // Re-fetch orders from storage to update UI
     const userOrders = filteredOrders.filter(order => order.customer && order.customer.email === user.email);
     setOrders(userOrders);
     setPage(1);
